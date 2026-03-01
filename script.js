@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
             }
         });
     }, observerOptions);
@@ -85,12 +85,80 @@ document.addEventListener('DOMContentLoaded', function() {
     cards.forEach((card, index) => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+        card.style.transition = `all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
         observer.observe(card);
     });
 });
 
-// Three.js Background
+// 3D Tilt Effect for Project Cards
+document.addEventListener('DOMContentLoaded', function() {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            card.style.transition = 'none';
+            
+            // Add shine effect
+            let shine = card.querySelector('.shine');
+            if (!shine) {
+                shine = document.createElement('div');
+                shine.className = 'shine';
+                card.style.position = 'relative';
+                card.style.overflow = 'hidden';
+                shine.style.position = 'absolute';
+                shine.style.top = '0';
+                shine.style.left = '0';
+                shine.style.width = '100%';
+                shine.style.height = '100%';
+                shine.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)';
+                shine.style.pointerEvents = 'none';
+                shine.style.opacity = '0';
+                shine.style.transition = 'opacity 0.3s';
+                card.appendChild(shine);
+            }
+            shine.style.opacity = '1';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            const shine = card.querySelector('.shine');
+            if (shine) {
+                shine.style.opacity = '0';
+            }
+        });
+    });
+    
+    // Add floating animation to skill cards
+    const skillCards = document.querySelectorAll('.skill-card');
+    skillCards.forEach((card, index) => {
+        card.style.animation = `float 3s ease-in-out ${index * 0.2}s infinite`;
+    });
+});
+
+// Add floating animation keyframes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+`;
+document.head.appendChild(style);
+
+// Three.js Background with Enhanced Effects
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
     
@@ -98,7 +166,8 @@ function initThreeJS() {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('canvas.webgl'),
-        alpha: true
+        alpha: true,
+        antialias: true
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -106,35 +175,136 @@ function initThreeJS() {
     camera.position.z = 5;
     
     // Particles
+    const particlesCount = 1200;
     const geometry = new THREE.BufferGeometry();
-    const particlesCount = 800;
     const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+    const velocities = new Float32Array(particlesCount * 3);
     
-    for (let i = 0; i < particlesCount * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 20;
+    const colorPalette = [
+        new THREE.Color(0x6366f1),
+        new THREE.Color(0x8b5cf6),
+        new THREE.Color(0xec4899),
+        new THREE.Color(0x06b6d4)
+    ];
+    
+    for (let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 20;
+        positions[i3 + 1] = (Math.random() - 0.5) * 20;
+        positions[i3 + 2] = (Math.random() - 0.5) * 20;
+        
+        velocities[i3] = (Math.random() - 0.5) * 0.01;
+        velocities[i3 + 1] = (Math.random() - 0.5) * 0.01;
+        velocities[i3 + 2] = (Math.random() - 0.5) * 0.01;
+        
+        const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+        colors[i3] = color.r;
+        colors[i3 + 1] = color.g;
+        colors[i3 + 2] = color.b;
     }
     
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     
     const material = new THREE.PointsMaterial({
-        color: 0x6366f1,
-        size: 0.02,
+        size: 0.03,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.8,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending
     });
     
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
     
+    // Lines connecting nearby particles
+    const lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x6366f1,
+        transparent: true,
+        opacity: 0.15
+    });
+    
+    const lineGeometry = new THREE.BufferGeometry();
+    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(lines);
+    
+    // Mouse interaction
+    const mouse = new THREE.Vector2();
+    const targetRotation = new THREE.Vector2();
+    
+    document.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        
+        targetRotation.x = mouse.y * 0.0005;
+        targetRotation.y = mouse.x * 0.0005;
+    });
+    
+    // Clock for animation timing
+    const clock = new THREE.Clock();
+    
     // Animation
     function animate() {
         requestAnimationFrame(animate);
-        particles.rotation.x += 0.0005;
-        particles.rotation.y += 0.001;
+        
+        const time = clock.getElapsedTime();
+        
+        // Rotate particles based on mouse position
+        particles.rotation.x += (targetRotation.x - particles.rotation.x) * 0.05;
+        particles.rotation.y += (targetRotation.y - particles.rotation.y) * 0.05;
+        
+        // Continuous slow rotation
+        particles.rotation.y += 0.0003;
+        
+        // Update particle positions with wave effect
+        const posArray = particles.geometry.attributes.position.array;
+        for (let i = 0; i < particlesCount; i++) {
+            const i3 = i * 3;
+            
+            // Add wave motion based on time
+            posArray[i3 + 1] += Math.sin(time + posArray[i3]) * 0.001;
+            
+            // Keep particles within bounds
+            if (posArray[i3] > 10 || posArray[i3] < -10) velocities[i3] *= -1;
+            if (posArray[i3 + 1] > 10 || posArray[i3 + 1] < -10) velocities[i3 + 1] *= -1;
+            if (posArray[i3 + 2] > 10 || posArray[i3 + 2] < -10) velocities[i3 + 2] *= -1;
+        }
+        particles.geometry.attributes.position.needsUpdate = true;
+        
+        // Update connecting lines
+        updateLines();
+        
         renderer.render(scene, camera);
     }
     
-    // Resize
+    function updateLines() {
+        const posArray = particles.geometry.attributes.position.array;
+        const linePositions = [];
+        
+        for (let i = 0; i < particlesCount; i++) {
+            const i3 = i * 3;
+            for (let j = i + 1; j < particlesCount; j++) {
+                const j3 = j * 3;
+                
+                const dx = posArray[i3] - posArray[j3];
+                const dy = posArray[i3 + 1] - posArray[j3 + 1];
+                const dz = posArray[i3 + 2] - posArray[j3 + 2];
+                const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                
+                if (distance < 1.5) {
+                    linePositions.push(
+                        posArray[i3], posArray[i3 + 1], posArray[i3 + 2],
+                        posArray[j3], posArray[j3 + 1], posArray[j3 + 2]
+                    );
+                }
+            }
+        }
+        
+        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+    }
+    
+    // Resize handler
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -143,195 +313,6 @@ function initThreeJS() {
     
     animate();
 }
-
-// Contact Form Handling with Node.js Backend Integration
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            
-            // Gather form data
-            const formData = {
-                name: document.getElementById('name')?.value || '',
-                email: document.getElementById('email')?.value || '',
-                subject: document.getElementById('subject')?.value || 'New Contact Form Submission',
-                message: document.getElementById('message')?.value || ''
-            };
-            
-            // Validate form fields
-            if (!formData.name.trim()) {
-                showNotification('Please enter your name.', 'error');
-                return;
-            }
-            
-            if (!formData.email.trim()) {
-                showNotification('Please enter your email address.', 'error');
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(formData.email)) {
-                showNotification('Please enter a valid email address.', 'error');
-                return;
-            }
-            
-            if (!formData.message.trim()) {
-                showNotification('Please enter your message.', 'error');
-                return;
-            }
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            try {
-                // Send data to Node.js backend
-                const response = await fetch('/api/contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    showNotification('Your message has been sent successfully!', 'success');
-                    contactForm.reset();
-                } else {
-                    showNotification(data.message || 'Failed to send message. Please try again.', 'error');
-                }
-            } catch (error) {
-                console.error('Contact form error:', error);
-                showNotification('Network error. Please check your connection and try again.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-            }
-        });
-    }
-    
-    // Notification system
-    function showNotification(message, type) {
-        // Remove any existing notifications
-        const existingNotification = document.querySelector('.notification-toast');
-        if (existingNotification) {
-            existingNotification.remove();
-        }
-        
-        const notification = document.createElement('div');
-        notification.className = `notification-toast ${type}`;
-        notification.innerHTML = `
-            <span class="notification-icon">${type === 'success' ? '✓' : '✕'}</span>
-            <span class="notification-message">${message}</span>
-        `;
-        
-        const styles = `
-            .notification-toast {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 16px 24px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                max-width: 380px;
-                border-left: 4px solid;
-            }
-            .notification-toast.success {
-                border-left-color: #10b981;
-            }
-            .notification-toast.success .notification-icon {
-                background: #10b981;
-            }
-            .notification-toast.error {
-                border-left-color: #ef4444;
-            }
-            .notification-toast.error .notification-icon {
-                background: #ef4444;
-            }
-            .notification-icon {
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                font-weight: bold;
-                font-size: 14px;
-                flex-shrink: 0;
-            }
-            .notification-message {
-                color: #1f2937;
-                font-size: 14px;
-                font-weight: 500;
-            }
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-            }
-        `;
-        
-        // Add styles if not already present
-        if (!document.querySelector('#notificationStyles')) {
-            const styleSheet = document.createElement('style');
-            styleSheet.id = 'notificationStyles';
-            styleSheet.textContent = styles;
-            document.head.appendChild(styleSheet);
-        }
-        
-        document.body.appendChild(notification);
-        
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            notification.style.animation = 'slideOutRight 0.4s ease forwards';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 400);
-        }, 5000);
-        
-        // Allow click to dismiss
-        notification.addEventListener('click', () => {
-            notification.style.animation = 'slideOutRight 0.4s ease forwards';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 400);
-        });
-    }
-});
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {

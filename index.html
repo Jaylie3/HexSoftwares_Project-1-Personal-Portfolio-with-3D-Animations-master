@@ -10,30 +10,37 @@
 <body>
     <canvas class="webgl"></canvas>
     
+    <!-- Floating particles container -->
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Interactive cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+    
     <header>
         <div class="container">
             <div class="profile-section">
-                <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
+                <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img floating-element">
                 <div class="profile-info">
-                    <h1>Lindokuhle Nkosinathi Jali</h1>
-                    <h2>Front-end Developer & IT Support Intern</h2>
-                    <p class="professional-summary">Passionate developer creating modern web solutions with 2+ years experience</p>
-                    <div class="cta-buttons">
-                        <a href="#contact" class="btn-primary">Hire Me</a>
-                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary">Download CV</a>
+                    <h1 class="fade-in-up">Lindokuhle Nkosinathi Jali</h1>
+                    <h2 class="fade-in-up delay-1">Front-end Developer & IT Support Intern</h2>
+                    <p class="professional-summary fade-in-up delay-2">Passionate developer creating modern web solutions with 2+ years experience</p>
+                    <div class="cta-buttons fade-in-up delay-3">
+                        <a href="#contact" class="btn-primary hover-lift">Hire Me</a>
+                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary hover-lift">Download CV</a>
                     </div>
                 </div>
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#technologies">Tech Stack</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#testimonials">Reviews</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#about" class="nav-link hover-underline">About</a></li>
+                    <li><a href="#skills" class="nav-link hover-underline">Skills</a></li>
+                    <li><a href="#technologies" class="nav-link hover-underline">Tech Stack</a></li>
+                    <li><a href="#projects" class="nav-link hover-underline">Projects</a></li>
+                    <li><a href="#experience" class="nav-link hover-underline">Experience</a></li>
+                    <li><a href="#certifications" class="nav-link hover-underline">Certifications</a></li>
+                    <li><a href="#testimonials" class="nav-link hover-underline">Reviews</a></li>
+                    <li><a href="#contact" class="nav-link hover-underline">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -42,13 +49,13 @@
     <main>
         <section id="about" class="section">
             <div class="container">
-                <h3>Bio</h3>
+                <h3 class="section-title reveal-on-scroll">Bio</h3>
                 <div class="about-content">
-                    <div class="about-text">
+                    <div class="about-text reveal-on-scroll">
                         <p>Front-end developer and IT Support Intern at Okhahlamba District Teacher Development Centre (DTDC). Passionate about creating engaging web experiences and supporting educational technology initiatives. I specialize in modern web technologies and have a strong foundation in both development and technical support.</p>
                     </div>
-                    <div class="about-image">
-                        <img src="images/undraw_programming_65t2.svg" alt="Developer illustration" class="floating">
+                    <div class="about-image reveal-on-scroll">
+                        <img src="images/undraw_programming_65t2.svg" alt="Developer illustration" class="floating 3d-tilt">
                     </div>
                 </div>
             </div>
@@ -56,27 +63,39 @@
 
         <section id="skills" class="section">
             <div class="container">
-                <h3>Core Skills</h3>
+                <h3 class="section-title reveal-on-scroll">Core Skills</h3>
                 <div class="skills-grid">
-                    <div class="skill-card">
-                        <i class="fas fa-code"></i>
-                        <h4>Frontend Development</h4>
-                        <p>Building responsive, interactive user interfaces</p>
+                    <div class="skill-card hover-3d" data-tilt>
+                        <div class="card-inner">
+                            <div class="card-icon"><i class="fas fa-code"></i></div>
+                            <h4>Frontend Development</h4>
+                            <p>Building responsive, interactive user interfaces</p>
+                            <div class="card-glow"></div>
+                        </div>
                     </div>
-                    <div class="skill-card">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h4>Responsive Design</h4>
-                        <p>Mobile-first approach and cross-browser compatibility</p>
+                    <div class="skill-card hover-3d" data-tilt>
+                        <div class="card-inner">
+                            <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h4>Responsive Design</h4>
+                            <p>Mobile-first approach and cross-browser compatibility</p>
+                            <div class="card-glow"></div>
+                        </div>
                     </div>
-                    <div class="skill-card">
-                        <i class="fas fa-tools"></i>
-                        <h4>IT Support</h4>
-                        <p>Technical troubleshooting and system maintenance</p>
+                    <div class="skill-card hover-3d" data-tilt>
+                        <div class="card-inner">
+                            <div class="card-icon"><i class="fas fa-tools"></i></div>
+                            <h4>IT Support</h4>
+                            <p>Technical troubleshooting and system maintenance</p>
+                            <div class="card-glow"></div>
+                        </div>
                     </div>
-                    <div class="skill-card">
-                        <i class="fas fa-users"></i>
-                        <h4>Team Collaboration</h4>
-                        <p>Working effectively in development teams</p>
+                    <div class="skill-card hover-3d" data-tilt>
+                        <div class="card-inner">
+                            <div class="card-icon"><i class="fas fa-users"></i></div>
+                            <h4>Team Collaboration</h4>
+                            <p>Working effectively in development teams</p>
+                            <div class="card-glow"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,34 +103,34 @@
 
         <section id="technologies" class="section">
             <div class="container">
-                <h3>Technologies & Tools</h3>
+                <h3 class="section-title reveal-on-scroll">Technologies & Tools</h3>
                 <div class="tech-categories">
-                    <div class="tech-category">
+                    <div class="tech-category reveal-on-scroll">
                         <h4>Frontend</h4>
                         <div class="tech-items">
-                            <span class="tech-item"><i class="fab fa-html5"></i> HTML5</span>
-                            <span class="tech-item"><i class="fab fa-css3-alt"></i> CSS3</span>
-                            <span class="tech-item"><i class="fab fa-js-square"></i> JavaScript</span>
-                            <span class="tech-item"><i class="fab fa-react"></i> React</span>
-                            <span class="tech-item"><i class="fab fa-node-js"></i> Node.js</span>
+                            <span class="tech-item hover-scale" data-tooltip="HTML5"><i class="fab fa-html5"></i> HTML5</span>
+                            <span class="tech-item hover-scale" data-tooltip="CSS3"><i class="fab fa-css3-alt"></i> CSS3</span>
+                            <span class="tech-item hover-scale" data-tooltip="JavaScript"><i class="fab fa-js-square"></i> JavaScript</span>
+                            <span class="tech-item hover-scale" data-tooltip="React"><i class="fab fa-react"></i> React</span>
+                            <span class="tech-item hover-scale" data-tooltip="Node.js"><i class="fab fa-node-js"></i> Node.js</span>
                         </div>
                     </div>
-                    <div class="tech-category">
+                    <div class="tech-category reveal-on-scroll">
                         <h4>Tools & Platforms</h4>
                         <div class="tech-items">
-                            <span class="tech-item"><i class="fab fa-git-alt"></i> Git</span>
-                            <span class="tech-item"><i class="fab fa-github"></i> GitHub</span>
-                            <span class="tech-item"><i class="fab fa-docker"></i> Docker</span>
-                            <span class="tech-item"><i class="fas fa-robot"></i> GitHub Actions</span>
+                            <span class="tech-item hover-scale" data-tooltip="Git"><i class="fab fa-git-alt"></i> Git</span>
+                            <span class="tech-item hover-scale" data-tooltip="GitHub"><i class="fab fa-github"></i> GitHub</span>
+                            <span class="tech-item hover-scale" data-tooltip="Docker"><i class="fab fa-docker"></i> Docker</span>
+                            <span class="tech-item hover-scale" data-tooltip="GitHub Actions"><i class="fas fa-robot"></i> GitHub Actions</span>
                         </div>
                     </div>
-                    <div class="tech-category">
+                    <div class="tech-category reveal-on-scroll">
                         <h4>Languages & More</h4>
                         <div class="tech-items">
-                            <span class="tech-item"><i class="fab fa-python"></i> Python</span>
-                            <span class="tech-item"><i class="fas fa-code"></i> Algorithms</span>
-                            <span class="tech-item"><i class="fas fa-project-diagram"></i> Data Structures</span>
-                            <span class="tech-item"><i class="fas fa-vial"></i> Jest Testing</span>
+                            <span class="tech-item hover-scale" data-tooltip="Python"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-item hover-scale" data-tooltip="Algorithms"><i class="fas fa-code"></i> Algorithms</span>
+                            <span class="tech-item hover-scale" data-tooltip="Data Structures"><i class="fas fa-project-diagram"></i> Data Structures</span>
+                            <span class="tech-item hover-scale" data-tooltip="Jest Testing"><i class="fas fa-vial"></i> Jest Testing</span>
                         </div>
                     </div>
                 </div>
@@ -120,11 +139,16 @@
 
         <section id="projects" class="section">
             <div class="container">
-                <h3>Projects</h3>
+                <h3 class="section-title reveal-on-scroll">Projects</h3>
                 <div class="projects-grid">
-                    <div class="project-card">
+                    <div class="project-card reveal-on-scroll" data-3d-card>
                         <div class="project-image-container">
                             <img src="images/break-a-sweat-preview.png" alt="Break-a-Sweat Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Break-a-Sweat Fitness App</h4>
@@ -133,15 +157,21 @@
                                 <span>HTML</span><span>CSS</span><span>JavaScript</span>
                             </div>
                             <div class="project-links">
-                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Break-a-Sweat-v2" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="project-link hover-glow">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Break-a-Sweat-v2" target="_blank" class="project-link github-link hover-glow">GitHub</a>
                             </div>
                         </div>
+                        <div class="card-border"></div>
                     </div>
-            
-                    <div class="project-card">
+                
+                    <div class="project-card reveal-on-scroll" data-3d-card>
                         <div class="project-image-container">
                             <img src="images/Battleship.png" alt="Battleship Game Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-gamepad"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Battleship Game</h4>
@@ -150,15 +180,21 @@
                                 <span>JavaScript</span><span>HTML</span><span>CSS</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Battleship" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link hover-glow">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Battleship" target="_blank" class="project-link github-link hover-glow">GitHub</a>
                             </div>
                         </div>
+                        <div class="card-border"></div>
                     </div>
-            
-                    <div class="project-card">
+                
+                    <div class="project-card reveal-on-scroll" data-3d-card>
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Temperature Converter Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-thermometer-half"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Temperature Converter</h4>
@@ -167,15 +203,21 @@
                                 <span>HTML</span><span>CSS</span><span>JavaScript</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/OIBSIP" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link hover-glow">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/OIBSIP" target="_blank" class="project-link github-link hover-glow">GitHub</a>
                             </div>
                         </div>
+                        <div class="card-border"></div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card reveal-on-scroll" data-3d-card>
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Binary Search Trees Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-tree"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Binary Search Trees</h4>
@@ -184,15 +226,21 @@
                                 <span>JavaScript</span><span>Algorithms</span><span>Data Structures</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Binary-Search-Trees" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link hover-glow">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Binary-Search-Trees" target="_blank" class="project-link github-link hover-glow">GitHub</a>
                             </div>
                         </div>
+                        <div class="card-border"></div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card reveal-on-scroll" data-3d-card>
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="HashMap Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h4>HashMap Implementation</h4>
@@ -201,15 +249,21 @@
                                 <span>JavaScript</span><span>Data Structures</span><span>Algorithms</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-HashMap" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link hover-glow">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-HashMap" target="_blank" class="project-link github-link hover-glow">GitHub</a>
                             </div>
                         </div>
+                        <div class="card-border"></div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card reveal-on-scroll" data-3d-card>
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Knights Travails Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-chess-knight"></i>
+                                </div>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Knights Travails</h4>
@@ -218,10 +272,11 @@
                                 <span>JavaScript</span><span>Algorithms</span><span>Graph Theory</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Knights-Travails" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link hover-glow">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Knights-Travails" target="_blank" class="project-link github-link hover-glow">GitHub</a>
                             </div>
                         </div>
+                        <div class="card-border"></div>
                     </div>
                 </div>
             </div>
@@ -229,11 +284,12 @@
 
         <section id="experience" class="section">
             <div class="container">
-                <h3>Experience</h3>
+                <h3 class="section-title reveal-on-scroll">Experience</h3>
                 <div class="experience-timeline">
-                    <div class="timeline-item">
+                    <div class="timeline-item reveal-on-scroll">
+                        <div class="timeline-dot pulse"></div>
                         <div class="timeline-date">2024 - Present</div>
-                        <div class="timeline-content">
+                        <div class="timeline-content hover-lift">
                             <h4>IT Support Intern</h4>
                             <p>Okhahlamba District Teacher Development Centre (DTDC)</p>
                             <ul>
@@ -243,9 +299,10 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item reveal-on-scroll">
+                        <div class="timeline-dot pulse"></div>
                         <div class="timeline-date">2023 - 2024</div>
-                        <div class="timeline-content">
+                        <div class="timeline-content hover-lift">
                             <h4>Front-end Developer</h4>
                             <p>Freelance Projects</p>
                             <ul>
@@ -261,35 +318,47 @@
 
         <section id="testimonials" class="section">
             <div class="container">
-                <h3>What People Say</h3>
+                <h3 class="section-title reveal-on-scroll">What People Say</h3>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card">
+                    <div class="testimonial-card reveal-on-scroll hover-3d" data-tilt>
+                        <div class="testimonial-icon"><i class="fas fa-quote-left"></i></div>
                         <div class="testimonial-content">
                             <p>"Lindokuhle delivered exceptional work on our web project. His attention to detail and technical skills are impressive."</p>
                         </div>
                         <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
                             <div class="author-info">
                                 <h5>Sarah Johnson</h5>
                                 <span>Project Manager</span>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card">
+                    <div class="testimonial-card reveal-on-scroll hover-3d" data-tilt>
+                        <div class="testimonial-icon"><i class="fas fa-quote-left"></i></div>
                         <div class="testimonial-content">
                             <p>"Great problem-solving skills and always delivers on time. A reliable developer who communicates well."</p>
                         </div>
                         <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
                             <div class="author-info">
                                 <h5>Mike Chen</h5>
                                 <span>Team Lead</span>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card">
+                    <div class="testimonial-card reveal-on-scroll hover-3d" data-tilt>
+                        <div class="testimonial-icon"><i class="fas fa-quote-left"></i></div>
                         <div class="testimonial-content">
                             <p>"Professional approach to IT support and development. Helped streamline our technical processes effectively."</p>
                         </div>
                         <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
                             <div class="author-info">
                                 <h5>Mr Sfiso Xulu</h5>
                                 <span>DTDC Supervisor</span>
@@ -302,11 +371,12 @@
 
         <section id="certifications" class="section">
             <div class="container">
-                <h3>Education & Certifications</h3>
+                <h3 class="section-title reveal-on-scroll">Education & Certifications</h3>
                 <div class="education-timeline">
-                    <div class="edu-item">
+                    <div class="edu-item reveal-on-scroll">
+                        <div class="edu-icon hover-pulse"><i class="fas fa-graduation-cap"></i></div>
                         <div class="edu-date">Apr 2025 - Present</div>
-                        <div class="edu-content">
+                        <div class="edu-content hover-lift">
                             <h4>The Fullstack Developer Path</h4>
                             <p class="edu-institution">Scrimba, Online</p>
                             <ul>
@@ -316,9 +386,10 @@
                         </div>
                     </div>
                     
-                    <div class="edu-item">
+                    <div class="edu-item reveal-on-scroll">
+                        <div class="edu-icon hover-pulse"><i class="fas fa-certificate"></i></div>
                         <div class="edu-date">Mar 2025</div>
-                        <div class="edu-content">
+                        <div class="edu-content hover-lift">
                             <h4>Google IT Support Professional Certificate</h4>
                             <p class="edu-institution">Coursera, Online</p>
                             <ul>
@@ -329,9 +400,10 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item reveal-on-scroll">
+                        <div class="edu-icon hover-pulse"><i class="fas fa-certificate"></i></div>
                         <div class="edu-date">Jan 2024 - Feb 2025</div>
-                        <div class="edu-content">
+                        <div class="edu-content hover-lift">
                             <h4>Responsive Web Design Certification</h4>
                             <p class="edu-institution">FreeCodeCamp, Online</p>
                             <ul>
@@ -342,9 +414,10 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item reveal-on-scroll">
+                        <div class="edu-icon hover-pulse"><i class="fas fa-laptop-code"></i></div>
                         <div class="edu-date">Aug 2024 - Dec 2024</div>
-                        <div class="edu-content">
+                        <div class="edu-content hover-lift">
                             <h4>Software Development Program</h4>
                             <p class="edu-institution">Power Learn Project, Online</p>
                             <ul>
@@ -354,9 +427,10 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item reveal-on-scroll">
+                        <div class="edu-icon hover-pulse"><i class="fas fa-university"></i></div>
                         <div class="edu-date">Feb 2021 - Dec 2023</div>
-                        <div class="edu-content">
+                        <div class="edu-content hover-lift">
                             <h4>Diploma in Information Technology Management</h4>
                             <p class="edu-institution">IIE Rosebank College, Pietermaritzburg</p>
                             <ul>
@@ -366,9 +440,10 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item reveal-on-scroll">
+                        <div class="edu-icon hover-pulse"><i class="fas fa-school"></i></div>
                         <div class="edu-date">2020</div>
-                        <div class="edu-content">
+                        <div class="edu-content hover-lift">
                             <h4>Grade 12 Certificate</h4>
                             <p class="edu-institution">Amangwane High School, Bergville</p>
                         </div>
@@ -379,60 +454,29 @@
 
         <section id="contact" class="section">
             <div class="container">
-                <h3>Contact Information</h3>
+                <h3 class="section-title reveal-on-scroll">Contact Information</h3>
                 <div class="contact-grid">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
+                    <div class="contact-item reveal-on-scroll hover-lift">
+                        <div class="contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
                         <h4>Email</h4>
                         <p>lindokuhlenkosinathijali@gmail.com</p>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
+                    <div class="contact-item reveal-on-scroll hover-lift">
+                        <div class="contact-icon-wrapper"><i class="fas fa-phone"></i></div>
                         <h4>Phone</h4>
                         <p>+27837752498</p>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
+                    <div class="contact-item reveal-on-scroll hover-lift">
+                        <div class="contact-icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
                         <h4>Location</h4>
                         <p>Bergville, KwaZulu-Natal, South Africa</p>
                     </div>
                 </div>
-                
-                <div class="contact-form-wrapper">
-                    <div class="form-header">
-                        <h4>Send Me a Message</h4>
-                        <p>Fill out the form below and I'll get back to you as soon as possible.</p>
-                    </div>
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required placeholder="What is this about?">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="6" required placeholder="Your message..."></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary submit-btn">
-                            <span class="btn-text">Send Message</span>
-                            <span class="btn-loading">Sending...</span>
-                        </button>
-                        <div class="form-message" id="formMessage"></div>
-                    </form>
-                </div>
-                
-                <div class="social-links">
-                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+                <div class="social-links reveal-on-scroll">
+                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link hover-grow"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link hover-grow"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link hover-grow"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link hover-grow"><i class="fab fa-x-twitter"></i></a>
                 </div>
             </div>
         </section>
@@ -450,8 +494,8 @@
                 </div>
                 <div class="footer-right">
                     <div class="footer-social">
-                        <a href="https://github.com/Jaylie3" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/Jaylie3" target="_blank" class="footer-social-link hover-glow"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="footer-social-link hover-glow"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -461,17 +505,25 @@
     <!-- Fixed Navigation -->
     <nav class="fixed-nav" id="fixedNav">
         <div class="nav-container">
-            <a href="#about" class="nav-item"><i class="fas fa-user"></i><span>About</span></a>
-            <a href="#skills" class="nav-item"><i class="fas fa-cogs"></i><span>Skills</span></a>
-            <a href="#projects" class="nav-item"><i class="fas fa-folder"></i><span>Projects</span></a>
-            <a href="#certifications" class="nav-item"><i class="fas fa-certificate"></i><span>Certs</span></a>
-            <a href="#contact" class="nav-item"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            <a href="#about" class="nav-item hover-pulse" data-tooltip="About"><i class="fas fa-user"></i><span>About</span></a>
+            <a href="#skills" class="nav-item hover-pulse" data-tooltip="Skills"><i class="fas fa-cogs"></i><span>Skills</span></a>
+            <a href="#projects" class="nav-item hover-pulse" data-tooltip="Projects"><i class="fas fa-folder"></i><span>Projects</span></a>
+            <a href="#certifications" class="nav-item hover-pulse" data-tooltip="Certifications"><i class="fas fa-certificate"></i><span>Certs</span></a>
+            <a href="#contact" class="nav-item hover-pulse" data-tooltip="Contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
         </div>
     </nav>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader">
+            <div class="loader-3d-cube">
+                <div class="cube-face cube-front"></div>
+                <div class="cube-face cube-back"></div>
+                <div class="cube-face cube-right"></div>
+                <div class="cube-face cube-left"></div>
+                <div class="cube-face cube-top"></div>
+                <div class="cube-face cube-bottom"></div>
+            </div>
             <div class="loader-text">Loading Portfolio...</div>
             <div class="loader-bar">
                 <div class="loader-progress"></div>
@@ -479,88 +531,12 @@
         </div>
     </div>
 
+    <!-- Scroll to top button -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
-    <script>
-        // Contact Form Handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const contactForm = document.getElementById('contactForm');
-            const formMessage = document.getElementById('formMessage');
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const btnLoading = submitBtn.querySelector('.btn-loading');
-
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Get form data
-                const formData = {
-                    name: document.getElementById('name').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    subject: document.getElementById('subject').value.trim(),
-                    message: document.getElementById('message').value.trim()
-                };
-
-                // Basic validation
-                if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-                    showFormMessage('Please fill in all fields.', 'error');
-                    return;
-                }
-
-                // Email validation
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(formData.email)) {
-                    showFormMessage('Please enter a valid email address.', 'error');
-                    return;
-                }
-
-                // Show loading state
-                submitBtn.disabled = true;
-                btnText.style.display = 'none';
-                btnLoading.style.display = 'inline';
-                formMessage.textContent = '';
-
-                try {
-                    const response = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
-                        contactForm.reset();
-                    } else {
-                        showFormMessage(data.message || 'Failed to send message. Please try again.', 'error');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    showFormMessage('An error occurred. Please try again or contact me directly via email.', 'error');
-                } finally {
-                    // Reset button state
-                    submitBtn.disabled = false;
-                    btnText.style.display = 'inline';
-                    btnLoading.style.display = 'none';
-                }
-            });
-
-            function showFormMessage(message, type) {
-                formMessage.textContent = message;
-                formMessage.className = 'form-message ' + type;
-                
-                // Auto-hide success messages after 5 seconds
-                if (type === 'success') {
-                    setTimeout(() => {
-                        formMessage.textContent = '';
-                        formMessage.className = 'form-message';
-                    }, 5000);
-                }
-            }
-        });
-    </script>
 </body>
 </html>
