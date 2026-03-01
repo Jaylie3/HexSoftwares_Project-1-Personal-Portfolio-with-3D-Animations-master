@@ -121,18 +121,8 @@
         <section id="projects" class="section">
             <div class="container">
                 <h3>Projects</h3>
-                
-                <!-- Project Filter Buttons -->
-                <div class="project-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="webapp">Web Apps</button>
-                    <button class="filter-btn" data-filter="game">Games</button>
-                    <button class="filter-btn" data-filter="algorithm">Algorithms</button>
-                    <button class="filter-btn" data-filter="tool">Tools</button>
-                </div>
-                
                 <div class="projects-grid">
-                    <div class="project-card" data-category="webapp">
+                    <div class="project-card">
                         <div class="project-image-container">
                             <img src="images/break-a-sweat-preview.png" alt="Break-a-Sweat Preview" class="project-image">
                         </div>
@@ -149,7 +139,7 @@
                         </div>
                     </div>
             
-                    <div class="project-card" data-category="game">
+                    <div class="project-card">
                         <div class="project-image-container">
                             <img src="images/Battleship.png" alt="Battleship Game Preview" class="project-image">
                         </div>
@@ -166,7 +156,7 @@
                         </div>
                     </div>
             
-                    <div class="project-card" data-category="tool">
+                    <div class="project-card">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Temperature Converter Preview" class="project-image">
                         </div>
@@ -183,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card" data-category="algorithm">
+                    <div class="project-card">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Binary Search Trees Preview" class="project-image">
                         </div>
@@ -200,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card" data-category="algorithm">
+                    <div class="project-card">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="HashMap Preview" class="project-image">
                         </div>
@@ -217,7 +207,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card" data-category="algorithm">
+                    <div class="project-card">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Knights Travails Preview" class="project-image">
                         </div>
@@ -389,91 +379,47 @@
 
         <section id="contact" class="section">
             <div class="container">
-                <h3>Get In Touch</h3>
-                <div class="contact-wrapper">
-                    <!-- Contact Form -->
-                    <div class="contact-form-container">
-                        <form class="modern-contact-form" action="https://formspree.io/f/lindokuhlenkosinathijali@gmail.com" method="POST" id="contactForm">
-                            <div class="form-header">
-                                <h4>Send a Message</h4>
-                                <p>I'd love to hear from you. Fill out the form below!</p>
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" id="name" name="name" required placeholder="John Doe">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required placeholder="john@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                <span>Send Message</span>
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                            <div class="form-message" id="formMessage"></div>
-                        </form>
+                <h3>Contact Information</h3>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email</h4>
+                        <p>lindokuhlenkosinathijali@gmail.com</p>
                     </div>
-                    
-                    <!-- Contact Info -->
-                    <div class="contact-info-container">
-                        <div class="contact-info-content">
-                            <h4>Contact Information</h4>
-                            <p>Feel free to reach out through any of these channels</p>
-                            
-                            <div class="contact-info-items">
-                                <div class="contact-info-item">
-                                    <div class="info-icon">
-                                        <i class="fas fa-envelope"></i>
-                                    </div>
-                                    <div class="info-content">
-                                        <h5>Email</h5>
-                                        <p>lindokuhlenkosinathijali@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div class="contact-info-item">
-                                    <div class="info-icon">
-                                        <i class="fas fa-phone"></i>
-                                    </div>
-                                    <div class="info-content">
-                                        <h5>Phone</h5>
-                                        <p>+27 83 775 2498</p>
-                                    </div>
-                                </div>
-                                <div class="contact-info-item">
-                                    <div class="info-icon">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                    </div>
-                                    <div class="info-content">
-                                        <h5>Location</h5>
-                                        <p>Bergville, KwaZulu-Natal, South Africa</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="social-links">
-                                <a href="https://github.com/Jaylie3" target="_blank" class="social-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link">
-                                    <i class="fab fa-facebook"></i>
-                                </a>
-                                <a href="https://x.com/LindoJaylie" target="_blank" class="social-link">
-                                    <i class="fab fa-x-twitter"></i>
-                                </a>
-                            </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h4>Phone</h4>
+                        <p>+27837752498</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Location</h4>
+                        <p>Bergville, KwaZulu-Natal, South Africa</p>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <h3>Send Me a Message</h3>
+                    <form action="mailto:lindokuhlenkosinathijali@gmail.com" method="post" enctype="text/plain" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
                 </div>
             </div>
         </section>
@@ -522,105 +468,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
-    
-    <!-- Project Filter & Contact Form Script -->
-    <script>
-        // Project Filter Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const projectCards = document.querySelectorAll('.project-card');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Remove active class from all buttons
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    // Add active class to clicked button
-                    btn.classList.add('active');
-
-                    const filterValue = btn.getAttribute('data-filter');
-
-                    projectCards.forEach(card => {
-                        const cardCategory = card.getAttribute('data-category');
-                        
-                        if (filterValue === 'all' || cardCategory === filterValue) {
-                            card.style.display = 'block';
-                            card.style.animation = 'fadeIn 0.5s ease forwards';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // Contact Form Handler
-            const contactForm = document.getElementById('contactForm');
-            const formMessage = document.getElementById('formMessage');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const formData = new FormData(this);
-                    const submitBtn = this.querySelector('.submit-btn');
-                    const originalBtnText = submitBtn.innerHTML;
-                    
-                    // Show loading state
-                    submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
-                    submitBtn.disabled = true;
-
-                    // Formspree submission
-                    fetch(this.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            formMessage.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> <p>Thank you! Your message has been sent successfully.</p></div>';
-                            formMessage.classList.add('show');
-                            contactForm.reset();
-                            
-                            setTimeout(() => {
-                                formMessage.classList.remove('show');
-                            }, 5000);
-                        } else {
-                            throw new Error('Form submission failed');
-                        }
-                    })
-                    .catch(error => {
-                        formMessage.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> <p>Oops! Something went wrong. Please try again or email me directly.</p></div>';
-                        formMessage.classList.add('show');
-                        
-                        setTimeout(() => {
-                            formMessage.classList.remove('show');
-                        }, 5000);
-                    })
-                    .finally(() => {
-                        // Reset button
-                        submitBtn.innerHTML = originalBtnText;
-                        submitBtn.disabled = false;
-                    });
-                });
-            }
-        });
-
-        // Add CSS animation keyframes dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
 </body>
 </html>
