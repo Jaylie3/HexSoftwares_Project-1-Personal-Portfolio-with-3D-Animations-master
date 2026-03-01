@@ -144,42 +144,38 @@ function initThreeJS() {
     animate();
 }
 
-// Project Filter
+// Dynamic Project Filter
 document.addEventListener('DOMContentLoaded', function() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
     
-    // Get all unique categories from project cards
-    const categories = new Set();
-    projectCards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        if (category) {
-            categories.add(category);
-        }
-    });
+    // Set "All" as active by default
+    if (filterButtons.length > 0) {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    }
     
-    // Filter functionality
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const filterValue = this.getAttribute('data-filter');
-            
-            // Update active button
-            filterBtns.forEach(b => b.classList.remove('active'));
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
             this.classList.add('active');
             
-            // Filter projects with animation
+            const filterValue = this.getAttribute('data-filter');
+            
             projectCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 
-                if (filterValue === 'all' || cardCategory === filterValue) {
+                if (filterValue === 'all' || filterValue === cardCategory) {
                     card.style.display = 'block';
                     setTimeout(() => {
                         card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
+                        card.style.transform = 'translateY(0) scale(1)';
                     }, 50);
                 } else {
                     card.style.opacity = '0';
-                    card.style.transform = 'translateY(30px)';
+                    card.style.transform = 'translateY(30px) scale(0.9)';
                     setTimeout(() => {
                         card.style.display = 'none';
                     }, 300);
@@ -188,130 +184,166 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add animation styles for filter transitions
-    projectCards.forEach(card => {
-        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-    });
+    // Add data-category attributes to project cards if not present
+    if (projectCards.length > 0) {
+        const categories = ['web', 'mobile', 'design', 'other'];
+        projectCards.forEach((card, index) => {
+            if (!card.getAttribute('data-category')) {
+                card.setAttribute('data-category', categories[index % categories.length]);
+            }
+        });
+    }
 });
 
-// Contact Form with Email Notifications
+// Contact Form with Email Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const formStatus = document.getElementById('formStatus');
+    const formSuccess = document.getElementById('formSuccess');
+    const formError = document.getElementById('formError');
     
     if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Get form values
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            // Validation
-            if (!name || !email || !subject || !message) {
-                showFormStatus('Please fill in all fields.', 'error');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showFormStatus('Please enter a valid email address.', 'error');
-                return;
-            }
-            
-            // Disable submit button
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            // Prepare form data
             const formData = {
-                name: name,
-                email: email,
-                subject: subject,
-                message: message,
-                timestamp: new Date().toISOString()
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                subject: document.getElementById('subject').value.trim(),
+                message: document.getElementById('message').value.trim()
             };
             
+            // Basic validation
+            if (!formData.name || !formData.email || !formData.message) {
+                showFormMessage(formError, 'Please fill in all required fields.');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                showFormMessage(formError, 'Please enter a valid email address.');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 mr-2 inline" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+            `;
+            submitBtn.disabled = true;
+            
             try {
-                // Simulate email sending (replace with actual API call)
-                await sendEmailNotification(formData);
+                // Prepare email data - would connect to backend service
+                const emailData = {
+                    to: 'portfolio@example.com',
+                    from: formData.email,
+                    subject: `Portfolio Contact: ${formData.subject || 'New Message'}`,
+                    text: `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
+                    html: `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                            <h2 style="color: #6366f1; border-bottom: 2px solid #6366f1; padding-bottom: 10px;">
+                                New Contact Form Submission
+                            </h2>
+                            <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                                <p><strong>From:</strong> ${formData.name}</p>
+                                <p><strong>Email:</strong> <a href="mailto:${formData.email}" style="color: #6366f1;">${formData.email}</a></p>
+                                <p><strong>Subject:</strong> ${formData.subject || 'N/A'}</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <p><strong>Message:</strong></p>
+                                <p style="background: #f3f4f6; padding: 15px; border-radius: 8px; line-height: 1.6;">
+                                    ${formData.message.replace(/\n/g, '<br>')}
+                                </p>
+                            </div>
+                            <p style="margin-top: 20px; color: #6b7280; font-size: 12px;">
+                                This message was sent from your portfolio contact form.
+                            </p>
+                        </div>
+                    `
+                };
                 
-                // Show success message
-                showFormStatus('Message sent successfully! I\'ll get back to you soon.', 'success');
+                // Simulate API call (replace with actual backend integration)
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                // Reset form
+                // Success - in production, you would send emailData to your backend
+                console.log('Email data prepared:', emailData);
+                
+                showFormMessage(formSuccess, 'Thank you! Your message has been sent successfully.');
                 contactForm.reset();
                 
+                // Clear success message after 5 seconds
+                setTimeout(() => {
+                    hideFormMessage(formSuccess);
+                }, 5000);
+                
             } catch (error) {
-                showFormStatus('Failed to send message. Please try again.', 'error');
-                console.error('Email sending error:', error);
+                console.error('Form submission error:', error);
+                showFormMessage(formError, 'An error occurred. Please try again later.');
             } finally {
-                // Re-enable submit button
+                // Reset button state
+                submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
             }
         });
-        
-        // Real-time validation feedback
-        const inputs = contactForm.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                if (this.value.trim()) {
-                    if (this.type === 'email' && !isValidEmail(this.value)) {
-                        this.classList.add('invalid');
-                    } else {
-                        this.classList.remove('invalid');
-                    }
-                }
-            });
+    }
+    
+    function showFormMessage(messageElement, text) {
+        if (messageElement) {
+            messageElement.textContent = text;
+            messageElement.style.display = 'block';
+            messageElement.style.opacity = '0';
+            messageElement.style.transform = 'translateY(-10px)';
             
-            input.addEventListener('input', function() {
-                this.classList.remove('invalid');
-            });
-        });
-    }
-    
-    // Email validation helper
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-    
-    // Show form status message
-    function showFormStatus(message, type) {
-        if (!formStatus) return;
-        
-        formStatus.textContent = message;
-        formStatus.className = 'form-status ' + type;
-        formStatus.style.display = 'block';
-        
-        // Auto-hide success messages
-        if (type === 'success') {
             setTimeout(() => {
-                formStatus.style.display = 'none';
-            }, 5000);
+                messageElement.style.opacity = '1';
+                messageElement.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // Auto hide error messages
+            if (messageElement.id === 'formError') {
+                setTimeout(() => {
+                    hideFormMessage(messageElement);
+                }, 5000);
+            }
         }
     }
     
-    // Send email notification (function to be integrated with EmailJS or similar service)
-    async function sendEmailNotification(formData) {
-        // Simulate API delay
-        return new Promise((resolve, reject) => {
+    function hideFormMessage(messageElement) {
+        if (messageElement) {
+            messageElement.style.opacity = '0';
+            messageElement.style.transform = 'translateY(-10px)';
             setTimeout(() => {
-                // Here you would integrate with EmailJS, Formspree, or your backend
-                // Example EmailJS integration:
-                // emailjs.send('service_id', 'template_id', formData)
-                //     .then(response => resolve(response))
-                //     .catch(error => reject(error));
-                
-                // For demo purposes, simulate success
-                console.log('Email notification data:', formData);
-                resolve({ success: true });
-            }, 1500);
-        });
+                messageElement.style.display = 'none';
+            }, 300);
+        }
     }
+    
+    // Add floating input labels effect
+    const formInputs = document.querySelectorAll('.form-input, .form-textarea');
+    formInputs.forEach(input => {
+        const label = input.parentElement.querySelector('.form-label');
+        
+        input.addEventListener('focus', function() {
+            if (label) label.classList.add('floating');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (label && !this.value) {
+                label.classList.remove('floating');
+            }
+        });
+        
+        // Check initial state
+        if (input.value && label) {
+            label.classList.add('floating');
+        }
+    });
 });
 
 // Initialize
