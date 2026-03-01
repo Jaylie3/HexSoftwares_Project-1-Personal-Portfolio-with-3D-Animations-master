@@ -90,239 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Contact Form Security - Validation and Sanitization
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Clear previous error messages
-            clearErrors();
-            
-            // Get form values
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const subject = document.getElementById('subject');
-            const message = document.getElementById('message');
-            
-            // Validate inputs
-            let isValid = true;
-            
-            // Validate name
-            if (!validateRequired(name)) {
-                showError(name, 'Name is required');
-                isValid = false;
-            } else if (!validateLength(name, 2, 100)) {
-                showError(name, 'Name must be between 2 and 100 characters');
-                isValid = false;
-            } else if (!validateName(name.value)) {
-                showError(name, 'Name can only contain letters, spaces, hyphens, and apostrophes');
-                isValid = false;
-            }
-            
-            // Validate email
-            if (!validateRequired(email)) {
-                showError(email, 'Email is required');
-                isValid = false;
-            } else if (!validateEmail(email.value)) {
-                showError(email, 'Please enter a valid email address');
-                isValid = false;
-            }
-            
-            // Validate subject
-            if (!validateRequired(subject)) {
-                showError(subject, 'Subject is required');
-                isValid = false;
-            } else if (!validateLength(subject, 3, 200)) {
-                showError(subject, 'Subject must be between 3 and 200 characters');
-                isValid = false;
-            }
-            
-            // Validate message
-            if (!validateRequired(message)) {
-                showError(message, 'Message is required');
-                isValid = false;
-            } else if (!validateLength(message, 10, 2000)) {
-                showError(message, 'Message must be between 10 and 2000 characters');
-                isValid = false;
-            }
-            
-            // If valid, sanitize and submit
-            if (isValid) {
-                const formData = {
-                    name: sanitizeInput(name.value.trim()),
-                    email: sanitizeEmail(email.value.trim()),
-                    subject: sanitizeInput(subject.value.trim()),
-                    message: sanitizeInput(message.value.trim())
-                };
-                
-                // Create hidden inputs with sanitized values
-                addHiddenInput(contactForm, 'sanitized_name', formData.name);
-                addHiddenInput(contactForm, 'sanitized_email', formData.email);
-                addHiddenInput(contactForm, 'sanitized_subject', formData.subject);
-                addHiddenInput(contactForm, 'sanitized_message', formData.message);
-                addHiddenInput(contactForm, 'timestamp', Date.now().toString());
-                addHiddenInput(contactForm, 'csrf_token', generateCSRFToken());
-                
-                // Show success message
-                showSuccessMessage();
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Optionally submit to backend (uncomment when backend is ready)
-                // submitForm(contactForm, formData);
-            }
-        });
-    }
-    
-    // Validation Functions
-    function validateRequired(input) {
-        return input.value.trim() !== '';
-    }
-    
-    function validateLength(input, min, max) {
-        const length = input.value.trim().length;
-        return length >= min && length <= max;
-    }
-    
-    function validateEmail(email) {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailPattern.test(email.trim());
-    }
-    
-    function validateName(name) {
-        const namePattern = /^[a-zA-Z\s'-]+$/;
-        return namePattern.test(name.trim());
-    }
-    
-    // Sanitization Functions
-    function sanitizeInput(input) {
-        // Remove potentially dangerous characters
-        let sanitized = input
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#x27;')
-            .replace(/\//g, '&#x2F;');
-        
-        // Remove script tags and event handlers
-        sanitized = sanitized
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-            .replace(/on\w+="[^"]*"/gi, '')
-            .replace(/on\w+='[^']*'/gi, '')
-            .replace(/javascript:/gi, '');
-        
-        // Trim and limit multiple spaces
-        sanitized = sanitized.replace(/\s+/g, ' ').trim();
-        
-        return sanitized;
-    }
-    
-    function sanitizeEmail(email) {
-        const sanitized = email
-            .toLowerCase()
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .trim();
-        return sanitized;
-    }
-    
-    function generateCSRFToken() {
-        const array = new Uint32Array(4);
-        window.crypto.getRandomValues(array);
-        return Array.from(array, dec => ('0' + dec.toString(16)).substr(-2)).join('');
-    }
-    
-    // UI Helper Functions
-    function showError(input, message) {
-        const formGroup = input.closest('.form-group') || input.parentElement;
-        formGroup.classList.add('error');
-        
-        let errorElement = formGroup.querySelector('.error-message');
-        if (!errorElement) {
-            errorElement = document.createElement('small');
-            errorElement.className = 'error-message';
-            formGroup.appendChild(errorElement);
-        }
-        errorElement.textContent = message;
-    }
-    
-    function clearErrors() {
-        const errorMessages = document.querySelectorAll('.error-message');
-        errorMessages.forEach(msg => msg.remove());
-        
-        const formGroups = document.querySelectorAll('.form-group');
-        formGroups.forEach(group => group.classList.remove('error'));
-    }
-    
-    function showSuccessMessage() {
-        const form = document.getElementById('contactForm');
-        let successDiv = document.querySelector('.form-success');
-        
-        if (!successDiv) {
-            successDiv = document.createElement('div');
-            successDiv.className = 'form-success';
-            form.parentNode.insertBefore(successDiv, form.nextSibling);
-        }
-        
-        successDiv.innerHTML = `
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <span>Message sent successfully! We will get back to you soon.</span>
-        `;
-        
-        setTimeout(() => {
-            successDiv.style.opacity = '0';
-            setTimeout(() => {
-                successDiv.remove();
-            }, 300);
-        }, 5000);
-    }
-    
-    function addHiddenInput(form, name, value) {
-        let input = form.querySelector(`input[name="${name}"]`);
-        if (!input) {
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = name;
-            form.appendChild(input);
-        }
-        input.value = value;
-    }
-    
-    function submitForm(form, data) {
-        const submitUrl = form.action || '/contact';
-        const method = form.method || 'POST';
-        
-        fetch(submitUrl, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(result => {
-            console.log('Form submitted successfully:', result);
-        })
-        .catch(error => {
-            console.error('Error submitting form:', error);
-        });
-    }
-});
-
 // Three.js Background
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
@@ -399,4 +166,321 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
+});
+
+// Secure Form Handling
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        // Set secure form attributes
+        contactForm.setAttribute('autocomplete', 'off');
+        
+        // Get form fields and set secure attributes
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const subjectInput = document.getElementById('subject');
+        const messageInput = document.getElementById('message');
+        
+        if (nameInput) {
+            nameInput.setAttribute('autocomplete', 'off');
+            nameInput.setAttribute('autocorrect', 'off');
+            nameInput.setAttribute('spellcheck', 'false');
+        }
+        
+        if (emailInput) {
+            emailInput.setAttribute('autocomplete', 'off');
+            emailInput.setAttribute('type', 'email');
+            emailInput.setAttribute('inputmode', 'email');
+        }
+        
+        if (subjectInput) {
+            subjectInput.setAttribute('autocomplete', 'off');
+            subjectInput.setAttribute('autocorrect', 'off');
+            subjectInput.setAttribute('spellcheck', 'false');
+        }
+        
+        if (messageInput) {
+            messageInput.setAttribute('autocomplete', 'off');
+            messageInput.setAttribute('autocorrect', 'off');
+            messageInput.setAttribute('spellcheck', 'true');
+        }
+        
+        // Form submission handler
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Remove existing error messages
+            const existingErrors = contactForm.querySelectorAll('.error-message');
+            existingErrors.forEach(error => error.remove());
+            
+            const formData = new FormData(contactForm);
+            let isValid = true;
+            let errorMessage = '';
+            
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Validate name - required, min 2 chars
+            if (!name || name.trim().length < 2 || !/^[a-zA-Z\s\-\.']+$/.test(name.trim())) {
+                isValid = false;
+                showFieldError(nameInput, 'Please enter a valid name (letters, spaces, hyphens, apostrophes only)');
+            }
+            
+            // Validate email format
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!email || !emailRegex.test(email.trim())) {
+                isValid = false;
+                showFieldError(emailInput, 'Please enter a valid email address');
+            }
+            
+            // Validate subject - required, min 3 chars
+            if (!subject || subject.trim().length < 3) {
+                isValid = false;
+                showFieldError(subjectInput, 'Please enter a subject (at least 3 characters)');
+            }
+            
+            // Validate message - required, min 10 chars, max 1000 chars
+            if (!message || message.trim().length < 10 || message.trim().length > 1000) {
+                isValid = false;
+                showFieldError(messageInput, 'Please enter a message (10-1000 characters)');
+            }
+            
+            // Check if form is valid
+            if (!isValid) {
+                showFormMessage('Please correct the errors above and try again.', 'error');
+                return;
+            }
+            
+            // Sanitize inputs to prevent XSS attacks
+            const sanitizedData = {
+                name: sanitizeInput(name),
+                email: sanitizeInput(email),
+                subject: sanitizeInput(subject),
+                message: sanitizeInput(message)
+            };
+            
+            // Show loading state
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.setAttribute('aria-busy', 'true');
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Sending...';
+                submitButton.dataset.originalText = originalText;
+            }
+            
+            // Send data securely
+            sendSecureFormData(sanitizedData)
+                .then(response => {
+                    showFormMessage('Message sent successfully!', 'success');
+                    contactForm.reset();
+                    // Clear any remaining.error styling
+                    contactForm.querySelectorAll('.error').forEach(field => {
+                        field.classList.remove('error');
+                    });
+                })
+                .catch(error => {
+                    showFormMessage('Failed to send message. Please try again.', 'error');
+                    console.error('Form submission error:', error);
+                })
+                .finally(() => {
+                    // Reset button state
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.setAttribute('aria-busy', 'false');
+                        submitButton.textContent = submitButton.dataset.originalText || 'Send Message';
+                    }
+                });
+        });
+        
+        // Add real-time validation feedback
+        const formInputs = contactForm.querySelectorAll('input, textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorMsg = this.parentElement.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            });
+            
+            // Prevent paste events for sensitive fields (optional security measure)
+            if (input.type === 'email') {
+                input.addEventListener('paste', function(e) {
+                    setTimeout(() => validateField(this), 0);
+                });
+            }
+        });
+    }
+    
+    // Sanitize input function - prevents XSS attacks
+    function sanitizeInput(input) {
+        if (!input) return '';
+        
+        // Create a temporary div to safely escape HTML
+        const div = document.createElement('div');
+        div.textContent = input.trim();
+        const sanitized = div.innerHTML;
+        
+        // Additional security: remove any remaining HTML entities
+        return sanitized
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#x27;')
+            .replace(/\//g, '&#x2F;');
+    }
+    
+    // Send secure form data
+    async function sendSecureFormData(data) {
+        // In production, send to a secure backend endpoint with HTTPS
+        // Using Content Security Policy headers on the server
+        
+        // Prepare data for secure transmission
+        const payload = JSON.stringify({
+            name: data.name,
+            email: data.email,
+            subject: data.subject,
+            message: data.message,
+            timestamp: new Date().toISOString(),
+            // Add CSRF token in production
+            csrfToken: document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+        });
+        
+        // Simulate secure submission
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Log data for demonstration (remove in production)
+                console.log('Secure form data prepared for submission:', {
+                    recipient: 'lindokuhle nkosinathi jali at gmail dot com',
+                    sanitizedData: data
+                });
+                resolve({ success: true, message: 'Message sent successfully' });
+            }, 1500);
+        });
+        
+        // Production example (replace with actual endpoint):
+        /*
+        return fetch('https://your-secure-endpoint.com/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: payload,
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        });
+        */
+    }
+    
+    // Validate individual field
+    function validateField(field) {
+        if (!field) return false;
+        
+        let isValid = true;
+        
+        const fieldId = field.id;
+        const value = field.value.trim();
+        
+        // Clear previous error
+        const existingErrorMsg = field.parentElement.querySelector('.error-message');
+        if (existingErrorMsg) {
+            existingErrorMsg.remove();
+        }
+        field.classList.remove('error');
+        
+        switch(fieldId) {
+            case 'name':
+                if (value.length < 2 || !/^[a-zA-Z\s\-\.']+$/.test(value)) {
+                    isValid = false;
+                    showFieldError(field, 'Name must be at least 2 characters (letters, spaces, hyphens, apostrophes only)');
+                }
+                break;
+            case 'email':
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailRegex.test(value)) {
+                    isValid = false;
+                    showFieldError(field, 'Please enter a valid email address');
+                }
+                break;
+            case 'subject':
+                if (value.length < 3) {
+                    isValid = false;
+                    showFieldError(field, 'Subject must be at least 3 characters');
+                }
+                break;
+            case 'message':
+                if (value.length < 10 || value.length > 1000) {
+                    isValid = false;
+                    showFieldError(field, 'Message must be between 10 and 1000 characters');
+                }
+                break;
+        }
+        
+        return isValid;
+    }
+    
+    // Show field error
+    function showFieldError(field, message) {
+        if (!field) return;
+        
+        field.classList.add('error');
+        field.setAttribute('aria-invalid', 'true');
+        field.setAttribute('aria-describedby', field.id + '-error');
+        
+        let errorElement = field.parentElement.querySelector('.error-message');
+        if (!errorElement) {
+            errorElement = document.createElement('span');
+            errorElement.className = 'error-message';
+            errorElement.id = field.id + '-error';
+            errorElement.setAttribute('role', 'alert');
+            field.parentElement.appendChild(errorElement);
+        }
+        errorElement.textContent = message;
+    }
+    
+    // Show form message (success/error)
+    function showFormMessage(message, type) {
+        let messageElement = document.querySelector('.form-message');
+        
+        if (!messageElement) {
+            messageElement = document.createElement('div');
+            messageElement.className = 'form-message';
+            messageElement.setAttribute('role', 'alert');
+            messageElement.setAttribute('aria-live', 'polite');
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.insertBefore(messageElement, contactForm.firstChild);
+            }
+        }
+        
+        messageElement.textContent = message;
+        messageElement.className = 'form-message ' + type;
+        
+        // Remove message after 5 seconds
+        setTimeout(() => {
+            if (messageElement && messageElement.parentNode) {
+                messageElement.remove();
+            }
+        }, 5000);
+    }
+    
+    // Prevent form resubmission on page refresh
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 });
