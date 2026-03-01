@@ -46,11 +46,11 @@ header {
     padding: 2rem 0;
     position: relative;
     z-index: 10;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
 }
 
 .profile-section {
@@ -188,6 +188,20 @@ nav a:hover {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    padding: 3rem;
+    transition: all 0.4s ease;
+}
+
+.about-content:hover {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 48px rgba(31, 38, 135, 0.3);
+    transform: translateY(-3px);
 }
 
 .about-text p {
@@ -214,23 +228,23 @@ nav a:hover {
 }
 
 .skill-card {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     padding: 2rem;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     cursor: pointer;
     position: relative;
 }
 
 .skill-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 16px 48px rgba(31, 38, 135, 0.3);
 }
 
 .skill-card i {
@@ -255,7 +269,6 @@ nav a:hover {
     font-size: 0.9rem;
 }
 
-/* Projects Section - Fixed */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -264,14 +277,14 @@ nav a:hover {
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     cursor: pointer;
     position: relative;
 }
@@ -294,9 +307,9 @@ nav a:hover {
 }
 
 .project-card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 56px rgba(31, 38, 135, 0.35);
 }
 
 .project-image-container {
@@ -418,15 +431,20 @@ nav a:hover {
 
 .timeline-content {
     flex: 1;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     padding: 2rem;
     margin: 0 2rem;
     position: relative;
+}
+
+.timeline-content:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.3);
 }
 
 .timeline-content h4 {
@@ -468,21 +486,21 @@ nav a:hover {
 }
 
 .contact-item {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     padding: 2rem;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .contact-item:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 16px 48px rgba(31, 38, 135, 0.3);
 }
 
 .contact-item i {
@@ -529,7 +547,6 @@ nav a:hover {
     box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
 }
 
-/* Technologies Section */
 .tech-categories {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -538,20 +555,20 @@ nav a:hover {
 }
 
 .tech-category {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     padding: 2rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .tech-category:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 14px 44px rgba(31, 38, 135, 0.3);
 }
 
 .tech-category h4 {
@@ -591,7 +608,6 @@ nav a:hover {
     color: var(--primary);
 }
 
-/* Project Updates */
 .project-tech {
     display: flex;
     gap: 0.5rem;
@@ -624,7 +640,6 @@ nav a:hover {
     color: var(--primary) !important;
 }
 
-/* Testimonials */
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -633,14 +648,14 @@ nav a:hover {
 }
 
 .testimonial-card {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     padding: 2rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     position: relative;
 }
 
@@ -655,9 +670,9 @@ nav a:hover {
 }
 
 .testimonial-card:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 14px 44px rgba(31, 38, 135, 0.3);
 }
 
 .testimonial-content p {
@@ -684,18 +699,17 @@ nav a:hover {
     font-size: 0.9rem;
 }
 
-/* Fixed Navigation */
 .fixed-nav {
     position: fixed;
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
     padding: 0.75rem;
     z-index: 1000;
     opacity: 0;
@@ -739,7 +753,6 @@ nav a:hover {
     display: inline;
 }
 
-/* Loading Screen */
 .loading-screen {
     position: fixed;
     top: 0;
@@ -790,7 +803,6 @@ nav a:hover {
     100% { width: 100%; }
 }
 
-/* Education & Certifications */
 .education-timeline {
     position: relative;
     max-width: 900px;
@@ -836,21 +848,21 @@ nav a:hover {
 
 .edu-content {
     flex: 1;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     padding: 2rem;
     margin-left: 3rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .edu-content:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.3);
 }
 
 .edu-content h4 {
@@ -887,13 +899,12 @@ nav a:hover {
     font-size: 0.8rem;
 }
 
-/* Footer */
 .footer {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 -8px 32px rgba(31, 38, 135, 0.15);
     padding: 3rem 0 2rem;
     margin-top: 5rem;
 }
@@ -935,12 +946,12 @@ nav a:hover {
 .footer-social a {
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px rgba(31, 38, 135, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -966,11 +977,11 @@ nav a:hover {
     100% { transform: translateY(0px); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+        padding: 2rem;
     }
     
     .profile-section {
@@ -1088,7 +1099,12 @@ nav a:hover {
         justify-content: center;
     }
     
+    .about-content {
+        padding: 1.5rem;
+    }
+    
     .edu-content {
         margin-left: 1rem;
+        padding: 1.5rem;
     }
 }
