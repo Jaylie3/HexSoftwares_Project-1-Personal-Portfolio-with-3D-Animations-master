@@ -4,75 +4,740 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lindokuhle Jali - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Loading Screen Progress Animation Styles */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #e8e8e8;
+            --accent-color: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .glass-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 40px var(--accent-glow);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 40px var(--accent-glow), 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 60px var(--accent-glow), 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-info h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-info h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .professional-summary {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-nav a {
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .section {
+            padding: 100px 20px;
+            min-height: 100vh;
+        }
+
+        .section h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 500px;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+        }
+
+        .skill-card {
+            padding: 40px 32px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .skill-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skill-card h4 {
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .skill-card p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        .tech-categories {
+            display: grid;
+            gap: 32px;
+        }
+
+        .tech-category {
+            padding: 40px;
+        }
+
+        .tech-category h4 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: #a5b4fc;
+        }
+
+        .tech-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .tech-item {
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(139, 92, 246, 0.4));
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .tech-item i {
+            margin-right: 8px;
+            color: #a5b4fc;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 36px;
+        }
+
+        .project-card {
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .project-image-container {
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 32px;
+        }
+
+        .project-content h4 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .project-content p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .project-tech span {
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #c7d2fe;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .project-link {
+            padding: 10px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .github-link {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .experience-timeline, .education-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item, .edu-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 32px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-date, .edu-date {
+            font-weight: 600;
+            color: #a5b4fc;
+            font-size: 0.95rem;
+            padding-top: 4px;
+        }
+
+        .timeline-content h4, .edu-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .timeline-content p, .edu-content .edu-institution {
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 16px;
+        }
+
+        .timeline-content ul, .edu-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .timeline-content li, .edu-content li {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .timeline-content li::before, .edu-content li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #6366f1;
+            font-size: 1.2rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .testimonial-card {
+            padding: 40px;
+            transition: all 0.4s ease;
+        }
+
+        .testimonial-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author .author-info h5 {
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .testimonial-author .author-info span {
+            color: #a5b4fc;
+            font-size: 0.9rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin-bottom: 50px;
+        }
+
+        .contact-item {
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .contact-item p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left h4 {
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .footer-left p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .footer-center p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: rgba(99, 102, 241, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .fixed-nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 60px;
+            padding: 12px 24px;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item {
+            padding: 10px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-item i {
+            font-size: 0.9rem;
+        }
+
         .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #0f0f23, #1a1a3e);
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
+
         .loader {
             text-align: center;
-            color: white;
         }
+
         .loader-text {
+            color: white;
             font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            animation: pulse 1.5s ease-in-out infinite;
+            font-family: 'Poppins', sans-serif;
         }
+
         .loader-bar {
-            width: 250px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
             overflow: hidden;
-            position: relative;
         }
+
         .loader-progress {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+            border-radius: 2px;
             width: 0%;
-            transition: width 0.3s ease-out;
-            position: relative;
+            transition: width 0.3s ease;
         }
-        .loader-progress::after {
-            content: '';
-            position: absolute;
+
+        .webgl {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 1s infinite;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
-        .progress-percentage {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-info h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+
+            .timeline-item, .edu-item {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .fixed-nav {
+                bottom: 15px;
+                padding: 10px 16px;
+            }
+
+            .nav-item span {
+                display: none;
+            }
+
+            .nav-item {
+                padding: 10px 14px;
+            }
         }
     </style>
 </head>
@@ -113,7 +778,7 @@
             <div class="container">
                 <h3>Bio</h3>
                 <div class="about-content">
-                    <div class="about-text">
+                    <div class="about-text glass">
                         <p>Front-end developer and IT Support Intern at Okhahlamba District Teacher Development Centre (DTDC). Passionate about creating engaging web experiences and supporting educational technology initiatives. I specialize in modern web technologies and have a strong foundation in both development and technical support.</p>
                     </div>
                     <div class="about-image">
@@ -127,22 +792,22 @@
             <div class="container">
                 <h3>Core Skills</h3>
                 <div class="skills-grid">
-                    <div class="skill-card">
+                    <div class="skill-card glass glass-hover">
                         <i class="fas fa-code"></i>
                         <h4>Frontend Development</h4>
                         <p>Building responsive, interactive user interfaces</p>
                     </div>
-                    <div class="skill-card">
+                    <div class="skill-card glass glass-hover">
                         <i class="fas fa-mobile-alt"></i>
                         <h4>Responsive Design</h4>
                         <p>Mobile-first approach and cross-browser compatibility</p>
                     </div>
-                    <div class="skill-card">
+                    <div class="skill-card glass glass-hover">
                         <i class="fas fa-tools"></i>
                         <h4>IT Support</h4>
                         <p>Technical troubleshooting and system maintenance</p>
                     </div>
-                    <div class="skill-card">
+                    <div class="skill-card glass glass-hover">
                         <i class="fas fa-users"></i>
                         <h4>Team Collaboration</h4>
                         <p>Working effectively in development teams</p>
@@ -155,7 +820,7 @@
             <div class="container">
                 <h3>Technologies & Tools</h3>
                 <div class="tech-categories">
-                    <div class="tech-category">
+                    <div class="tech-category glass glass-hover">
                         <h4>Frontend</h4>
                         <div class="tech-items">
                             <span class="tech-item"><i class="fab fa-html5"></i> HTML5</span>
@@ -165,7 +830,7 @@
                             <span class="tech-item"><i class="fab fa-node-js"></i> Node.js</span>
                         </div>
                     </div>
-                    <div class="tech-category">
+                    <div class="tech-category glass glass-hover">
                         <h4>Tools & Platforms</h4>
                         <div class="tech-items">
                             <span class="tech-item"><i class="fab fa-git-alt"></i> Git</span>
@@ -174,7 +839,7 @@
                             <span class="tech-item"><i class="fas fa-robot"></i> GitHub Actions</span>
                         </div>
                     </div>
-                    <div class="tech-category">
+                    <div class="tech-category glass glass-hover">
                         <h4>Languages & More</h4>
                         <div class="tech-items">
                             <span class="tech-item"><i class="fab fa-python"></i> Python</span>
@@ -191,7 +856,7 @@
             <div class="container">
                 <h3>Projects</h3>
                 <div class="projects-grid">
-                    <div class="project-card">
+                    <div class="project-card glass glass-hover">
                         <div class="project-image-container">
                             <img src="images/break-a-sweat-preview.png" alt="Break-a-Sweat Preview" class="project-image">
                         </div>
@@ -208,7 +873,7 @@
                         </div>
                     </div>
             
-                    <div class="project-card">
+                    <div class="project-card glass glass-hover">
                         <div class="project-image-container">
                             <img src="images/Battleship.png" alt="Battleship Game Preview" class="project-image">
                         </div>
@@ -225,7 +890,7 @@
                         </div>
                     </div>
             
-                    <div class="project-card">
+                    <div class="project-card glass glass-hover">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Temperature Converter Preview" class="project-image">
                         </div>
@@ -242,7 +907,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card glass glass-hover">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Binary Search Trees Preview" class="project-image">
                         </div>
@@ -259,7 +924,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card glass glass-hover">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="HashMap Preview" class="project-image">
                         </div>
@@ -276,7 +941,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card glass glass-hover">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Knights Travails Preview" class="project-image">
                         </div>
@@ -300,7 +965,7 @@
             <div class="container">
                 <h3>Experience</h3>
                 <div class="experience-timeline">
-                    <div class="timeline-item">
+                    <div class="timeline-item glass glass-hover">
                         <div class="timeline-date">2024 - Present</div>
                         <div class="timeline-content">
                             <h4>IT Support Intern</h4>
@@ -312,7 +977,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item glass glass-hover">
                         <div class="timeline-date">2023 - 2024</div>
                         <div class="timeline-content">
                             <h4>Front-end Developer</h4>
@@ -332,7 +997,7 @@
             <div class="container">
                 <h3>What People Say</h3>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card">
+                    <div class="testimonial-card glass glass-hover">
                         <div class="testimonial-content">
                             <p>"Lindokuhle delivered exceptional work on our web project. His attention to detail and technical skills are impressive."</p>
                         </div>
@@ -343,7 +1008,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card">
+                    <div class="testimonial-card glass glass-hover">
                         <div class="testimonial-content">
                             <p>"Great problem-solving skills and always delivers on time. A reliable developer who communicates well."</p>
                         </div>
@@ -354,7 +1019,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card">
+                    <div class="testimonial-card glass glass-hover">
                         <div class="testimonial-content">
                             <p>"Professional approach to IT support and development. Helped streamline our technical processes effectively."</p>
                         </div>
@@ -373,7 +1038,7 @@
             <div class="container">
                 <h3>Education & Certifications</h3>
                 <div class="education-timeline">
-                    <div class="edu-item">
+                    <div class="edu-item glass glass-hover">
                         <div class="edu-date">Apr 2025 - Present</div>
                         <div class="edu-content">
                             <h4>The Fullstack Developer Path</h4>
@@ -385,7 +1050,7 @@
                         </div>
                     </div>
                     
-                    <div class="edu-item">
+                    <div class="edu-item glass glass-hover">
                         <div class="edu-date">Mar 2025</div>
                         <div class="edu-content">
                             <h4>Google IT Support Professional Certificate</h4>
@@ -398,7 +1063,7 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item glass glass-hover">
                         <div class="edu-date">Jan 2024 - Feb 2025</div>
                         <div class="edu-content">
                             <h4>Responsive Web Design Certification</h4>
@@ -411,7 +1076,7 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item glass glass-hover">
                         <div class="edu-date">Aug 2024 - Dec 2024</div>
                         <div class="edu-content">
                             <h4>Software Development Program</h4>
@@ -423,7 +1088,7 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item glass glass-hover">
                         <div class="edu-date">Feb 2021 - Dec 2023</div>
                         <div class="edu-content">
                             <h4>Diploma in Information Technology Management</h4>
@@ -435,7 +1100,7 @@
                         </div>
                     </div>
 
-                    <div class="edu-item">
+                    <div class="edu-item glass glass-hover">
                         <div class="edu-date">2020</div>
                         <div class="edu-content">
                             <h4>Grade 12 Certificate</h4>
@@ -450,17 +1115,17 @@
             <div class="container">
                 <h3>Contact Information</h3>
                 <div class="contact-grid">
-                    <div class="contact-item">
+                    <div class="contact-item glass glass-hover">
                         <i class="fas fa-envelope"></i>
                         <h4>Email</h4>
                         <p>lindokuhlenkosinathijali@gmail.com</p>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item glass glass-hover">
                         <i class="fas fa-phone"></i>
                         <h4>Phone</h4>
                         <p>+27837752498</p>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item glass glass-hover">
                         <i class="fas fa-map-marker-alt"></i>
                         <h4>Location</h4>
                         <p>Bergville, KwaZulu-Natal, South Africa</p>
@@ -512,43 +1177,12 @@
         <div class="loader">
             <div class="loader-text">Loading Portfolio...</div>
             <div class="loader-bar">
-                <div class="loader-progress" id="loaderProgress"></div>
+                <div class="loader-progress"></div>
             </div>
-            <div class="progress-percentage" id="progressPercentage">0%</div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // Loading Screen with Progress Animation
-        (function() {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const loaderProgress = document.getElementById('loaderProgress');
-            const progressPercentage = document.getElementById('progressPercentage');
-            let progress = 0;
-            
-            // Simulate loading progress
-            function updateProgress() {
-                const increment = Math.random() * 15 + 5; // Random increment between 5-20%
-                progress = Math.min(progress + increment, 100);
-                loaderProgress.style.width = progress + '%';
-                progressPercentage.textContent = Math.floor(progress) + '%';
-                
-                if (progress < 100) {
-                    const delay = Math.random() * 100 + 50; // Random delay for more realistic feel
-                    setTimeout(updateProgress, delay);
-                } else {
-                    // Fade out quickly after reaching 100%
-                    setTimeout(() => {
-                        loadingScreen.classList.add('hidden');
-                    }, 300);
-                }
-            }
-            
-            // Start progress animation
-            setTimeout(updateProgress, 100);
-        })();
-    </script>
     <script src="script.js"></script>
 </body>
 </html>
