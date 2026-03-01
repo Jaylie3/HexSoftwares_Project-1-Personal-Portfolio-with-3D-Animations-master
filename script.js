@@ -144,6 +144,195 @@ function initThreeJS() {
     animate();
 }
 
+// Contact Form Handling with Node.js Backend Integration
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            
+            // Gather form data
+            const formData = {
+                name: document.getElementById('name')?.value || '',
+                email: document.getElementById('email')?.value || '',
+                subject: document.getElementById('subject')?.value || 'New Contact Form Submission',
+                message: document.getElementById('message')?.value || ''
+            };
+            
+            // Validate form fields
+            if (!formData.name.trim()) {
+                showNotification('Please enter your name.', 'error');
+                return;
+            }
+            
+            if (!formData.email.trim()) {
+                showNotification('Please enter your email address.', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                showNotification('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            if (!formData.message.trim()) {
+                showNotification('Please enter your message.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            try {
+                // Send data to Node.js backend
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showNotification('Your message has been sent successfully!', 'success');
+                    contactForm.reset();
+                } else {
+                    showNotification(data.message || 'Failed to send message. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Contact form error:', error);
+                showNotification('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+        });
+    }
+    
+    // Notification system
+    function showNotification(message, type) {
+        // Remove any existing notifications
+        const existingNotification = document.querySelector('.notification-toast');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        const notification = document.createElement('div');
+        notification.className = `notification-toast ${type}`;
+        notification.innerHTML = `
+            <span class="notification-icon">${type === 'success' ? '✓' : '✕'}</span>
+            <span class="notification-message">${message}</span>
+        `;
+        
+        const styles = `
+            .notification-toast {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                max-width: 380px;
+                border-left: 4px solid;
+            }
+            .notification-toast.success {
+                border-left-color: #10b981;
+            }
+            .notification-toast.success .notification-icon {
+                background: #10b981;
+            }
+            .notification-toast.error {
+                border-left-color: #ef4444;
+            }
+            .notification-toast.error .notification-icon {
+                background: #ef4444;
+            }
+            .notification-icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                font-size: 14px;
+                flex-shrink: 0;
+            }
+            .notification-message {
+                color: #1f2937;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        
+        // Add styles if not already present
+        if (!document.querySelector('#notificationStyles')) {
+            const styleSheet = document.createElement('style');
+            styleSheet.id = 'notificationStyles';
+            styleSheet.textContent = styles;
+            document.head.appendChild(styleSheet);
+        }
+        
+        document.body.appendChild(notification);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.4s ease forwards';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 400);
+        }, 5000);
+        
+        // Allow click to dismiss
+        notification.addEventListener('click', () => {
+            notification.style.animation = 'slideOutRight 0.4s ease forwards';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 400);
+        });
+    }
+});
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     // Typing effect
@@ -166,209 +355,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
-});
-
-// Secure Contact Form Handling
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.querySelector('#contact form');
-    
-    if (contactForm) {
-        // Enable auto-fill by ensuring autocomplete attributes are set
-        const formInputs = contactForm.querySelectorAll('input, textarea');
-        formInputs.forEach(input => {
-            if (!input.getAttribute('autocomplete')) {
-                if (input.type === 'email') {
-                    input.setAttribute('autocomplete', 'email');
-                } else if (input.type === 'text') {
-                    input.setAttribute('autocomplete', 'name');
-                } else if (input.tagName === 'TEXTAREA') {
-                    input.setAttribute('autocomplete', 'off');
-                }
-            }
-        });
-        
-        // Form submission handler
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Clear previous errors
-            clearErrors();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = {
-                name: sanitizeInput(formData.get('name') || ''),
-                email: sanitizeInput(formData.get('email') || ''),
-                subject: sanitizeInput(formData.get('subject') || ''),
-                message: sanitizeInput(formData.get('message') || '')
-            };
-            
-            // Validate form
-            const validation = validateForm(data);
-            if (!validation.isValid) {
-                displayErrors(validation.errors);
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            try {
-                // Create secure headers
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                };
-                
-                // Send data to backend
-                // Replace 'YOUR_ENDPOINT_URL' with your actual backend endpoint
-                // or use Formspree: 'https://formspree.io/f/YOUR_FORM_ID'
-                const response = await fetch('YOUR_ENDPOINT_URL', {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(data),
-                    mode: 'cors'
-                });
-                
-                if (response.ok) {
-                    showSuccessMessage('Your message has been sent successfully!');
-                    contactForm.reset();
-                } else {
-                    throw new Error('Failed to send message');
-                }
-            } catch (error) {
-                console.error('Form submission error:', error);
-                
-                // Fallback: Display message for backend setup
-                showBackendSetupMessage(data);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-            }
-        });
-    }
-    
-    // Input sanitization function to prevent XSS
-    function sanitizeInput(input) {
-        if (typeof input !== 'string') return '';
-        
-        // Create a div to use browser's built-in HTML escaping
-        const div = document.createElement('div');
-        div.textContent = input;
-        return div.innerHTML;
-    }
-    
-    // Form validation
-    function validateForm(data) {
-        const errors = {};
-        let isValid = true;
-        
-        // Name validation
-        if (!data.name || data.name.trim().length < 2) {
-            errors.name = 'Please enter a valid name (at least 2 characters)';
-            isValid = false;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!data.email || !emailRegex.test(data.email)) {
-            errors.email = 'Please enter a valid email address';
-            isValid = false;
-        }
-        
-        // Subject validation
-        if (!data.subject || data.subject.trim().length < 3) {
-            errors.subject = 'Please enter a subject (at least 3 characters)';
-            isValid = false;
-        }
-        
-        // Message validation
-        if (!data.message || data.message.trim().length < 10) {
-            errors.message = 'Please enter a message (at least 10 characters)';
-            isValid = false;
-        }
-        
-        // Prevent potential email injection
-        const emailInjectionRegex = /[\r\n]|(%0D|%0A)/i;
-        if (emailInjectionRegex.test(data.email) || emailInjectionRegex.test(data.subject)) {
-            errors.email = 'Invalid characters detected';
-            isValid = false;
-        }
-        
-        return { isValid, errors };
-    }
-    
-    // Display validation errors
-    function displayErrors(errors) {
-        Object.keys(errors).forEach(field => {
-            const input = contactForm.querySelector(`[name="${field}"]`);
-            if (input) {
-                // Add error class to input
-                input.classList.add('error');
-                
-                // Create or update error message
-                let errorElement = input.parentElement.querySelector('.error-message');
-                if (!errorElement) {
-                    errorElement = document.createElement('span');
-                    errorElement.className = 'error-message';
-                    input.parentElement.appendChild(errorElement);
-                }
-                errorElement.textContent = errors[field];
-            }
-        });
-    }
-    
-    // Clear all error states
-    function clearErrors() {
-        const inputs = contactForm.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.classList.remove('error');
-            const errorElement = input.parentElement.querySelector('.error-message');
-            if (errorElement) {
-                errorElement.remove();
-            }
-        });
-    }
-    
-    // Show success message
-    function showSuccessMessage(message) {
-        const successDiv = document.createElement('div');
-        successDiv.className = 'form-message success';
-        successDiv.textContent = message;
-        
-        const existingMessage = contactForm.querySelector('.form-message');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
-        
-        contactForm.insertBefore(successDiv, contactForm.firstChild);
-        
-        setTimeout(() => {
-            successDiv.remove();
-        }, 5000);
-    }
-    
-    // Show message for backend setup
-    function showBackendSetupMessage(data) {
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'form-message info';
-        infoDiv.innerHTML = `
-            <p><strong>Backend Setup Required:</strong> To receive email notifications, configure one of these options:</p>
-            <ol>
-                <li><strong>Formspree:</strong> Replace 'YOUR_ENDPOINT_URL' in script.js with your Formspree endpoint URL</li>
-                <li><strong>Custom Backend:</strong> Set up an HTTPS endpoint to handle form submissions</li>
-                <li><strong>EmailJS:</strong> Integrate EmailJS service for direct email sending</li>
-            </ol>
-        `;
-        
-        const existingMessage = contactForm.querySelector('.form-message');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
-        
-        contactForm.insertBefore(infoDiv, contactForm.firstChild);
-    }
 });

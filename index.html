@@ -398,90 +398,36 @@
                     </div>
                 </div>
                 
-                <div class="contact-form-container">
-                    <h4>Send Me a Message</h4>
-                    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" autocomplete="on" novalidate>
-                        <input type="hidden" name="_subject" value="Portfolio Contact Form Submission">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="text" name="_honey" style="display:none">
-                        <input type="hidden" name="_replyto" value="">
-                        
+                <div class="contact-form-wrapper">
+                    <div class="form-header">
+                        <h4>Send Me a Message</h4>
+                        <p>Fill out the form below and I'll get back to you as soon as possible.</p>
+                    </div>
+                    <form id="contactForm" class="contact-form">
                         <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input 
-                                type="text" 
-                                id="name" 
-                                name="name" 
-                                required 
-                                autocomplete="name" 
-                                minlength="2" 
-                                maxlength="100"
-                                pattern="[a-zA-Z\s\-']+"
-                                title="Please enter a valid name (letters, spaces, hyphens, and apostrophes only)"
-                            >
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
                         </div>
-                        
                         <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                required 
-                                autocomplete="email"
-                                title="Please enter a valid email address"
-                            >
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
                         </div>
-                        
                         <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input 
-                                type="tel" 
-                                id="phone" 
-                                name="phone" 
-                                autocomplete="tel"
-                                pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
-                                title="Please enter a valid phone number"
-                            >
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="What is this about?">
                         </div>
-                        
                         <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <input 
-                                type="text" 
-                                id="subject" 
-                                name="subject" 
-                                required 
-                                autocomplete="organization-title" 
-                                minlength="3" 
-                                maxlength="150"
-                                title="Please enter a subject (minimum 3 characters)"
-                            >
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Your message..."></textarea>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea 
-                                id="message" 
-                                name="message" 
-                                required 
-                                minlength="10" 
-                                maxlength="1000" 
-                                rows="5"
-                                title="Please enter your message (minimum 10 characters)"
-                            ></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button type="submit" class="btn-primary">
-                                <i class="fas fa-paper-plane"></i> Send Message
-                            </button>
-                        </div>
-                        
-                        <div id="formStatus" class="form-status"></div>
+                        <button type="submit" class="btn-primary submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loading">Sending...</span>
+                        </button>
+                        <div class="form-message" id="formMessage"></div>
                     </form>
                 </div>
-
+                
                 <div class="social-links">
                     <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
                     <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
@@ -512,6 +458,7 @@
         </div>
     </footer>
 
+    <!-- Fixed Navigation -->
     <nav class="fixed-nav" id="fixedNav">
         <div class="nav-container">
             <a href="#about" class="nav-item"><i class="fas fa-user"></i><span>About</span></a>
@@ -522,6 +469,7 @@
         </div>
     </nav>
 
+    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader">
             <div class="loader-text">Loading Portfolio...</div>
@@ -532,120 +480,87 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
     <script>
+        // Contact Form Handler
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contactForm');
-            const formStatus = document.getElementById('formStatus');
-            
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const honeypot = form.querySelector('input[name="_honey"]').value;
-                    if (honeypot) {
-                        return false;
-                    }
-                    
-                    if (!form.checkValidity()) {
-                        showFormStatus('Please fill in all required fields correctly.', 'error');
-                        highlightInvalidFields();
-                        return false;
-                    }
-                    
-                    const formData = new FormData(form);
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    const originalBtnText = submitBtn.innerHTML;
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-                    submitBtn.disabled = true;
-                    
-                    fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            showFormStatus('Thank you! Your message has been sent successfully.', 'success');
-                            form.reset();
-                        } else {
-                            response.json().then(data => {
-                                const errorMsg = data.error || 'There was a problem sending your message.';
-                                showFormStatus(errorMsg, 'error');
-                            }).catch(() => {
-                                showFormStatus('There was a problem sending your message. Please try again.', 'error');
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        showFormStatus('There was a problem sending your message. Please try again.', 'error');
-                    })
-                    .finally(() => {
-                        submitBtn.innerHTML = originalBtnText;
-                        submitBtn.disabled = false;
-                    });
-                    
-                    return false;
-                });
+            const contactForm = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
                 
-                const inputs = form.querySelectorAll('input, textarea');
-                inputs.forEach(input => {
-                    input.addEventListener('input', function() {
-                        this.classList.remove('invalid');
-                        const errorMsg = this.parentElement.querySelector('.field-error');
-                        if (errorMsg) {
-                            errorMsg.remove();
-                        }
+                // Get form data
+                const formData = {
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    subject: document.getElementById('subject').value.trim(),
+                    message: document.getElementById('message').value.trim()
+                };
+
+                // Basic validation
+                if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                    showFormMessage('Please fill in all fields.', 'error');
+                    return;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(formData.email)) {
+                    showFormMessage('Please enter a valid email address.', 'error');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                formMessage.textContent = '';
+
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
                     });
-                });
-            }
-            
-            function showFormStatus(message, type) {
-                if (formStatus) {
-                    formStatus.textContent = message;
-                    formStatus.className = 'form-status ' + type;
-                    formStatus.style.display = 'block';
-                    
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+                        contactForm.reset();
+                    } else {
+                        showFormMessage(data.message || 'Failed to send message. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showFormMessage('An error occurred. Please try again or contact me directly via email.', 'error');
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                }
+            });
+
+            function showFormMessage(message, type) {
+                formMessage.textContent = message;
+                formMessage.className = 'form-message ' + type;
+                
+                // Auto-hide success messages after 5 seconds
+                if (type === 'success') {
                     setTimeout(() => {
-                        formStatus.style.display = 'none';
+                        formMessage.textContent = '';
+                        formMessage.className = 'form-message';
                     }, 5000);
                 }
             }
-            
-            function highlightInvalidFields() {
-                const inputs = form.querySelectorAll('input[required], textarea[required]');
-                inputs.forEach(input => {
-                    if (!input.validity.valid) {
-                        input.classList.add('invalid');
-                        
-                        let errorMsg = '';
-                        if (input.validity.valueMissing) {
-                            errorMsg = 'This field is required.';
-                        } else if (input.validity.tooShort) {
-                            errorMsg = `Minimum length is ${input.minLength} characters.`;
-                        } else if (input.validity.tooLong) {
-                            errorMsg = `Maximum length is ${input.maxLength} characters.`;
-                        } else if (input.validity.typeMismatch && input.type === 'email') {
-                            errorMsg = 'Please enter a valid email address.';
-                        } else if (input.validity.patternMismatch) {
-                            errorMsg = input.title || 'Please enter a valid value.';
-                        }
-                        
-                        if (errorMsg) {
-                            let errorDiv = input.parentElement.querySelector('.field-error');
-                            if (!errorDiv) {
-                                errorDiv = document.createElement('div');
-                                errorDiv.className = 'field-error';
-                                input.parentElement.appendChild(errorDiv);
-                            }
-                            errorDiv.textContent = errorMsg;
-                        }
-                    }
-                });
-            }
         });
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
