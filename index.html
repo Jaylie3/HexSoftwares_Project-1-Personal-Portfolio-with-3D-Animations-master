@@ -4,151 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lindokuhle Jali - Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <canvas class="webgl"></canvas>
-    <div class="ambient-overlay"></div>
     
-    <header class="glass-header">
+    <header>
         <div class="container">
             <div class="profile-section">
-                <div class="profile-image-wrapper">
-                    <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
-                    <div class="profile-ring"></div>
-                </div>
+                <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
                 <div class="profile-info">
-                    <div class="greeting">👋 Hello, I'm</div>
-                    <h1 class="name-title">Lindokuhle Nkosinathi Jali</h1>
-                    <h2 class="role-title">Front-end Developer & IT Support Intern</h2>
-                    <p class="professional-summary">Passionate developer creating modern web solutions with 2+ years experience, blending creativity with technical excellence to deliver stunning digital experiences.</p>
+                    <h1>Lindokuhle Nkosinathi Jali</h1>
+                    <h2>Front-end Developer & IT Support Intern</h2>
+                    <p class="professional-summary">Passionate developer creating modern web solutions with 2+ years experience</p>
                     <div class="cta-buttons">
-                        <a href="#contact" class="btn-primary btn-animated">
-                            <span>Hire Me</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary btn-animated">
-                            <i class="fas fa-download"></i>
-                            <span>Download CV</span>
-                        </a>
+                        <a href="#contact" class="btn-primary">Hire Me</a>
+                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary">Download CV</a>
                     </div>
                 </div>
             </div>
-            <nav class="main-nav glass-nav">
-                <ul class="nav-list">
-                    <li><a href="#about" class="nav-link"><i class="fas fa-user"></i><span>About</span></a></li>
-                    <li><a href="#skills" class="nav-link"><i class="fas fa-cogs"></i><span>Skills</span></a></li>
-                    <li><a href="#technologies" class="nav-link"><i class="fas fa-layer-group"></i><span>Tech Stack</span></a></li>
-                    <li><a href="#projects" class="nav-link"><i class="fas fa-rocket"></i><span>Projects</span></a></li>
-                    <li><a href="#experience" class="nav-link"><i class="fas fa-briefcase"></i><span>Experience</span></a></li>
-                    <li><a href="#certifications" class="nav-link"><i class="fas fa-award"></i><span>Certs</span></a></li>
-                    <li><a href="#testimonials" class="nav-link"><i class="fas fa-star"></i><span>Reviews</span></a></li>
-                    <li><a href="#contact" class="nav-link"><i class="fas fa-paper-plane"></i><span>Contact</span></a></li>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#technologies">Tech Stack</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main>
-        <section id="about" class="section glass-section fade-in-up">
+        <section id="about" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">01</span>
-                    <h3>About Me</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>Bio</h3>
                 <div class="about-content">
-                    <div class="about-text glass-card">
-                        <p class="highlight-text">Front-end developer and IT Support Intern at Okhahlamba District Teacher Development Centre (DTDC). Passionate about creating engaging web experiences and supporting educational technology initiatives.</p>
-                        <p>I specialize in modern web technologies and have a strong foundation in both development and technical support. My goal is to bridge the gap between design and functionality, creating seamless user experiences that leave lasting impressions.</p>
-                        <div class="stats">
-                            <div class="stat-item">
-                                <span class="stat-number">2+</span>
-                                <span class="stat-label">Years Experience</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">15+</span>
-                                <span class="stat-label">Projects Completed</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">100%</span>
-                                <span class="stat-label">Client Satisfaction</span>
-                            </div>
-                        </div>
+                    <div class="about-text">
+                        <p>Front-end developer and IT Support Intern at Okhahlamba District Teacher Development Centre (DTDC). Passionate about creating engaging web experiences and supporting educational technology initiatives. I specialize in modern web technologies and have a strong foundation in both development and technical support.</p>
                     </div>
                     <div class="about-image">
-                        <img src="images/undraw_programming_65t2.svg" alt="Developer illustration" class="floating-animation">
+                        <img src="images/undraw_programming_65t2.svg" alt="Developer illustration" class="floating">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="section glass-section fade-in-up">
+        <section id="skills" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">02</span>
-                    <h3>Core Skills</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>Core Skills</h3>
                 <div class="skills-grid">
-                    <div class="skill-card glass-card hover-lift">
-                        <div class="skill-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
+                    <div class="skill-card">
+                        <i class="fas fa-code"></i>
                         <h4>Frontend Development</h4>
-                        <p>Building responsive, interactive user interfaces with modern frameworks</p>
-                        <div class="skill-progress">
-                            <div class="progress-bar" style="width: 90%"></div>
-                        </div>
+                        <p>Building responsive, interactive user interfaces</p>
                     </div>
-                    <div class="skill-card glass-card hover-lift">
-                        <div class="skill-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
+                    <div class="skill-card">
+                        <i class="fas fa-mobile-alt"></i>
                         <h4>Responsive Design</h4>
                         <p>Mobile-first approach and cross-browser compatibility</p>
-                        <div class="skill-progress">
-                            <div class="progress-bar" style="width: 85%"></div>
-                        </div>
                     </div>
-                    <div class="skill-card glass-card hover-lift">
-                        <div class="skill-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
+                    <div class="skill-card">
+                        <i class="fas fa-tools"></i>
                         <h4>IT Support</h4>
                         <p>Technical troubleshooting and system maintenance</p>
-                        <div class="skill-progress">
-                            <div class="progress-bar" style="width: 80%"></div>
-                        </div>
                     </div>
-                    <div class="skill-card glass-card hover-lift">
-                        <div class="skill-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
+                    <div class="skill-card">
+                        <i class="fas fa-users"></i>
                         <h4>Team Collaboration</h4>
                         <p>Working effectively in development teams</p>
-                        <div class="skill-progress">
-                            <div class="progress-bar" style="width: 95%"></div>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="technologies" class="section glass-section fade-in-up">
+        <section id="technologies" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">03</span>
-                    <h3>Technologies & Tools</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>Technologies & Tools</h3>
                 <div class="tech-categories">
-                    <div class="tech-category glass-card">
-                        <h4><i class="fas fa-laptop-code"></i> Frontend</h4>
+                    <div class="tech-category">
+                        <h4>Frontend</h4>
                         <div class="tech-items">
                             <span class="tech-item"><i class="fab fa-html5"></i> HTML5</span>
                             <span class="tech-item"><i class="fab fa-css3-alt"></i> CSS3</span>
@@ -157,8 +96,8 @@
                             <span class="tech-item"><i class="fab fa-node-js"></i> Node.js</span>
                         </div>
                     </div>
-                    <div class="tech-category glass-card">
-                        <h4><i class="fas fa-toolbox"></i> Tools & Platforms</h4>
+                    <div class="tech-category">
+                        <h4>Tools & Platforms</h4>
                         <div class="tech-items">
                             <span class="tech-item"><i class="fab fa-git-alt"></i> Git</span>
                             <span class="tech-item"><i class="fab fa-github"></i> GitHub</span>
@@ -166,8 +105,8 @@
                             <span class="tech-item"><i class="fas fa-robot"></i> GitHub Actions</span>
                         </div>
                     </div>
-                    <div class="tech-category glass-card">
-                        <h4><i class="fas fa-microchip"></i> Languages & More</h4>
+                    <div class="tech-category">
+                        <h4>Languages & More</h4>
                         <div class="tech-items">
                             <span class="tech-item"><i class="fab fa-python"></i> Python</span>
                             <span class="tech-item"><i class="fas fa-code"></i> Algorithms</span>
@@ -179,19 +118,18 @@
             </div>
         </section>
 
-        <section id="projects" class="section glass-section fade-in-up">
+        <section id="projects" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">04</span>
-                    <h3>Featured Projects</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>Projects</h3>
                 <div class="projects-grid">
-                    <div class="project-card glass-card hover-scale">
+                    <div class="project-card" data-project-id="1">
                         <div class="project-image-container">
                             <img src="images/break-a-sweat-preview.png" alt="Break-a-Sweat Preview" class="project-image">
                             <div class="project-overlay">
-                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+                                <button class="preview-btn" data-project="1">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Quick Preview</span>
+                                </button>
                             </div>
                         </div>
                         <div class="project-content">
@@ -201,17 +139,20 @@
                                 <span>HTML</span><span>CSS</span><span>JavaScript</span>
                             </div>
                             <div class="project-links">
-                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Break-a-Sweat-v2" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="project-link">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Break-a-Sweat-v2" target="_blank" class="project-link github-link">GitHub</a>
                             </div>
                         </div>
                     </div>
             
-                    <div class="project-card glass-card hover-scale">
+                    <div class="project-card" data-project-id="2">
                         <div class="project-image-container">
                             <img src="images/Battleship.png" alt="Battleship Game Preview" class="project-image">
                             <div class="project-overlay">
-                                <a href="#" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+                                <button class="preview-btn" data-project="2">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Quick Preview</span>
+                                </button>
                             </div>
                         </div>
                         <div class="project-content">
@@ -221,17 +162,20 @@
                                 <span>JavaScript</span><span>HTML</span><span>CSS</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Battleship" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" target="_blank" class="project-link">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Battleship" target="_blank" class="project-link github-link">GitHub</a>
                             </div>
                         </div>
                     </div>
             
-                    <div class="project-card glass-card hover-scale">
+                    <div class="project-card" data-project-id="3">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Temperature Converter Preview" class="project-image">
                             <div class="project-overlay">
-                                <a href="#" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+                                <button class="preview-btn" data-project="3">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Quick Preview</span>
+                                </button>
                             </div>
                         </div>
                         <div class="project-content">
@@ -241,17 +185,20 @@
                                 <span>HTML</span><span>CSS</span><span>JavaScript</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> Live Demo</a>
-                                <a href="https://github.com/Jaylie3/OIBSIP" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" target="_blank" class="project-link">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/OIBSIP" target="_blank" class="project-link github-link">GitHub</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card glass-card hover-scale">
+                    <div class="project-card" data-project-id="4">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Binary Search Trees Preview" class="project-image">
                             <div class="project-overlay">
-                                <a href="#" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+                                <button class="preview-btn" data-project="4">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Quick Preview</span>
+                                </button>
                             </div>
                         </div>
                         <div class="project-content">
@@ -261,17 +208,20 @@
                                 <span>JavaScript</span><span>Algorithms</span><span>Data Structures</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Binary-Search-Trees" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" target="_blank" class="project-link">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Binary-Search-Trees" target="_blank" class="project-link github-link">GitHub</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card glass-card hover-scale">
+                    <div class="project-card" data-project-id="5">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="HashMap Preview" class="project-image">
                             <div class="project-overlay">
-                                <a href="#" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+                                <button class="preview-btn" data-project="5">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Quick Preview</span>
+                                </button>
                             </div>
                         </div>
                         <div class="project-content">
@@ -281,17 +231,20 @@
                                 <span>JavaScript</span><span>Data Structures</span><span>Algorithms</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-HashMap" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" target="_blank" class="project-link">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-HashMap" target="_blank" class="project-link github-link">GitHub</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card glass-card hover-scale">
+                    <div class="project-card" data-project-id="6">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Knights Travails Preview" class="project-image">
                             <div class="project-overlay">
-                                <a href="#" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>
+                                <button class="preview-btn" data-project="6">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Quick Preview</span>
+                                </button>
                             </div>
                         </div>
                         <div class="project-content">
@@ -301,8 +254,8 @@
                                 <span>JavaScript</span><span>Algorithms</span><span>Graph Theory</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Knights-Travails" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="#" target="_blank" class="project-link">Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Knights-Travails" target="_blank" class="project-link github-link">GitHub</a>
                             </div>
                         </div>
                     </div>
@@ -310,37 +263,62 @@
             </div>
         </section>
 
-        <section id="experience" class="section glass-section fade-in-up">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-number">05</span>
-                    <h3>Experience</h3>
-                    <div class="section-line"></div>
+        <!-- Project Preview Modal -->
+        <div class="project-modal" id="projectModal">
+            <div class="modal-content">
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="modal-header">
+                    <img src="" alt="" class="modal-image" id="modalImage">
+                    <div class="modal-title-section">
+                        <h3 id="modalTitle">Project Title</h3>
+                        <div class="modal-tech" id="modalTech"></div>
+                    </div>
                 </div>
+                <div class="modal-body">
+                    <p id="modalDescription">Project description goes here.</p>
+                    <div class="modal-features" id="modalFeatures">
+                        <h4>Key Features:</h4>
+                        <ul></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" target="_blank" class="btn-primary" id="modalLiveDemo">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    <a href="#" target="_blank" class="btn-secondary" id="modalGithub">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section id="experience" class="section">
+            <div class="container">
+                <h3>Experience</h3>
                 <div class="experience-timeline">
-                    <div class="timeline-item glass-card hover-lift">
-                        <div class="timeline-marker"></div>
+                    <div class="timeline-item">
                         <div class="timeline-date">2024 - Present</div>
                         <div class="timeline-content">
-                            <div class="timeline-role">IT Support Intern</div>
-                            <div class="timeline-company">Okhahlamba District Teacher Development Centre (DTDC)</div>
+                            <h4>IT Support Intern</h4>
+                            <p>Okhahlamba District Teacher Development Centre (DTDC)</p>
                             <ul>
-                                <li><i class="fas fa-check-circle"></i> Providing technical support for educational technology</li>
-                                <li><i class="fas fa-check-circle"></i> Maintaining computer systems and networks</li>
-                                <li><i class="fas fa-check-circle"></i> Training staff on digital tools and platforms</li>
+                                <li>Providing technical support for educational technology</li>
+                                <li>Maintaining computer systems and networks</li>
+                                <li>Training staff on digital tools and platforms</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="timeline-item glass-card hover-lift">
-                        <div class="timeline-marker"></div>
+                    <div class="timeline-item">
                         <div class="timeline-date">2023 - 2024</div>
                         <div class="timeline-content">
-                            <div class="timeline-role">Front-end Developer</div>
-                            <div class="timeline-company">Freelance Projects</div>
+                            <h4>Front-end Developer</h4>
+                            <p>Freelance Projects</p>
                             <ul>
-                                <li><i class="fas fa-check-circle"></i> Developed responsive web applications</li>
-                                <li><i class="fas fa-check-circle"></i> Created interactive user interfaces</li>
-                                <li><i class="fas fa-check-circle"></i> Implemented modern web technologies</li>
+                                <li>Developed responsive web applications</li>
+                                <li>Created interactive user interfaces</li>
+                                <li>Implemented modern web technologies</li>
                             </ul>
                         </div>
                     </div>
@@ -348,47 +326,37 @@
             </div>
         </section>
 
-        <section id="testimonials" class="section glass-section fade-in-up">
+        <section id="testimonials" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">06</span>
-                    <h3>What People Say</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>What People Say</h3>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card glass-card hover-lift">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <div class="testimonial-card">
                         <div class="testimonial-content">
                             <p>"Lindokuhle delivered exceptional work on our web project. His attention to detail and technical skills are impressive."</p>
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">SJ</div>
                             <div class="author-info">
                                 <h5>Sarah Johnson</h5>
                                 <span>Project Manager</span>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card glass-card hover-lift">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <div class="testimonial-card">
                         <div class="testimonial-content">
                             <p>"Great problem-solving skills and always delivers on time. A reliable developer who communicates well."</p>
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">MC</div>
                             <div class="author-info">
                                 <h5>Mike Chen</h5>
                                 <span>Team Lead</span>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card glass-card hover-lift">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <div class="testimonial-card">
                         <div class="testimonial-content">
                             <p>"Professional approach to IT support and development. Helped streamline our technical processes effectively."</p>
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-avatar">SX</div>
                             <div class="author-info">
                                 <h5>Mr Sfiso Xulu</h5>
                                 <span>DTDC Supervisor</span>
@@ -399,160 +367,127 @@
             </div>
         </section>
 
-        <section id="certifications" class="section glass-section fade-in-up">
+        <section id="certifications" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">07</span>
-                    <h3>Education & Certifications</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>Education & Certifications</h3>
                 <div class="education-timeline">
-                    <div class="edu-item glass-card hover-lift">
-                        <div class="edu-marker"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="edu-item">
                         <div class="edu-date">Apr 2025 - Present</div>
                         <div class="edu-content">
-                            <div class="edu-cert" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">In Progress</div>
                             <h4>The Fullstack Developer Path</h4>
-                            <p class="edu-institution"><i class="fas fa-laptop"></i> Scrimba, Online</p>
+                            <p class="edu-institution">Scrimba, Online</p>
                             <ul>
-                                <li><i class="fas fa-star"></i> Learning the entire stack from backend to frontend with hireable JavaScript skills</li>
-                                <li><i class="fas fa-star"></i> Gaining proficiency in React, Node, Express, Next.js, and AI engineering</li>
+                                <li>Learning the entire stack from backend to frontend with hireable JavaScript skills</li>
+                                <li>Gaining proficiency in React, Node, Express, Next.js, and AI engineering</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="edu-item glass-card hover-lift">
-                        <div class="edu-marker"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="edu-item">
                         <div class="edu-date">Mar 2025</div>
                         <div class="edu-content">
-                            <div class="edu-cert" style="background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);">Completed</div>
                             <h4>Google IT Support Professional Certificate</h4>
-                            <p class="edu-institution"><i class="fas fa-laptop"></i> Coursera, Online</p>
+                            <p class="edu-institution">Coursera, Online</p>
                             <ul>
-                                <li><i class="fas fa-star"></i> Day-to-day IT support: computer assembly, networking, program installation</li>
-                                <li><i class="fas fa-star"></i> Systems: Linux, DNS, Command-Line Interface, Binary Code</li>
-                                <li><i class="fas fa-star"></i> End-to-end customer support and troubleshooting</li>
+                                <li>Day-to-day IT support: computer assembly, networking, program installation</li>
+                                <li>Systems: Linux, DNS, Command-Line Interface, Binary Code</li>
+                                <li>End-to-end customer support and troubleshooting</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass-card hover-lift">
-                        <div class="edu-marker"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="edu-item">
                         <div class="edu-date">Jan 2024 - Feb 2025</div>
                         <div class="edu-content">
-                            <div class="edu-cert" style="background: linear-gradient(135deg, #006400 0%, #228b22 100%);">Completed</div>
                             <h4>Responsive Web Design Certification</h4>
-                            <p class="edu-institution"><i class="fas fa-laptop"></i> FreeCodeCamp, Online</p>
+                            <p class="edu-institution">FreeCodeCamp, Online</p>
                             <ul>
-                                <li><i class="fas fa-star"></i> Mastered HTML and CSS for content and design</li>
-                                <li><i class="fas fa-star"></i> Modern techniques: CSS variables, Flexbox, CSS Grid</li>
-                                <li><i class="fas fa-star"></i> Responsive design and accessibility best practices</li>
+                                <li>Mastered HTML and CSS for content and design</li>
+                                <li>Modern techniques: CSS variables, Flexbox, CSS Grid</li>
+                                <li>Responsive design and accessibility best practices</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass-card hover-lift">
-                        <div class="edu-marker"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="edu-item">
                         <div class="edu-date">Aug 2024 - Dec 2024</div>
                         <div class="edu-content">
-                            <div class="edu-cert" style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);">Completed</div>
                             <h4>Software Development Program</h4>
-                            <p class="edu-institution"><i class="fas fa-laptop"></i> Power Learn Project, Online</p>
+                            <p class="edu-institution">Power Learn Project, Online</p>
                             <ul>
-                                <li><i class="fas fa-star"></i> 16-week program: Python, Web Technologies, Database Management</li>
-                                <li><i class="fas fa-star"></i> Dart with Flutter and Soft Skills development</li>
+                                <li>16-week program: Python, Web Technologies, Database Management</li>
+                                <li>Dart with Flutter and Soft Skills development</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass-card hover-lift">
-                        <div class="edu-marker"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="edu-item">
                         <div class="edu-date">Feb 2021 - Dec 2023</div>
                         <div class="edu-content">
-                            <div class="edu-cert" style="background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);">Completed</div>
                             <h4>Diploma in Information Technology Management</h4>
-                            <p class="edu-institution"><i class="fas fa-university"></i> IIE Rosebank College, Pietermaritzburg</p>
+                            <p class="edu-institution">IIE Rosebank College, Pietermaritzburg</p>
                             <ul>
-                                <li><i class="fas fa-star"></i> Comprehensive IT management and technical skills</li>
-                                <li><i class="fas fa-star"></i> Foundation in business technology solutions</li>
+                                <li>Comprehensive IT management and technical skills</li>
+                                <li>Foundation in business technology solutions</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass-card hover-lift">
-                        <div class="edu-marker"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="edu-item">
                         <div class="edu-date">2020</div>
                         <div class="edu-content">
-                            <div class="edu-cert" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);">Completed</div>
                             <h4>Grade 12 Certificate</h4>
-                            <p class="edu-institution"><i class="fas fa-school"></i> Amangwane High School, Bergville</p>
+                            <p class="edu-institution">Amangwane High School, Bergville</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="section glass-section fade-in-up">
+        <section id="contact" class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-number">08</span>
-                    <h3>Get In Touch</h3>
-                    <div class="section-line"></div>
-                </div>
+                <h3>Contact Information</h3>
                 <div class="contact-grid">
-                    <div class="contact-item glass-card hover-lift">
-                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
                         <h4>Email</h4>
-                        <p><a href="mailto:lindokuhlenkosinathijali@gmail.com">lindokuhlenkosinathijali@gmail.com</a></p>
+                        <p>lindokuhlenkosinathijali@gmail.com</p>
                     </div>
-                    <div class="contact-item glass-card hover-lift">
-                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
                         <h4>Phone</h4>
-                        <p><a href="tel:+27837752498">+27 83 775 2498</a></p>
+                        <p>+27837752498</p>
                     </div>
-                    <div class="contact-item glass-card hover-lift">
-                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
                         <h4>Location</h4>
                         <p>Bergville, KwaZulu-Natal, South Africa</p>
                     </div>
                 </div>
                 <div class="social-links">
-                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link glass-btn">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link glass-btn">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link glass-btn">
-                        <i class="fab fa-facebook"></i>
-                        <span>Facebook</span>
-                    </a>
-                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link glass-btn">
-                        <i class="fab fa-x-twitter"></i>
-                        <span>X (Twitter)</span>
-                    </a>
+                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer glass-footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
                     <h4>Lindokuhle Jali</h4>
-                    <p>Building the future, one pixel at a time 🚀</p>
+                    <p>Frontend Developer & IT Support</p>
                 </div>
                 <div class="footer-center">
-                    <p>&copy; 2025 Lindokuhle Jali. Crafted with <i class="fas fa-heart pulse"></i> and code.</p>
+                    <p>&copy; 2025 Lindokuhle Jali. All rights reserved.</p>
                 </div>
                 <div class="footer-right">
                     <div class="footer-social">
-                        <a href="https://github.com/Jaylie3" target="_blank" class="footer-social-link"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="footer-social-link"><i class="fab fa-linkedin"></i></a>
-                        <a href="mailto:lindokuhlenkosinathijali@gmail.com" class="footer-social-link"><i class="fas fa-envelope"></i></a>
+                        <a href="https://github.com/Jaylie3" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -560,9 +495,9 @@
     </footer>
 
     <!-- Fixed Navigation -->
-    <nav class="fixed-nav glass-nav" id="fixedNav">
+    <nav class="fixed-nav" id="fixedNav">
         <div class="nav-container">
-            <a href="#about" class="nav-item active"><i class="fas fa-user"></i><span>About</span></a>
+            <a href="#about" class="nav-item"><i class="fas fa-user"></i><span>About</span></a>
             <a href="#skills" class="nav-item"><i class="fas fa-cogs"></i><span>Skills</span></a>
             <a href="#projects" class="nav-item"><i class="fas fa-folder"></i><span>Projects</span></a>
             <a href="#certifications" class="nav-item"><i class="fas fa-certificate"></i><span>Certs</span></a>
@@ -570,27 +505,15 @@
         </div>
     </nav>
 
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scrollProgress"></div>
-
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader">
-            <div class="loader-logo">
-                <i class="fas fa-code"></i>
-            </div>
             <div class="loader-text">Loading Portfolio...</div>
             <div class="loader-bar">
                 <div class="loader-progress"></div>
             </div>
-            <div class="loader-dots">
-                <span></span><span></span><span></span>
-            </div>
         </div>
     </div>
-
-    <!-- Animated background particles -->
-    <div class="particles-container" id="particles"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
