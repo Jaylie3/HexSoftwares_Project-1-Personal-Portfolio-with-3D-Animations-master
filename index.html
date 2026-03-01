@@ -397,12 +397,14 @@
                         <p>Bergville, KwaZulu-Natal, South Africa</p>
                     </div>
                 </div>
-
+                
                 <div class="contact-form-container">
                     <h4>Send Me a Message</h4>
-                    <form id="contactForm" class="contact-form" action="#" method="POST" autocomplete="on" novalidate>
-                        <!-- CSRF Token - Add your backend-generated token here -->
-                        <input type="hidden" name="csrf_token" value="">
+                    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" autocomplete="on" novalidate>
+                        <input type="hidden" name="_subject" value="Portfolio Contact Form Submission">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="text" name="_honey" style="display:none">
+                        <input type="hidden" name="_replyto" value="">
                         
                         <div class="form-group">
                             <label for="name">Full Name *</label>
@@ -410,35 +412,27 @@
                                 type="text" 
                                 id="name" 
                                 name="name" 
-                                autocomplete="name" 
                                 required 
+                                autocomplete="name" 
                                 minlength="2" 
                                 maxlength="100"
-                                pattern="^[a-zA-Z\u00C0-\u00FF\s\-']+$"
+                                pattern="[a-zA-Z\s\-']+"
                                 title="Please enter a valid name (letters, spaces, hyphens, and apostrophes only)"
-                                aria-required="true"
-                                aria-describedby="name-error"
                             >
-                            <span class="error-message" id="name-error"></span>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="email">Email Address *</label>
                             <input 
                                 type="email" 
                                 id="email" 
                                 name="email" 
-                                autocomplete="email" 
                                 required 
-                                maxlength="254"
-                                pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                                autocomplete="email"
                                 title="Please enter a valid email address"
-                                aria-required="true"
-                                aria-describedby="email-error"
                             >
-                            <span class="error-message" id="email-error"></span>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
                             <input 
@@ -446,68 +440,45 @@
                                 id="phone" 
                                 name="phone" 
                                 autocomplete="tel"
-                                maxlength="20"
-                                pattern="^[\d\s\+\-\(\)]+$"
+                                pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
                                 title="Please enter a valid phone number"
-                                aria-describedby="phone-error"
                             >
-                            <span class="error-message" id="phone-error"></span>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="subject">Subject *</label>
                             <input 
                                 type="text" 
                                 id="subject" 
                                 name="subject" 
-                                autocomplete="subject" 
                                 required 
-                                minlength="3"
+                                autocomplete="organization-title" 
+                                minlength="3" 
                                 maxlength="150"
                                 title="Please enter a subject (minimum 3 characters)"
-                                aria-required="true"
-                                aria-describedby="subject-error"
                             >
-                            <span class="error-message" id="subject-error"></span>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="message">Message *</label>
                             <textarea 
                                 id="message" 
                                 name="message" 
-                                autocomplete="off"
                                 required 
                                 minlength="10" 
-                                maxlength="2000"
-                                rows="6"
+                                maxlength="1000" 
+                                rows="5"
                                 title="Please enter your message (minimum 10 characters)"
-                                aria-required="true"
-                                aria-describedby="message-error"
                             ></textarea>
-                            <span class="error-message" id="message-error"></span>
                         </div>
-
-                        <div class="form-group checkbox-group">
-                            <input 
-                                type="checkbox" 
-                                id="privacy" 
-                                name="privacy" 
-                                required
-                                aria-required="true"
-                            >
-                            <label for="privacy">I agree that my submitted data is being collected and stored. *</label>
-                            <span class="error-message" id="privacy-error"></span>
-                        </div>
-
-                        <div class="form-group form-submit">
-                            <button type="submit" class="btn-primary submit-btn" id="submitBtn">
-                                <span>Send Message</span>
-                                <i class="fas fa-paper-plane"></i>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send Message
                             </button>
                         </div>
-
-                        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+                        
+                        <div id="formStatus" class="form-status"></div>
                     </form>
                 </div>
 
@@ -541,7 +512,6 @@
         </div>
     </footer>
 
-    <!-- Fixed Navigation -->
     <nav class="fixed-nav" id="fixedNav">
         <div class="nav-container">
             <a href="#about" class="nav-item"><i class="fas fa-user"></i><span>About</span></a>
@@ -552,7 +522,6 @@
         </div>
     </nav>
 
-    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader">
             <div class="loader-text">Loading Portfolio...</div>
@@ -563,6 +532,120 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const formStatus = document.getElementById('formStatus');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const honeypot = form.querySelector('input[name="_honey"]').value;
+                    if (honeypot) {
+                        return false;
+                    }
+                    
+                    if (!form.checkValidity()) {
+                        showFormStatus('Please fill in all required fields correctly.', 'error');
+                        highlightInvalidFields();
+                        return false;
+                    }
+                    
+                    const formData = new FormData(form);
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalBtnText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                    submitBtn.disabled = true;
+                    
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            showFormStatus('Thank you! Your message has been sent successfully.', 'success');
+                            form.reset();
+                        } else {
+                            response.json().then(data => {
+                                const errorMsg = data.error || 'There was a problem sending your message.';
+                                showFormStatus(errorMsg, 'error');
+                            }).catch(() => {
+                                showFormStatus('There was a problem sending your message. Please try again.', 'error');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        showFormStatus('There was a problem sending your message. Please try again.', 'error');
+                    })
+                    .finally(() => {
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                    });
+                    
+                    return false;
+                });
+                
+                const inputs = form.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('input', function() {
+                        this.classList.remove('invalid');
+                        const errorMsg = this.parentElement.querySelector('.field-error');
+                        if (errorMsg) {
+                            errorMsg.remove();
+                        }
+                    });
+                });
+            }
+            
+            function showFormStatus(message, type) {
+                if (formStatus) {
+                    formStatus.textContent = message;
+                    formStatus.className = 'form-status ' + type;
+                    formStatus.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        formStatus.style.display = 'none';
+                    }, 5000);
+                }
+            }
+            
+            function highlightInvalidFields() {
+                const inputs = form.querySelectorAll('input[required], textarea[required]');
+                inputs.forEach(input => {
+                    if (!input.validity.valid) {
+                        input.classList.add('invalid');
+                        
+                        let errorMsg = '';
+                        if (input.validity.valueMissing) {
+                            errorMsg = 'This field is required.';
+                        } else if (input.validity.tooShort) {
+                            errorMsg = `Minimum length is ${input.minLength} characters.`;
+                        } else if (input.validity.tooLong) {
+                            errorMsg = `Maximum length is ${input.maxLength} characters.`;
+                        } else if (input.validity.typeMismatch && input.type === 'email') {
+                            errorMsg = 'Please enter a valid email address.';
+                        } else if (input.validity.patternMismatch) {
+                            errorMsg = input.title || 'Please enter a valid value.';
+                        }
+                        
+                        if (errorMsg) {
+                            let errorDiv = input.parentElement.querySelector('.field-error');
+                            if (!errorDiv) {
+                                errorDiv = document.createElement('div');
+                                errorDiv.className = 'field-error';
+                                input.parentElement.appendChild(errorDiv);
+                            }
+                            errorDiv.textContent = errorMsg;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
