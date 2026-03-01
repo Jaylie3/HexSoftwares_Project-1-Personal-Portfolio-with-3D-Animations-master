@@ -10,6 +10,27 @@
 <body>
     <canvas class="webgl"></canvas>
     
+    <!-- Circular Hamburger Menu Toggle -->
+    <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Mobile Slide-out Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item nav-item-1"><a href="#about">About</a></li>
+            <li class="mobile-nav-item nav-item-2"><a href="#skills">Skills</a></li>
+            <li class="mobile-nav-item nav-item-3"><a href="#technologies">Tech Stack</a></li>
+            <li class="mobile-nav-item nav-item-4"><a href="#projects">Projects</a></li>
+            <li class="mobile-nav-item nav-item-5"><a href="#experience">Experience</a></li>
+            <li class="mobile-nav-item nav-item-6"><a href="#certifications">Certifications</a></li>
+            <li class="mobile-nav-item nav-item-7"><a href="#testimonials">Reviews</a></li>
+            <li class="mobile-nav-item nav-item-8"><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
     <header>
         <div class="container">
             <div class="profile-section">
@@ -24,20 +45,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="nav-controls">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-                    <i class="fas fa-sun"></i>
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                </button>
-            </div>
-            
-            <nav class="main-nav" id="mainNav">
+            <nav class="main-nav">
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
