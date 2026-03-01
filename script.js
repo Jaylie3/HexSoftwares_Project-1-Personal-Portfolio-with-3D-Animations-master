@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Animations - Enhanced
+// Enhanced Animations
 document.addEventListener('DOMContentLoaded', function() {
     const observerOptions = {
         threshold: 0.1,
@@ -75,74 +75,68 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.transform = 'translateY(0) scale(1)';
+                entry.target.classList.add('animate-in');
             }
         });
     }, observerOptions);
     
-    // Animate cards with enhanced easing
+    // Animate cards with enhanced effects
     const cards = document.querySelectorAll('.skill-card, .project-card, .testimonial-card, .edu-content');
     cards.forEach((card, index) => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(50px) scale(0.9)';
-        card.style.transition = `all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${index * 0.1}s`;
+        card.style.transform = 'translateY(30px) scale(0.95)';
+        card.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
         observer.observe(card);
     });
-});
 
-// Card 3D Tilt Effect on Hover
-document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.project-card, .skill-card');
-    
-    cards.forEach(card => {
+    // Parallax effect on scroll
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const parallaxElements = document.querySelectorAll('.parallax');
+        parallaxElements.forEach(el => {
+            const speed = el.dataset.speed || 0.5;
+            el.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    });
+
+    // Magnetic effect for buttons
+    const magneticButtons = document.querySelectorAll('.btn, .nav-link');
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+
+    // Tilt effect for cards
+    const tiltCards = document.querySelectorAll('.skill-card, .project-card');
+    tiltCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
             
-            const rotateX = (y - centerY) / 15;
-            const rotateY = (centerX - x) / 15;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-            card.style.transition = 'transform 0.15s ease-out';
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
         });
         
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            card.style.transition = 'transform 0.5s ease-out';
         });
     });
 });
 
-// Scroll Progress Bar
-document.addEventListener('DOMContentLoaded', function() {
-    const progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress';
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #6366f1, #8b5cf6);
-        z-index: 10001;
-        transition: width 0.1s ease-out;
-        width: 0%;
-        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-    `;
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        progressBar.style.width = scrollPercent + '%';
-    });
-});
-
-// Three.js Background - Enhanced with Interaction
+// Enhanced Three.js Background
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
     
@@ -158,316 +152,312 @@ function initThreeJS() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
     
-    // Create particle group
-    const particlesGroup = new THREE.Group();
+    // Enhanced Particles System
+    const particlesCount = 1500;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+    const sizes = new Float32Array(particlesCount);
     
-    // Layer 1 - Main particles with gradient colors
-    const geometry1 = new THREE.BufferGeometry();
-    const particlesCount1 = 600;
-    const positions1 = new Float32Array(particlesCount1 * 3);
-    const colors1 = new Float32Array(particlesCount1 * 3);
-    const originalY = new Float32Array(particlesCount1);
-    
-    for (let i = 0; i < particlesCount1; i++) {
-        const i3 = i * 3;
-        positions1[i3] = (Math.random() - 0.5) * 20;
-        positions1[i3 + 1] = (Math.random() - 0.5) * 20;
-        positions1[i3 + 2] = (Math.random() - 0.5) * 20;
-        originalY[i] = positions1[i3 + 1];
-        
-        // Purple to blue gradient
-        const t = Math.random();
-        colors1[i3] = 0.39 + t * 0.15;
-        colors1[i3 + 1] = 0.4 + t * 0.1;
-        colors1[i3 + 2] = 0.85 + t * 0.15;
-    }
-    
-    geometry1.setAttribute('position', new THREE.BufferAttribute(positions1, 3));
-    geometry1.setAttribute('color', new THREE.BufferAttribute(colors1, 3));
-    
-    const material1 = new THREE.PointsMaterial({
-        size: 0.04,
-        transparent: true,
-        opacity: 0.9,
-        vertexColors: true,
-        blending: THREE.AdditiveBlending
-    });
-    
-    const particles1 = new THREE.Points(geometry1, material1);
-    particlesGroup.add(particles1);
-    
-    // Layer 2 - Smaller background particles
-    const geometry2 = new THREE.BufferGeometry();
-    const particlesCount2 = 1200;
-    const positions2 = new Float32Array(particlesCount2 * 3);
-    
-    for (let i = 0; i < particlesCount2 * 3; i++) {
-        positions2[i] = (Math.random() - 0.5) * 30;
-    }
-    
-    geometry2.setAttribute('position', new THREE.BufferAttribute(positions2, 3));
-    
-    const material2 = new THREE.PointsMaterial({
-        color: 0x8b5cf6,
-        size: 0.015,
-        transparent: true,
-        opacity: 0.6,
-        blending: THREE.AdditiveBlending
-    });
-    
-    const particles2 = new THREE.Points(geometry2, material2);
-    particlesGroup.add(particles2);
-    
-    // Floating geometric shapes
-    const shapesGroup = new THREE.Group();
-    const geometries = [
-        new THREE.IcosahedronGeometry(0.4, 0),
-        new THREE.OctahedronGeometry(0.35, 0),
-        new THREE.TetrahedronGeometry(0.4, 0),
-        new THREE.TorusGeometry(0.3, 0.1, 8, 16),
-        new THREE.IcosahedronGeometry(0.25, 0)
+    const colorPalette = [
+        new THREE.Color(0x6366f1),
+        new THREE.Color(0x8b5cf6),
+        new THREE.Color(0x06b6d4),
+        new THREE.Color(0xf472b6)
     ];
     
-    const shapeColors = [0x6366f1, 0x8b5cf6, 0xa855f7, 0x7877d9, 0x9d7bfa];
-    
-    for (let i = 0; i < 6; i++) {
-        const material = new THREE.MeshBasicMaterial({
-            color: shapeColors[i % shapeColors.length],
-            wireframe: true,
-            transparent: true,
-            opacity: 0.4
-        });
-        const mesh = new THREE.Mesh(geometries[i % geometries.length], material);
-        mesh.position.x = (Math.random() - 0.5) * 12;
-        mesh.position.y = (Math.random() - 0.5) * 12;
-        mesh.position.z = (Math.random() - 0.5) * 8;
-        mesh.userData = {
-            rotationSpeed: {
-                x: (Math.random() - 0.5) * 0.015,
-                y: (Math.random() - 0.5) * 0.015,
-                z: (Math.random() - 0.5) * 0.01
-            },
-            floatSpeed: Math.random() * 0.002 + 0.001,
-            floatOffset: Math.random() * Math.PI * 2
-        };
-        shapesGroup.add(mesh);
+    for (let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 25;
+        positions[i3 + 1] = (Math.random() - 0.5) * 25;
+        positions[i3 + 2] = (Math.random() - 0.5) * 25;
+        
+        const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+        colors[i3] = color.r;
+        colors[i3 + 1] = color.g;
+        colors[i3 + 2] = color.b;
+        
+        sizes[i] = Math.random() * 3 + 1;
     }
     
-    scene.add(particlesGroup);
-    scene.add(shapesGroup);
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     
-    // Mouse interaction
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
+    const material = new THREE.PointsMaterial({
+        size: 0.05,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
+    });
+    
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    
+    // Add floating geometric shapes
+    const shapes = [];
+    const shapeGeometry = new THREE.IcosahedronGeometry(0.3, 0);
+    const shapeMaterial = new THREE.MeshBasicMaterial({
+        color: 0x6366f1,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.5
+    });
+    
+    for (let i = 0; i < 5; i++) {
+        const shape = new THREE.Mesh(shapeGeometry, shapeMaterial.clone());
+        shape.position.set(
+            (Math.random() - 0.5) * 15,
+            (Math.random() - 0.5) * 15,
+            (Math.random() - 0.5) * 15
+        );
+        shape.userData = {
+            rotationSpeed: {
+                x: (Math.random() - 0.5) * 0.02,
+                y: (Math.random() - 0.5) * 0.02
+            },
+            floatSpeed: Math.random() * 0.5 + 0.5,
+            floatOffset: Math.random() * Math.PI * 2
+        };
+        shapes.push(shape);
+        scene.add(shape);
+    }
+    
+    // Mouse tracking for interactive effects
+    const mouse = {
+        x: 0,
+        y: 0,
+        targetX: 0,
+        targetY: 0
+    };
     
     document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        mouse.targetX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
     });
     
-    // Click ripple effect
-    const clickEffects = [];
+    // Raycaster for particle interaction
+    const raycaster = new THREE.Raycaster();
+    const mouseVector = new THREE.Vector2();
     
     document.addEventListener('click', (e) => {
-        clickEffects.push({
-            position: new THREE.Vector2(
-                (e.clientX / window.innerWidth) * 2 - 1,
-                -(e.clientY / window.innerHeight) * 2 + 1
-            ),
-            radius: 0,
-            opacity: 1
+        mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        
+        raycaster.setFromCamera(mouseVector, camera);
+        
+        // Create burst effect on click
+        const burstGeometry = new THREE.BufferGeometry();
+        const burstCount = 30;
+        const burstPositions = new Float32Array(burstCount * 3);
+        const burstColors = new Float32Array(burstCount * 3);
+        
+        for (let i = 0; i < burstCount; i++) {
+            const i3 = i * 3;
+            burstPositions[i3] = (Math.random() - 0.5) * 2;
+            burstPositions[i3 + 1] = (Math.random() - 0.5) * 2;
+            burstPositions[i3 + 2] = (Math.random() - 0.5) * 2;
+            
+            const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+            burstColors[i3] = color.r;
+            burstColors[i3 + 1] = color.g;
+            burstColors[i3 + 2] = color.b;
+        }
+        
+        burstGeometry.setAttribute('position', new THREE.BufferAttribute(burstPositions, 3));
+        burstGeometry.setAttribute('color', new THREE.BufferAttribute(burstColors, 3));
+        
+        const burstMaterial = new THREE.PointsMaterial({
+            size: 0.1,
+            vertexColors: true,
+            transparent: true,
+            opacity: 1,
+            blending: THREE.AdditiveBlending
         });
+        
+        const burst = new THREE.Points(burstGeometry, burstMaterial);
+        burst.position.copy(camera.position);
+        burst.position.z -= 3;
+        scene.add(burst);
+        
+        // Animate burst
+        let burstOpacity = 1;
+        function animateBurst() {
+            burstOpacity -= 0.02;
+            burst.material.opacity = burstOpacity;
+            burst.position.add(burst.position.clone().normalize().multiplyScalar(0.05));
+            
+            if (burstOpacity > 0) {
+                requestAnimationFrame(animateBurst);
+            } else {
+                scene.remove(burst);
+                burstGeometry.dispose();
+                burstMaterial.dispose();
+            }
+        }
+        animateBurst();
     });
     
-    // Animation loop
+    // Animation variables
     let time = 0;
+    
+    // Enhanced Animation
     function animate() {
         requestAnimationFrame(animate);
         time += 0.01;
         
         // Smooth mouse following
-        targetX += (mouseX - targetX) * 0.05;
-        targetY += (mouseY - targetY) * 0.05;
+        mouse.x += (mouse.targetX - mouse.x) * 0.05;
+        mouse.y += (mouse.targetY - mouse.y) * 0.05;
         
-        // Apply mouse rotation to particles
-        particlesGroup.rotation.x = targetY * 0.4;
-        particlesGroup.rotation.y = targetX * 0.4;
+        // Particle rotation with mouse interaction
+        particles.rotation.x += 0.0005 + mouse.y * 0.001;
+        particles.rotation.y += 0.001 + mouse.x * 0.001;
         
-        // Continuous base rotation
-        particles1.rotation.x += 0.0003;
-        particles1.rotation.y += 0.0005;
-        particles2.rotation.x -= 0.0002;
-        particles2.rotation.y -= 0.0004;
-        
-        // Wave effect on layer 1 particles
-        const positions = particles1.geometry.attributes.position.array;
-        for (let i = 0; i < particlesCount1; i++) {
+        // Animate individual particles for wave effect
+        const positions = particles.geometry.attributes.position.array;
+        for (let i = 0; i < particlesCount; i++) {
             const i3 = i * 3;
-            const wave = Math.sin(time + positions[i3] * 0.3 + positions[i3 + 2] * 0.2) * 0.003;
-            positions[i3 + 1] = originalY[i] + wave;
+            const x = positions[i3];
+            const y = positions[i3 + 1];
+            
+            // Add wave motion
+            positions[i3 + 1] = y + Math.sin(time + x * 0.5) * 0.002;
         }
-        particles1.geometry.attributes.position.needsUpdate = true;
+        particles.geometry.attributes.position.needsUpdate = true;
         
         // Animate floating shapes
-        shapesGroup.children.forEach((mesh, i) => {
-            mesh.rotation.x += mesh.userData.rotationSpeed.x;
-            mesh.rotation.y += mesh.userData.rotationSpeed.y;
-            mesh.rotation.z += mesh.userData.rotationSpeed.z;
-            mesh.position.y += Math.sin(time * mesh.userData.floatSpeed * 100 + mesh.userData.floatOffset) * mesh.userData.floatSpeed;
+        shapes.forEach((shape, i) => {
+            shape.rotation.x += shape.userData.rotationSpeed.x;
+            shape.rotation.y += shape.userData.rotationSpeed.y;
+            shape.position.y += Math.sin(time * shape.userData.floatSpeed + shape.userData.floatOffset) * 0.003;
+            shape.material.opacity = 0.3 + Math.sin(time + i) * 0.2;
         });
         
-        // Apply click ripple effects to particles
-        const positionsArray = particles1.geometry.attributes.position.array;
-        clickEffects.forEach((effect, effectIndex) => {
-            effect.radius += 0.15;
-            effect.opacity -= 0.02;
-            
-            if (effect.opacity > 0) {
-                for (let i = 0; i < particlesCount1; i++) {
-                    const i3 = i * 3;
-                    const px = positionsArray[i3];
-                    const py = positionsArray[i3 + 1];
-                    const pz = positionsArray[i3 + 2];
-                    
-                    const distance = Math.sqrt(
-                        Math.pow(px - effect.position.x * 5, 2) +
-                        Math.pow(py - effect.position.y * 5, 2)
-                    );
-                    
-                    const rippleWidth = 1.0;
-                    if (Math.abs(distance - effect.radius) < rippleWidth) {
-                        const pushFactor = Math.cos((distance - effect.radius) / rippleWidth * Math.PI / 2) * 0.1 * effect.opacity;
-                        positionsArray[i3] += (px - effect.position.x * 5) * pushFactor;
-                        positionsArray[i3 + 1] += (py - effect.position.y * 5) * pushFactor;
-                    }
-                }
-            }
-        });
-        
-        // Remove finished click effects
-        clickEffects.splice(0, clickEffects.length, ...clickEffects.filter(e => e.opacity > 0));
-        
-        particles1.geometry.attributes.position.needsUpdate = true;
+        // Camera subtle movement
+        camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.02;
+        camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.02;
+        camera.lookAt(scene.position);
         
         renderer.render(scene, camera);
     }
     
-    // Handle resize
+    // Resize handler with smooth transition
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }, 100);
     });
     
     animate();
 }
 
-// Cursor Trail Effect
-function initCursorTrail() {
-    const trailLength = 15;
-    const trailElements = [];
+// Theme Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
     
-    for (let i = 0; i < trailLength; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'cursor-dot';
-        dot.style.cssText = `
-            position: fixed;
-            width: ${12 - i * 0.6}px;
-            height: ${12 - i * 0.6}px;
-            background: radial-gradient(circle, rgba(99, 102, 241, ${0.9 - i * 0.05}) 0%, rgba(139, 92, 246, ${0.6 - i * 0.04}) 50%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s;
-        `;
-        document.body.appendChild(dot);
-        trailElements.push(dot);
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
     }
     
-    let cursorPositions = new Array(trailLength).fill({ x: 0, y: 0 });
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            
+            // Add transition effect
+            body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 300);
+        });
+    }
+    
+    function updateThemeIcon(theme) {
+        const icon = themeToggle?.querySelector('i') || themeToggle?.querySelector('.theme-icon');
+        if (icon) {
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    }
+
+    // Cursor glow effect
+    const cursorGlow = document.createElement('div');
+    cursorGlow.className = 'cursor-glow';
+    document.body.appendChild(cursorGlow);
     
     document.addEventListener('mousemove', (e) => {
-        cursorPositions.shift();
-        cursorPositions.push({ x: e.clientX, y: e.clientY });
-    });
-    
-    function animateTrail() {
-        trailElements.forEach((dot, i) => {
-            const target = cursorPositions[i];
-            if (target) {
-                dot.style.left = target.x + 'px';
-                dot.style.top = target.y + 'px';
-            }
-        });
-        requestAnimationFrame(animateTrail);
-    }
-    
-    animateTrail();
-    
-    // Hide cursor trail when mouse leaves window
-    document.addEventListener('mouseleave', () => {
-        trailElements.forEach(dot => dot.style.opacity = '0');
-    });
-    
-    document.addEventListener('mouseenter', () => {
-        trailElements.forEach(dot => dot.style.opacity = '1');
-    });
-}
-
-// Magnetic Button Effect
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('button, .btn, a.btn-primary');
-    
-    buttons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            
-            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-            btn.style.transition = 'transform 0.2s ease-out';
-        });
-        
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0)';
-            btn.style.transition = 'transform 0.3s ease-out';
-        });
+        cursorGlow.style.left = e.clientX - 20 + 'px';
+        cursorGlow.style.top = e.clientY - 20 + 'px';
     });
 });
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced typing effect with cursor animation
+    // Enhanced typing effect
     const mainHeading = document.querySelector('.profile-info h1');
     if (mainHeading) {
         const text = mainHeading.textContent;
         mainHeading.textContent = '';
-        mainHeading.style.borderRight = '3px solid #6366f1';
-        mainHeading.style.animation = 'blink 0.7s infinite';
         
         let i = 0;
         const typeWriter = () => {
             if (i < text.length) {
                 mainHeading.textContent += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, 70);
+                
+                // Add cursor blink effect
+                mainHeading.classList.add('typing');
+                setTimeout(typeWriter, 80 + Math.random() * 50);
             } else {
-                setTimeout(() => {
-                    mainHeading.style.borderRight = 'none';
-                    mainHeading.style.animation = 'none';
-                }, 500);
+                mainHeading.classList.remove('typing');
             }
         };
         
         setTimeout(typeWriter, 2500);
     }
+
+    // Subtitle typing effect
+    const subtitle = document.querySelector('.profile-info p.subtitle');
+    if (subtitle) {
+        const subtitleText = subtitle.textContent;
+        subtitle.textContent = '';
+        
+        let j = 0;
+        const typeSubtitle = () => {
+            if (j < subtitleText.length) {
+                subtitle.textContent += subtitleText.charAt(j);
+                j++;
+                setTimeout(typeSubtitle, 30);
+            }
+        };
+        
+        setTimeout(typeSubtitle, 4000);
+    }
     
-    // Initialize enhanced Three.js
+    // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
+
+    // Scroll progress indicator
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
     
-    // Initialize cursor trail with delay
-    setTimeout(initCursorTrail, 800);
+    window.addEventListener('scroll', () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = scrollPercent + '%';
+    });
 });
