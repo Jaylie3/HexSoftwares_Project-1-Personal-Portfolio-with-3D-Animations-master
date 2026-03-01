@@ -1,22 +1,13 @@
-// Loading Screen - Dynamic detection
-let threeJSReady = false;
-let domContentReady = false;
-
-function hideLoadingScreenWhenReady() {
-    // Hide loading screen when both DOM and Three.js are ready
-    if (domContentReady && threeJSReady) {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 500);
-        }
-    }
-}
-
+// Loading Screen
 document.addEventListener('DOMContentLoaded', function() {
-    domContentReady = true;
+    const loadingScreen = document.getElementById('loadingScreen');
+    
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500);
+    }, 2000);
 });
 
 // Fixed Navigation
@@ -99,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Three.js Background
+// Three.js Background - Enhanced
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
     
@@ -107,53 +98,147 @@ function initThreeJS() {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('canvas.webgl'),
-        alpha: true
+        alpha: true,
+        antialias: true
     });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
     
-    // Particles
+    // Enhanced Particles
+    const particlesCount = 2500;
     const geometry = new THREE.BufferGeometry();
-    const particlesCount = 800;
     const positions = new Float32Array(particlesCount * 3);
+    const originalPositions = new Float32Array(particlesCount * 3);
+    const sizes = new Float32Array(particlesCount);
+    const colors = new Float32Array(particlesCount * 3);
+    const randomFactors = new Float32Array(particlesCount);
     
-    for (let i = 0; i < particlesCount * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 20;
+    const color1 = new THREE.Color(0x6366f1);
+    const color2 = new THREE.Color(0x8b5cf6);
+    const color3 = new THREE.Color(0x06b6d4);
+    
+    for (let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        
+        // Create a sphere-like distribution
+        const radius = 8 * Math.cbrt(Math.random());
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        
+        positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        positions[i3 + 2] = radius * Math.cos(phi);
+        
+        // Store original positions for animation
+        originalPositions[i3] = positions[i3];
+        originalPositions[i3 + 1] = positions[i3 + 1];
+        originalPositions[i3 + 2] = positions[i3 + 2];
+        
+        // Vary particle sizes
+        sizes[i] = Math.random() * 2 + 0.5;
+        
+        // Random factors for animation variation
+        randomFactors[i] = Math.random() * Math.PI * 2;
+        
+        // Color gradient based on position
+        const mixFactor = (positions[i3] + 8) / 16;
+        const mixedColor = color1.clone().lerp(color2, mixFactor);
+        if (Math.random() > 0.7) {
+            mixedColor.lerp(color3, 0.5);
+        }
+        
+        colors[i3] = mixedColor.r;
+        colors[i3 + 1] = mixedColor.g;
+        colors[i3 + 2] = mixedColor.b;
     }
     
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     
+    // Custom shader material for better particles
     const material = new THREE.PointsMaterial({
-        color: 0x6366f1,
-        size: 0.02,
+        size: 0.05,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.9,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
     });
     
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
     
-    // Animation
+    // Mouse interaction
+    const mouse = new THREE.Vector2();
+    const targetRotation = new THREE.Vector2();
+    const windowHalfX = window.innerWidth / 2;
+    const windowHalfY = window.innerHeight / 2;
+    
+    document.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX - windowHalfX) * 0.001;
+        mouse.y = (event.clientY - windowHalfY) * 0.001;
+    });
+    
+    // Animation variables
+    let time = 0;
+    const waveSpeed = 0.002;
+    const waveAmplitude = 0.3;
+    
+    // Enhanced Animation
     function animate() {
         requestAnimationFrame(animate);
-        particles.rotation.x += 0.0005;
-        particles.rotation.y += 0.001;
+        time += waveSpeed;
+        
+        const positions = particles.geometry.attributes.position.array;
+        
+        // Wave motion for each particle
+        for (let i = 0; i < particlesCount; i++) {
+            const i3 = i * 3;
+            
+            // Organic wave movement
+            const waveX = Math.sin(time + originalPositions[i3 + 1] * 0.5 + randomFactors[i]) * waveAmplitude;
+            const waveY = Math.cos(time + originalPositions[i3] * 0.5 + randomFactors[i]) * waveAmplitude;
+            const waveZ = Math.sin(time + originalPositions[i3 + 2] * 0.3 + randomFactors[i]) * waveAmplitude * 0.5;
+            
+            positions[i3] = originalPositions[i3] + waveX;
+            positions[i3 + 1] = originalPositions[i3 + 1] + waveY;
+            positions[i3 + 2] = originalPositions[i3 + 2] + waveZ;
+        }
+        
+        particles.geometry.attributes.position.needsUpdate = true;
+        
+        // Smooth mouse follow rotation
+        targetRotation.x = mouse.y * 0.5;
+        targetRotation.y = mouse.x * 0.5;
+        
+        particles.rotation.x += (targetRotation.x - particles.rotation.x) * 0.05;
+        particles.rotation.y += (targetRotation.y - particles.rotation.y) * 0.05;
+        
+        // Gentle continuous rotation
+        particles.rotation.z += 0.0003;
+        
+        // Pulse effect for size
+        const pulse = 1 + Math.sin(time * 2) * 0.1;
+        material.size = 0.05 * pulse;
+        
         renderer.render(scene, camera);
     }
     
-    // Mark Three.js as ready after initial setup
-    animate();
-    threeJSReady = true;
-    hideLoadingScreenWhenReady();
-    
-    // Resize
+    // Resize with smooth transition
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }, 100);
     });
+    
+    animate();
 }
 
 // Initialize
@@ -173,9 +258,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
-        setTimeout(typeWriter, 500);
+        setTimeout(typeWriter, 2500);
     }
     
-    // Initialize Three.js
-    initThreeJS();
+    // Initialize Three.js after a delay
+    setTimeout(initThreeJS, 100);
 });
