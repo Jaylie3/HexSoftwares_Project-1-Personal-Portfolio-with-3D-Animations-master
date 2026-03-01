@@ -1,13 +1,22 @@
-// Loading Screen
+// Loading Screen - Dynamic detection
+let threeJSReady = false;
+let domContentReady = false;
+
+function hideLoadingScreenWhenReady() {
+    // Hide loading screen when both DOM and Three.js are ready
+    if (domContentReady && threeJSReady) {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    
-    setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500);
-    }, 2000);
+    domContentReady = true;
 });
 
 // Fixed Navigation
@@ -134,14 +143,17 @@ function initThreeJS() {
         renderer.render(scene, camera);
     }
     
+    // Mark Three.js as ready after initial setup
+    animate();
+    threeJSReady = true;
+    hideLoadingScreenWhenReady();
+    
     // Resize
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
-    
-    animate();
 }
 
 // Initialize
@@ -161,9 +173,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
-        setTimeout(typeWriter, 2500);
+        setTimeout(typeWriter, 500);
     }
     
-    // Initialize Three.js after a delay
-    setTimeout(initThreeJS, 100);
+    // Initialize Three.js
+    initThreeJS();
 });
