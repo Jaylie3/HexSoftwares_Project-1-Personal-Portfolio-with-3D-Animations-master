@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Animations
+// Animations - Enhanced
 document.addEventListener('DOMContentLoaded', function() {
     const observerOptions = {
         threshold: 0.1,
@@ -75,27 +75,27 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+                entry.target.style.transform = 'translateY(0)';
             }
         });
     }, observerOptions);
     
-    // Animate cards
+    // Animate cards with enhanced easing
     const cards = document.querySelectorAll('.skill-card, .project-card, .testimonial-card, .edu-content');
     cards.forEach((card, index) => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
+        card.style.transform = 'translateY(50px) scale(0.9)';
+        card.style.transition = `all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${index * 0.1}s`;
         observer.observe(card);
     });
 });
 
-// 3D Tilt Effect for Project Cards
+// Card 3D Tilt Effect on Hover
 document.addEventListener('DOMContentLoaded', function() {
-    const projectCards = document.querySelectorAll('.project-card');
+    const cards = document.querySelectorAll('.project-card, .skill-card');
     
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', function(e) {
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -103,62 +103,46 @@ document.addEventListener('DOMContentLoaded', function() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
+            const rotateX = (y - centerY) / 15;
+            const rotateY = (centerX - x) / 15;
             
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-            card.style.transition = 'none';
-            
-            // Add shine effect
-            let shine = card.querySelector('.shine');
-            if (!shine) {
-                shine = document.createElement('div');
-                shine.className = 'shine';
-                card.style.position = 'relative';
-                card.style.overflow = 'hidden';
-                shine.style.position = 'absolute';
-                shine.style.top = '0';
-                shine.style.left = '0';
-                shine.style.width = '100%';
-                shine.style.height = '100%';
-                shine.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)';
-                shine.style.pointerEvents = 'none';
-                shine.style.opacity = '0';
-                shine.style.transition = 'opacity 0.3s';
-                card.appendChild(shine);
-            }
-            shine.style.opacity = '1';
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            card.style.transition = 'transform 0.15s ease-out';
         });
         
-        card.addEventListener('mouseleave', function() {
+        card.addEventListener('mouseleave', () => {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            
-            const shine = card.querySelector('.shine');
-            if (shine) {
-                shine.style.opacity = '0';
-            }
+            card.style.transition = 'transform 0.5s ease-out';
         });
-    });
-    
-    // Add floating animation to skill cards
-    const skillCards = document.querySelectorAll('.skill-card');
-    skillCards.forEach((card, index) => {
-        card.style.animation = `float 3s ease-in-out ${index * 0.2}s infinite`;
     });
 });
 
-// Add floating animation keyframes
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-`;
-document.head.appendChild(style);
+// Scroll Progress Bar
+document.addEventListener('DOMContentLoaded', function() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        z-index: 10001;
+        transition: width 0.1s ease-out;
+        width: 0%;
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    `;
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+    });
+});
 
-// Three.js Background with Enhanced Effects
+// Three.js Background - Enhanced with Interaction
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
     
@@ -174,137 +158,203 @@ function initThreeJS() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
     
-    // Particles
-    const particlesCount = 1200;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particlesCount * 3);
-    const colors = new Float32Array(particlesCount * 3);
-    const velocities = new Float32Array(particlesCount * 3);
+    // Create particle group
+    const particlesGroup = new THREE.Group();
     
-    const colorPalette = [
-        new THREE.Color(0x6366f1),
-        new THREE.Color(0x8b5cf6),
-        new THREE.Color(0xec4899),
-        new THREE.Color(0x06b6d4)
-    ];
+    // Layer 1 - Main particles with gradient colors
+    const geometry1 = new THREE.BufferGeometry();
+    const particlesCount1 = 600;
+    const positions1 = new Float32Array(particlesCount1 * 3);
+    const colors1 = new Float32Array(particlesCount1 * 3);
+    const originalY = new Float32Array(particlesCount1);
     
-    for (let i = 0; i < particlesCount; i++) {
+    for (let i = 0; i < particlesCount1; i++) {
         const i3 = i * 3;
-        positions[i3] = (Math.random() - 0.5) * 20;
-        positions[i3 + 1] = (Math.random() - 0.5) * 20;
-        positions[i3 + 2] = (Math.random() - 0.5) * 20;
+        positions1[i3] = (Math.random() - 0.5) * 20;
+        positions1[i3 + 1] = (Math.random() - 0.5) * 20;
+        positions1[i3 + 2] = (Math.random() - 0.5) * 20;
+        originalY[i] = positions1[i3 + 1];
         
-        velocities[i3] = (Math.random() - 0.5) * 0.01;
-        velocities[i3 + 1] = (Math.random() - 0.5) * 0.01;
-        velocities[i3 + 2] = (Math.random() - 0.5) * 0.01;
-        
-        const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-        colors[i3] = color.r;
-        colors[i3 + 1] = color.g;
-        colors[i3 + 2] = color.b;
+        // Purple to blue gradient
+        const t = Math.random();
+        colors1[i3] = 0.39 + t * 0.15;
+        colors1[i3 + 1] = 0.4 + t * 0.1;
+        colors1[i3 + 2] = 0.85 + t * 0.15;
     }
     
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry1.setAttribute('position', new THREE.BufferAttribute(positions1, 3));
+    geometry1.setAttribute('color', new THREE.BufferAttribute(colors1, 3));
     
-    const material = new THREE.PointsMaterial({
-        size: 0.03,
+    const material1 = new THREE.PointsMaterial({
+        size: 0.04,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.9,
         vertexColors: true,
         blending: THREE.AdditiveBlending
     });
     
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+    const particles1 = new THREE.Points(geometry1, material1);
+    particlesGroup.add(particles1);
     
-    // Lines connecting nearby particles
-    const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x6366f1,
+    // Layer 2 - Smaller background particles
+    const geometry2 = new THREE.BufferGeometry();
+    const particlesCount2 = 1200;
+    const positions2 = new Float32Array(particlesCount2 * 3);
+    
+    for (let i = 0; i < particlesCount2 * 3; i++) {
+        positions2[i] = (Math.random() - 0.5) * 30;
+    }
+    
+    geometry2.setAttribute('position', new THREE.BufferAttribute(positions2, 3));
+    
+    const material2 = new THREE.PointsMaterial({
+        color: 0x8b5cf6,
+        size: 0.015,
         transparent: true,
-        opacity: 0.15
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
     });
     
-    const lineGeometry = new THREE.BufferGeometry();
-    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-    scene.add(lines);
+    const particles2 = new THREE.Points(geometry2, material2);
+    particlesGroup.add(particles2);
+    
+    // Floating geometric shapes
+    const shapesGroup = new THREE.Group();
+    const geometries = [
+        new THREE.IcosahedronGeometry(0.4, 0),
+        new THREE.OctahedronGeometry(0.35, 0),
+        new THREE.TetrahedronGeometry(0.4, 0),
+        new THREE.TorusGeometry(0.3, 0.1, 8, 16),
+        new THREE.IcosahedronGeometry(0.25, 0)
+    ];
+    
+    const shapeColors = [0x6366f1, 0x8b5cf6, 0xa855f7, 0x7877d9, 0x9d7bfa];
+    
+    for (let i = 0; i < 6; i++) {
+        const material = new THREE.MeshBasicMaterial({
+            color: shapeColors[i % shapeColors.length],
+            wireframe: true,
+            transparent: true,
+            opacity: 0.4
+        });
+        const mesh = new THREE.Mesh(geometries[i % geometries.length], material);
+        mesh.position.x = (Math.random() - 0.5) * 12;
+        mesh.position.y = (Math.random() - 0.5) * 12;
+        mesh.position.z = (Math.random() - 0.5) * 8;
+        mesh.userData = {
+            rotationSpeed: {
+                x: (Math.random() - 0.5) * 0.015,
+                y: (Math.random() - 0.5) * 0.015,
+                z: (Math.random() - 0.5) * 0.01
+            },
+            floatSpeed: Math.random() * 0.002 + 0.001,
+            floatOffset: Math.random() * Math.PI * 2
+        };
+        shapesGroup.add(mesh);
+    }
+    
+    scene.add(particlesGroup);
+    scene.add(shapesGroup);
     
     // Mouse interaction
-    const mouse = new THREE.Vector2();
-    const targetRotation = new THREE.Vector2();
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
     
-    document.addEventListener('mousemove', (event) => {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        
-        targetRotation.x = mouse.y * 0.0005;
-        targetRotation.y = mouse.x * 0.0005;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
     });
     
-    // Clock for animation timing
-    const clock = new THREE.Clock();
+    // Click ripple effect
+    const clickEffects = [];
     
-    // Animation
+    document.addEventListener('click', (e) => {
+        clickEffects.push({
+            position: new THREE.Vector2(
+                (e.clientX / window.innerWidth) * 2 - 1,
+                -(e.clientY / window.innerHeight) * 2 + 1
+            ),
+            radius: 0,
+            opacity: 1
+        });
+    });
+    
+    // Animation loop
+    let time = 0;
     function animate() {
         requestAnimationFrame(animate);
+        time += 0.01;
         
-        const time = clock.getElapsedTime();
+        // Smooth mouse following
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
         
-        // Rotate particles based on mouse position
-        particles.rotation.x += (targetRotation.x - particles.rotation.x) * 0.05;
-        particles.rotation.y += (targetRotation.y - particles.rotation.y) * 0.05;
+        // Apply mouse rotation to particles
+        particlesGroup.rotation.x = targetY * 0.4;
+        particlesGroup.rotation.y = targetX * 0.4;
         
-        // Continuous slow rotation
-        particles.rotation.y += 0.0003;
+        // Continuous base rotation
+        particles1.rotation.x += 0.0003;
+        particles1.rotation.y += 0.0005;
+        particles2.rotation.x -= 0.0002;
+        particles2.rotation.y -= 0.0004;
         
-        // Update particle positions with wave effect
-        const posArray = particles.geometry.attributes.position.array;
-        for (let i = 0; i < particlesCount; i++) {
+        // Wave effect on layer 1 particles
+        const positions = particles1.geometry.attributes.position.array;
+        for (let i = 0; i < particlesCount1; i++) {
             const i3 = i * 3;
-            
-            // Add wave motion based on time
-            posArray[i3 + 1] += Math.sin(time + posArray[i3]) * 0.001;
-            
-            // Keep particles within bounds
-            if (posArray[i3] > 10 || posArray[i3] < -10) velocities[i3] *= -1;
-            if (posArray[i3 + 1] > 10 || posArray[i3 + 1] < -10) velocities[i3 + 1] *= -1;
-            if (posArray[i3 + 2] > 10 || posArray[i3 + 2] < -10) velocities[i3 + 2] *= -1;
+            const wave = Math.sin(time + positions[i3] * 0.3 + positions[i3 + 2] * 0.2) * 0.003;
+            positions[i3 + 1] = originalY[i] + wave;
         }
-        particles.geometry.attributes.position.needsUpdate = true;
+        particles1.geometry.attributes.position.needsUpdate = true;
         
-        // Update connecting lines
-        updateLines();
+        // Animate floating shapes
+        shapesGroup.children.forEach((mesh, i) => {
+            mesh.rotation.x += mesh.userData.rotationSpeed.x;
+            mesh.rotation.y += mesh.userData.rotationSpeed.y;
+            mesh.rotation.z += mesh.userData.rotationSpeed.z;
+            mesh.position.y += Math.sin(time * mesh.userData.floatSpeed * 100 + mesh.userData.floatOffset) * mesh.userData.floatSpeed;
+        });
+        
+        // Apply click ripple effects to particles
+        const positionsArray = particles1.geometry.attributes.position.array;
+        clickEffects.forEach((effect, effectIndex) => {
+            effect.radius += 0.15;
+            effect.opacity -= 0.02;
+            
+            if (effect.opacity > 0) {
+                for (let i = 0; i < particlesCount1; i++) {
+                    const i3 = i * 3;
+                    const px = positionsArray[i3];
+                    const py = positionsArray[i3 + 1];
+                    const pz = positionsArray[i3 + 2];
+                    
+                    const distance = Math.sqrt(
+                        Math.pow(px - effect.position.x * 5, 2) +
+                        Math.pow(py - effect.position.y * 5, 2)
+                    );
+                    
+                    const rippleWidth = 1.0;
+                    if (Math.abs(distance - effect.radius) < rippleWidth) {
+                        const pushFactor = Math.cos((distance - effect.radius) / rippleWidth * Math.PI / 2) * 0.1 * effect.opacity;
+                        positionsArray[i3] += (px - effect.position.x * 5) * pushFactor;
+                        positionsArray[i3 + 1] += (py - effect.position.y * 5) * pushFactor;
+                    }
+                }
+            }
+        });
+        
+        // Remove finished click effects
+        clickEffects.splice(0, clickEffects.length, ...clickEffects.filter(e => e.opacity > 0));
+        
+        particles1.geometry.attributes.position.needsUpdate = true;
         
         renderer.render(scene, camera);
     }
     
-    function updateLines() {
-        const posArray = particles.geometry.attributes.position.array;
-        const linePositions = [];
-        
-        for (let i = 0; i < particlesCount; i++) {
-            const i3 = i * 3;
-            for (let j = i + 1; j < particlesCount; j++) {
-                const j3 = j * 3;
-                
-                const dx = posArray[i3] - posArray[j3];
-                const dy = posArray[i3 + 1] - posArray[j3 + 1];
-                const dz = posArray[i3 + 2] - posArray[j3 + 2];
-                const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-                
-                if (distance < 1.5) {
-                    linePositions.push(
-                        posArray[i3], posArray[i3 + 1], posArray[i3 + 2],
-                        posArray[j3], posArray[j3 + 1], posArray[j3 + 2]
-                    );
-                }
-            }
-        }
-        
-        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-    }
-    
-    // Resize handler
+    // Handle resize
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -314,26 +364,110 @@ function initThreeJS() {
     animate();
 }
 
+// Cursor Trail Effect
+function initCursorTrail() {
+    const trailLength = 15;
+    const trailElements = [];
+    
+    for (let i = 0; i < trailLength; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        dot.style.cssText = `
+            position: fixed;
+            width: ${12 - i * 0.6}px;
+            height: ${12 - i * 0.6}px;
+            background: radial-gradient(circle, rgba(99, 102, 241, ${0.9 - i * 0.05}) 0%, rgba(139, 92, 246, ${0.6 - i * 0.04}) 50%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+        `;
+        document.body.appendChild(dot);
+        trailElements.push(dot);
+    }
+    
+    let cursorPositions = new Array(trailLength).fill({ x: 0, y: 0 });
+    
+    document.addEventListener('mousemove', (e) => {
+        cursorPositions.shift();
+        cursorPositions.push({ x: e.clientX, y: e.clientY });
+    });
+    
+    function animateTrail() {
+        trailElements.forEach((dot, i) => {
+            const target = cursorPositions[i];
+            if (target) {
+                dot.style.left = target.x + 'px';
+                dot.style.top = target.y + 'px';
+            }
+        });
+        requestAnimationFrame(animateTrail);
+    }
+    
+    animateTrail();
+    
+    // Hide cursor trail when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+        trailElements.forEach(dot => dot.style.opacity = '0');
+    });
+    
+    document.addEventListener('mouseenter', () => {
+        trailElements.forEach(dot => dot.style.opacity = '1');
+    });
+}
+
+// Magnetic Button Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('button, .btn, a.btn-primary');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            btn.style.transition = 'transform 0.2s ease-out';
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+            btn.style.transition = 'transform 0.3s ease-out';
+        });
+    });
+});
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Typing effect
+    // Enhanced typing effect with cursor animation
     const mainHeading = document.querySelector('.profile-info h1');
     if (mainHeading) {
         const text = mainHeading.textContent;
         mainHeading.textContent = '';
+        mainHeading.style.borderRight = '3px solid #6366f1';
+        mainHeading.style.animation = 'blink 0.7s infinite';
         
         let i = 0;
         const typeWriter = () => {
             if (i < text.length) {
                 mainHeading.textContent += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, 100);
+                setTimeout(typeWriter, 70);
+            } else {
+                setTimeout(() => {
+                    mainHeading.style.borderRight = 'none';
+                    mainHeading.style.animation = 'none';
+                }, 500);
             }
         };
         
         setTimeout(typeWriter, 2500);
     }
     
-    // Initialize Three.js after a delay
+    // Initialize enhanced Three.js
     setTimeout(initThreeJS, 100);
+    
+    // Initialize cursor trail with delay
+    setTimeout(initCursorTrail, 800);
 });

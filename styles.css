@@ -25,7 +25,6 @@ body {
     color: var(--light);
     line-height: 1.6;
     overflow-x: hidden;
-    perspective: 1000px;
 }
 
 canvas.webgl {
@@ -35,6 +34,16 @@ canvas.webgl {
     z-index: -1;
     width: 100vw;
     height: 100vh;
+}
+
+/* Enhanced 3D Canvas Animation */
+canvas.webgl.active {
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
 }
 
 .container {
@@ -52,23 +61,12 @@ header {
     -webkit-backdrop-filter: blur(4px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    transform-style: preserve-3d;
+    transition: all 0.5s ease;
 }
 
-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 100%; }
+header:hover {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
 }
 
 .profile-section {
@@ -77,6 +75,7 @@ header::before {
     gap: 2rem;
     margin-bottom: 2rem;
     transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .profile-img {
@@ -85,55 +84,47 @@ header::before {
     border-radius: 50%;
     border: 4px solid var(--primary);
     box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
-    position: relative;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: profile-float 6s ease-in-out infinite;
 }
 
-.profile-img::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 2px solid var(--secondary);
-    opacity: 0;
-    animation: pulse-ring 2s infinite;
-}
-
-@keyframes pulse-ring {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.3); opacity: 0; }
+@keyframes profile-float {
+    0%, 100% { transform: translateY(0) rotateY(0deg); }
+    25% { transform: translateY(-10px) rotateY(5deg); }
+    75% { transform: translateY(-5px) rotateY(-5deg); }
 }
 
 .profile-img:hover {
-    transform: scale(1.08) rotateY(15deg) rotateX(5deg);
-    box-shadow: 
-        0 0 40px rgba(99, 102, 241, 0.5),
-        0 20px 40px rgba(99, 102, 241, 0.3),
-        inset 0 -10px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.15) rotateY(360deg);
+    box-shadow: 0 0 50px rgba(99, 102, 241, 0.6), 0 0 100px rgba(139, 92, 246, 0.3);
 }
 
 .profile-info h1 {
     font-size: 3rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-    background-size: 200% 200%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
-    animation: gradient-shift 4s ease infinite;
+    transition: all 0.3s ease;
+    cursor: default;
 }
 
-@keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+.profile-info h1:hover {
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    transform: scale(1.02);
 }
 
 .profile-info h2 {
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--text-secondary);
-    transform: translateZ(20px);
+    transition: all 0.3s ease;
+}
+
+.profile-info h2:hover {
+    color: var(--primary);
+    transform: translateX(5px);
 }
 
 .professional-summary {
@@ -141,14 +132,19 @@ header::before {
     color: var(--text-secondary);
     margin: 1rem 0 2rem 0;
     line-height: 1.6;
-    transform: translateZ(10px);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.professional-summary:hover {
+    color: var(--light);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .cta-buttons {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
-    transform: translateZ(30px);
 }
 
 .btn-primary, .btn-secondary {
@@ -161,12 +157,12 @@ header::before {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    transform-style: preserve-3d;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
 }
 
-.btn-primary::before {
+.btn-primary::before, .btn-secondary::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -176,10 +172,10 @@ header::before {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition: width 0.6s ease, height 0.6s ease;
 }
 
-.btn-primary:hover::before {
+.btn-primary:hover::before, .btn-secondary:hover::before {
     width: 300px;
     height: 300px;
 }
@@ -192,14 +188,12 @@ header::before {
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px) rotateX(10deg) scale(1.02);
-    box-shadow: 
-        0 15px 35px rgba(99, 102, 241, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
+    transform: translateY(-4px) rotateX(10deg) scale(1.05);
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.5), 0 0 50px rgba(139, 92, 246, 0.3);
 }
 
 .btn-primary:active {
-    transform: translateY(-1px) rotateX(5deg) scale(0.98);
+    transform: translateY(-2px) rotateX(5deg) scale(0.98);
 }
 
 .btn-secondary {
@@ -211,8 +205,8 @@ header::before {
 .btn-secondary:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-3px) rotateX(10deg) scale(1.02);
-    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+    transform: translateY(-4px) rotateX(10deg) scale(1.05);
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
 }
 
 nav ul {
@@ -228,9 +222,9 @@ nav a {
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    transform-style: preserve-3d;
+    overflow: hidden;
 }
 
 nav a::before {
@@ -239,20 +233,21 @@ nav a::before {
     bottom: 0;
     left: 50%;
     width: 0;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: all 0.3s ease;
     transform: translateX(-50%);
-    transition: width 0.3s ease;
+}
+
+nav a:hover::before {
+    width: 80%;
 }
 
 nav a:hover {
     background: rgba(99, 102, 241, 0.1);
     color: var(--primary);
-    transform: translateY(-2px) rotateX(5deg);
-}
-
-nav a:hover::before {
-    width: 80%;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
 }
 
 .section {
@@ -267,6 +262,13 @@ nav a:hover::before {
     margin-bottom: 3rem;
     text-align: center;
     position: relative;
+    transition: all 0.4s ease;
+    cursor: default;
+}
+
+.section h3:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
 }
 
 .section h3::after {
@@ -279,12 +281,13 @@ nav a:hover::before {
     height: 4px;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     border-radius: 2px;
-    animation: line-expand 0.6s ease-out;
+    transition: all 0.3s ease;
+    animation: line-pulse 2s ease-in-out infinite;
 }
 
-@keyframes line-expand {
-    0% { width: 0; }
-    100% { width: 80px; }
+@keyframes line-pulse {
+    0%, 100% { width: 80px; box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+    50% { width: 120px; box-shadow: 0 0 20px rgba(99, 102, 241, 0.8); }
 }
 
 .about-content {
@@ -298,22 +301,33 @@ nav a:hover::before {
     font-size: 1.1rem;
     color: var(--text-secondary);
     line-height: 1.8;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.about-text p:hover {
+    color: var(--light);
+    transform: translateX(10px);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 .about-image {
     display: flex;
     justify-content: center;
+    perspective: 1000px;
 }
 
 .about-image img {
     max-width: 100%;
     height: auto;
     filter: drop-shadow(0 10px 20px rgba(99, 102, 241, 0.2));
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
 }
 
 .about-image img:hover {
-    transform: perspective(1000px) rotateY(10deg) rotateX(5deg) scale(1.05);
+    transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+    filter: drop-shadow(0 20px 40px rgba(99, 102, 241, 0.4));
 }
 
 .skills-grid {
@@ -331,84 +345,94 @@ nav a:hover::before {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 2rem;
     text-align: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     position: relative;
     transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
-.skill-card::before {
+.skill-card::after {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+    border-radius: 12px;
+    z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
+    filter: blur(10px);
+}
+
+.skill-card:hover::after {
+    opacity: 0.7;
 }
 
 .skill-card:hover {
-    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
     background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 20px 40px rgba(31, 38, 135, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
-}
-
-.skill-card:hover::before {
-    opacity: 1;
+    box-shadow: 0 20px 50px 0 rgba(31, 38, 135, 0.5), 0 0 30px rgba(99, 102, 241, 0.3);
 }
 
 .skill-card i {
     font-size: 3rem;
     color: var(--primary);
     margin-bottom: 1rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: translateZ(20px);
+    transition: all 0.5s ease;
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
 }
 
 .skill-card:hover i {
-    transform: translateZ(40px) scale(1.2) rotateY(360deg);
-    text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    transform: scale(1.2) rotateY(360deg);
+    filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6));
 }
 
 .skill-card h4 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: var(--light);
-    transform: translateZ(10px);
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover h4 {
+    transform: translateY(-3px);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .skill-card p {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    transform: translateZ(5px);
+    transition: all 0.3s ease;
 }
 
-/* Projects Section - Enhanced with 3D effects */
+.skill-card:hover p {
+    color: var(--light);
+}
+
+/* Projects Section - Enhanced */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 2.5rem;
     margin-top: 2rem;
-    perspective: 1500px;
 }
 
 .project-card {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    border-radius: 15px;
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 
-        0 8px 32px 0 rgba(31, 38, 135, 0.37),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     position: relative;
     transform-style: preserve-3d;
-    transform: translateZ(0);
+    perspective: 1000px;
 }
 
 .project-card::before {
@@ -418,25 +442,29 @@ nav a:hover::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: 1;
-    pointer-events: none;
 }
 
 .project-card::after {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    padding: 2px;
     background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-    border-radius: 17px;
-    z-index: -1;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.4s ease;
+    z-index: 10;
 }
 
 .project-card:hover::before {
@@ -448,12 +476,9 @@ nav a:hover::before {
 }
 
 .project-card:hover {
-    transform: translateY(-12px) rotateX(8deg) rotateY(-5deg) scale(1.03);
+    transform: translateY(-15px) rotateX(5deg) rotateY(-5deg) scale(1.02);
     background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 30px 60px rgba(31, 38, 135, 0.5),
-        0 0 0 1px rgba(99, 102, 241, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 0 25px 60px 0 rgba(31, 38, 135, 0.5), 0 0 50px rgba(99, 102, 241, 0.3);
 }
 
 .project-image-container {
@@ -463,38 +488,23 @@ nav a:hover::before {
     background: linear-gradient(135deg, var(--dark-secondary), var(--dark));
 }
 
-.project-image-container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(15, 23, 42, 0.8));
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.project-card:hover .project-image-container::before {
-    opacity: 1;
-}
-
 .project-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     filter: brightness(0.9);
 }
 
 .project-card:hover .project-image {
     transform: scale(1.15) rotateZ(2deg);
-    filter: brightness(1.1);
+    filter: brightness(1.2) saturate(1.2);
 }
 
 .project-content {
     padding: 2rem;
     position: relative;
     z-index: 2;
-    transform: translateZ(20px);
 }
 
 .project-content h4 {
@@ -502,11 +512,14 @@ nav a:hover::before {
     font-weight: 600;
     margin-bottom: 1rem;
     color: var(--light);
-    background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-    background-size: 200% 200%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: gradient-shift 4s ease infinite;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-content h4 {
+    transform: translateX(5px);
 }
 
 .project-content p {
@@ -514,6 +527,12 @@ nav a:hover::before {
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-content p {
+    color: var(--light);
+    transform: translateX(3px);
 }
 
 .project-link {
@@ -531,7 +550,6 @@ nav a:hover::before {
     background: transparent;
     position: relative;
     overflow: hidden;
-    transform: translateZ(30px);
 }
 
 .project-link::before {
@@ -552,53 +570,8 @@ nav a:hover::before {
 
 .project-link:hover {
     color: white;
-    transform: translateZ(35px) translateX(8px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
-}
-
-.project-link:active {
-    transform: translateZ(25px) translateX(3px);
-}
-
-/* Project Tech Tags Animation */
-.project-tech {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.project-tech span {
-    background: rgba(99, 102, 241, 0.2);
-    color: var(--primary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: default;
-}
-
-.project-tech span:hover {
-    background: rgba(99, 102, 241, 0.3);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
-}
-
-.project-links {
-    display: flex;
-    gap: 1rem;
-}
-
-.github-link {
-    background: transparent !important;
-    border: 2px solid var(--text-secondary) !important;
-    color: var(--text-secondary) !important;
-}
-
-.github-link:hover {
-    border-color: var(--primary) !important;
-    color: var(--primary) !important;
+    transform: translateX(10px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
 }
 
 .experience-timeline {
@@ -616,6 +589,12 @@ nav a:hover::before {
     width: 2px;
     background: linear-gradient(to bottom, var(--primary), var(--secondary));
     transform: translateX(-50%);
+    animation: timeline-pulse 3s ease-in-out infinite;
+}
+
+@keyframes timeline-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8); }
 }
 
 .timeline-item {
@@ -623,10 +602,15 @@ nav a:hover::before {
     margin-bottom: 3rem;
     position: relative;
     transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .timeline-item:nth-child(odd) {
     flex-direction: row-reverse;
+}
+
+.timeline-item:hover {
+    transform: translateZ(20px);
 }
 
 .timeline-date {
@@ -635,7 +619,12 @@ nav a:hover::before {
     font-weight: 600;
     color: var(--primary);
     padding: 1rem;
-    transform: translateZ(10px);
+    transition: all 0.3s ease;
+}
+
+.timeline-date:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
 }
 
 .timeline-content {
@@ -654,25 +643,27 @@ nav a:hover::before {
 }
 
 .timeline-content:hover {
-    transform: translateZ(20px) translateY(-5px) rotateX(3deg);
+    transform: translateY(-5px) rotateY(5deg) scale(1.02);
     background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 20px 40px rgba(31, 38, 135, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 15px 40px 0 rgba(31, 38, 135, 0.5), 0 0 30px rgba(99, 102, 241, 0.2);
 }
 
 .timeline-content h4 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: var(--light);
-    transform: translateZ(15px);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover h4 {
+    transform: translateX(5px);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .timeline-content p {
     color: var(--primary);
     font-weight: 500;
     margin-bottom: 1rem;
-    transform: translateZ(10px);
 }
 
 .timeline-content ul {
@@ -685,7 +676,12 @@ nav a:hover::before {
     margin-bottom: 0.5rem;
     position: relative;
     padding-left: 1.5rem;
-    transform: translateZ(5px);
+    transition: all 0.3s ease;
+}
+
+.timeline-content li:hover {
+    color: var(--light);
+    transform: translateX(5px);
 }
 
 .timeline-content li::before {
@@ -693,6 +689,12 @@ nav a:hover::before {
     position: absolute;
     left: 0;
     color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.timeline-content li:hover::before {
+    transform: scale(1.3);
+    text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
 .contact-grid {
@@ -711,40 +713,49 @@ nav a:hover::before {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 2rem;
     text-align: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
 }
 
 .contact-item:hover {
-    transform: translateY(-8px) rotateX(5deg) scale(1.03);
+    transform: translateY(-10px) rotateX(10deg) scale(1.05);
     background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 20px 40px rgba(31, 38, 135, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 50px 0 rgba(31, 38, 135, 0.5), 0 0 40px rgba(99, 102, 241, 0.3);
 }
 
 .contact-item i {
     font-size: 2rem;
     color: var(--primary);
     margin-bottom: 1rem;
-    transition: transform 0.4s ease;
-    transform: translateZ(20px);
+    transition: all 0.5s ease;
+    display: inline-block;
 }
 
 .contact-item:hover i {
-    transform: translateZ(30px) scale(1.2);
+    transform: scale(1.2) rotateY(360deg);
+    filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.6));
 }
 
 .contact-item h4 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: var(--light);
-    transform: translateZ(15px);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover h4 {
+    transform: translateY(-3px);
 }
 
 .contact-item p {
     color: var(--text-secondary);
-    transform: translateZ(10px);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover p {
+    color: var(--light);
 }
 
 .social-links {
@@ -765,17 +776,35 @@ nav a:hover::before {
     border: 1px solid rgba(99, 102, 241, 0.3);
     color: var(--light);
     font-size: 1.5rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-decoration: none;
     transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+    z-index: -1;
+}
+
+.social-link:hover::before {
+    width: 100px;
+    height: 100px;
 }
 
 .social-link:hover {
-    transform: translateY(-8px) rotateZ(10deg) scale(1.1);
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    box-shadow: 
-        0 15px 35px rgba(99, 102, 241, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.2);
+    transform: translateY(-8px) rotateZ(15deg) scale(1.1);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5), 0 0 50px rgba(139, 92, 246, 0.3);
 }
 
 /* Technologies Section */
@@ -784,7 +813,6 @@ nav a:hover::before {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
-    perspective: 1000px;
 }
 
 .tech-category {
@@ -796,15 +824,12 @@ nav a:hover::before {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 2rem;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
 }
 
 .tech-category:hover {
-    transform: translateY(-5px) rotateX(3deg) rotateY(-3deg);
+    transform: translateY(-8px) rotateX(5deg);
     background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 20px 40px rgba(31, 38, 135, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 50px 0 rgba(31, 38, 135, 0.5);
 }
 
 .tech-category h4 {
@@ -812,7 +837,12 @@ nav a:hover::before {
     margin-bottom: 1.5rem;
     color: var(--light);
     text-align: center;
-    transform: translateZ(15px);
+    transition: all 0.3s ease;
+}
+
+.tech-category:hover h4 {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .tech-items {
@@ -820,7 +850,6 @@ nav a:hover::before {
     flex-wrap: wrap;
     gap: 0.75rem;
     justify-content: center;
-    transform: translateZ(10px);
 }
 
 .tech-item {
@@ -830,27 +859,68 @@ nav a:hover::before {
     border-radius: 25px;
     font-size: 0.9rem;
     border: 1px solid rgba(99, 102, 241, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transform-style: preserve-3d;
+    cursor: pointer;
 }
 
 .tech-item:hover {
-    background: rgba(99, 102, 241, 0.2);
-    transform: translateY(-3px) translateZ(10px) scale(1.1);
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.3);
+    transform: scale(1.15) translateY(-5px) rotateZ(3deg);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    border-color: var(--primary);
 }
 
 .tech-item i {
     font-size: 1rem;
     color: var(--primary);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .tech-item:hover i {
-    transform: rotate(10deg) scale(1.2);
+    transform: scale(1.3) rotateY(180deg);
+}
+
+/* Project Updates */
+.project-tech {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.project-tech span {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.project-tech span:hover {
+    background: rgba(99, 102, 241, 0.4);
+    transform: scale(1.1);
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.github-link {
+    background: transparent !important;
+    border: 2px solid var(--text-secondary) !important;
+    color: var(--text-secondary) !important;
+}
+
+.github-link:hover {
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+    transform: translateX(10px) scale(1.05);
 }
 
 /* Testimonials */
@@ -859,7 +929,6 @@ nav a:hover::before {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
-    perspective: 1000px;
 }
 
 .testimonial-card {
@@ -870,9 +939,11 @@ nav a:hover::before {
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 2rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
 }
 
 .testimonial-card::before {
@@ -886,17 +957,16 @@ nav a:hover::before {
     transition: all 0.4s ease;
 }
 
-.testimonial-card:hover {
-    transform: translateY(-8px) rotateX(3deg) rotateY(-3deg);
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 20px 40px rgba(31, 38, 135, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
-}
-
 .testimonial-card:hover::before {
     opacity: 0.6;
-    transform: translateZ(10px) scale(1.1);
+    transform: scale(1.2) rotateZ(10deg);
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 20px 50px 0 rgba(31, 38, 135, 0.5), 0 0 40px rgba(99, 102, 241, 0.2);
 }
 
 .testimonial-content p {
@@ -904,20 +974,28 @@ nav a:hover::before {
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-style: italic;
-    transform: translateZ(5px);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover .testimonial-content p {
+    color: var(--light);
 }
 
 .testimonial-author {
     display: flex;
     align-items: center;
     gap: 1rem;
-    transform: translateZ(10px);
 }
 
 .author-info h5 {
     color: var(--light);
     margin-bottom: 0.25rem;
     font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover .author-info h5 {
+    transform: translateX(5px);
 }
 
 .author-info span {
@@ -936,19 +1014,23 @@ nav a:hover::before {
     -webkit-backdrop-filter: blur(4px);
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 
-        0 8px 32px 0 rgba(31, 38, 135, 0.37),
-        0 0 0 1px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 0.75rem;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
 }
 
 .fixed-nav.visible {
     opacity: 1;
     visibility: visible;
+    animation: nav-appear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes nav-appear {
+    0% { transform: translateX(-50%) translateY(20px) scale(0.9); }
+    100% { transform: translateX(-50%) translateY(0) scale(1); }
 }
 
 .nav-container {
@@ -964,16 +1046,36 @@ nav a:hover::before {
     color: var(--text-secondary);
     text-decoration: none;
     border-radius: 25px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     font-size: 0.9rem;
-    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: -1;
+}
+
+.nav-item:hover::before {
+    width: 100px;
+    height: 100px;
 }
 
 .nav-item:hover, .nav-item.active {
     background: var(--primary);
     color: white;
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
 }
 
 .nav-item span {
@@ -982,6 +1084,12 @@ nav a:hover::before {
 
 .nav-item:hover span {
     display: inline;
+    animation: span-appear 0.3s ease;
+}
+
+@keyframes span-appear {
+    0% { opacity: 0; transform: translateX(-10px); }
+    100% { opacity: 1; transform: translateX(0); }
 }
 
 /* Loading Screen */
@@ -1017,7 +1125,7 @@ nav a:hover::before {
 }
 
 @keyframes text-pulse {
-    0%, 100% { opacity: 0.7; }
+    0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
 
@@ -1027,24 +1135,20 @@ nav a:hover::before {
     background: rgba(99, 102, 241, 0.2);
     border-radius: 2px;
     overflow: hidden;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
 }
 
 .loader-progress {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-    background-size: 200% 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     border-radius: 2px;
-    animation: loading 2s ease-in-out, shimmer-bar 2s linear infinite;
+    animation: loading 2s ease-in-out;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
 }
 
 @keyframes loading {
     0% { width: 0%; }
     100% { width: 100%; }
-}
-
-@keyframes shimmer-bar {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
 }
 
 /* Education & Certifications */
@@ -1062,6 +1166,7 @@ nav a:hover::before {
     bottom: 0;
     width: 2px;
     background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    animation: timeline-pulse 3s ease-in-out infinite;
 }
 
 .edu-item {
@@ -1069,6 +1174,7 @@ nav a:hover::before {
     margin-bottom: 3rem;
     position: relative;
     transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .edu-item::before {
@@ -1082,12 +1188,18 @@ nav a:hover::before {
     border-radius: 50%;
     border: 3px solid var(--dark);
     z-index: 1;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    animation: dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8); }
 }
 
 .edu-item:hover::before {
-    transform: scale(1.3);
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+    transform: scale(1.5);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
 }
 
 .edu-date {
@@ -1096,7 +1208,12 @@ nav a:hover::before {
     color: var(--primary);
     padding: 1rem 2rem 1rem 0;
     text-align: right;
-    transform: translateZ(10px);
+    transition: all 0.3s ease;
+}
+
+.edu-date:hover {
+    transform: scale(1.1) translateX(-5px);
+    text-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
 }
 
 .edu-content {
@@ -1109,23 +1226,25 @@ nav a:hover::before {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 2rem;
     margin-left: 3rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .edu-content:hover {
-    transform: translateZ(20px) translateY(-5px) rotateX(3deg);
+    transform: translateY(-5px) rotateX(5deg) scale(1.02);
     background: rgba(255, 255, 255, 0.35);
-    box-shadow: 
-        0 20px 40px rgba(31, 38, 135, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 20px 50px 0 rgba(31, 38, 135, 0.5), 0 0 40px rgba(99, 102, 241, 0.2);
 }
 
 .edu-content h4 {
     color: var(--light);
     margin-bottom: 0.5rem;
     font-size: 1.3rem;
-    transform: translateZ(15px);
+    transition: all 0.3s ease;
+}
+
+.edu-content:hover h4 {
+    transform: translateX(5px);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .edu-institution {
@@ -1133,7 +1252,6 @@ nav a:hover::before {
     font-weight: 500;
     margin-bottom: 1rem;
     font-size: 1rem;
-    transform: translateZ(10px);
 }
 
 .edu-content ul {
@@ -1147,7 +1265,12 @@ nav a:hover::before {
     position: relative;
     padding-left: 1.5rem;
     line-height: 1.5;
-    transform: translateZ(5px);
+    transition: all 0.3s ease;
+}
+
+.edu-content li:hover {
+    color: var(--light);
+    transform: translateX(5px);
 }
 
 .edu-content li::before {
@@ -1156,6 +1279,11 @@ nav a:hover::before {
     left: 0;
     color: var(--primary);
     font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.edu-content li:hover::before {
+    transform: scale(1.3);
 }
 
 /* Footer */
@@ -1180,6 +1308,12 @@ nav a:hover::before {
     color: var(--light);
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.footer-left h4:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .footer-left p {
@@ -1217,128 +1351,51 @@ nav a:hover::before {
     justify-content: center;
     color: var(--text-secondary);
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .footer-social a:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-5px) rotateZ(10deg);
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+    transform: translateY(-5px) rotateZ(15deg) scale(1.1);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
 }
 
 .floating {
-    animation: floating3d 6s ease-in-out infinite;
+    animation: floating 6s ease-in-out infinite;
 }
 
-@keyframes floating3d {
-    0%, 100% { 
-        transform: translateY(0px) rotateX(0deg) rotateY(0deg); 
-    }
-    25% { 
-        transform: translateY(-15px) rotateX(2deg) rotateY(-2deg); 
-    }
-    50% { 
-        transform: translateY(-25px) rotateX(0deg) rotateY(0deg); 
-    }
-    75% { 
-        transform: translateY(-15px) rotateX(-2deg) rotateY(2deg); 
-    }
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
 }
 
-/* Entrance Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px) translateZ(0);
-    }
+/* Glow effect on scroll */
+.glow-effect {
+    animation: scroll-glow 2s ease-in-out;
+}
+
+@keyframes scroll-glow {
+    0% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
+    50% { filter: brightness(1.3) drop-shadow(0 0 30px rgba(99, 102, 241, 0.5)); }
+    100% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
+}
+
+/* Interactive ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.4);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
     to {
-        opacity: 1;
-        transform: translateY(0) translateZ(0);
-    }
-}
-
-@keyframes fadeInLeft {
-    from {
+        transform: scale(4);
         opacity: 0;
-        transform: translateX(-40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8) translateZ(0);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateZ(0);
-    }
-}
-
-/* Stagger Animation Delays */
-.skill-card:nth-child(1) { animation: fadeInUp 0.6s ease-out 0.1s backwards; }
-.skill-card:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.2s backwards; }
-.skill-card:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.3s backwards; }
-.skill-card:nth-child(4) { animation: fadeInUp 0.6s ease-out 0.4s backwards; }
-.skill-card:nth-child(5) { animation: fadeInUp 0.6s ease-out 0.5s backwards; }
-.skill-card:nth-child(6) { animation: fadeInUp 0.6s ease-out 0.6s backwards; }
-
-.project-card:nth-child(1) { animation: scaleIn 0.6s ease-out 0.1s backwards; }
-.project-card:nth-child(2) { animation: scaleIn 0.6s ease-out 0.2s backwards; }
-.project-card:nth-child(3) { animation: scaleIn 0.6s ease-out 0.3s backwards; }
-.project-card:nth-child(4) { animation: scaleIn 0.6s ease-out 0.4s backwards; }
-.project-card:nth-child(5) { animation: scaleIn 0.6s ease-out 0.5s backwards; }
-.project-card:nth-child(6) { animation: scaleIn 0.6s ease-out 0.6s backwards; }
-
-.tech-category:nth-child(1) { animation: fadeInUp 0.6s ease-out 0.1s backwards; }
-.tech-category:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.2s backwards; }
-.tech-category:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.3s backwards; }
-
-.testimonial-card:nth-child(1) { animation: fadeInUp 0.6s ease-out 0.1s backwards; }
-.testimonial-card:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.2s backwards; }
-.testimonial-card:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.3s backwards; }
-
-/* Magnetic Button Effect */
-.btn-primary, .btn-secondary, .project-link {
-    will-change: transform;
-}
-
-/* Glow Effect on Hover */
-.project-card:hover, .skill-card:hover, .contact-item:hover,
-.tech-category:hover, .testimonial-card:hover, .timeline-content:hover,
-.edu-content:hover {
-    animation: glow-pulse 2s ease-in-out infinite;
-}
-
-@keyframes glow-pulse {
-    0%, 100% {
-        box-shadow: 
-            0 20px 40px rgba(31, 38, 135, 0.4),
-            0 0 0 1px rgba(99, 102, 241, 0.3),
-            0 0 20px rgba(99, 102, 241, 0.1);
-    }
-    50% {
-        box-shadow: 
-            0 20px 40px rgba(31, 38, 135, 0.4),
-            0 0 0 1px rgba(99, 102, 241, 0.5),
-            0 0 40px rgba(99, 102, 241, 0.2);
     }
 }
 
@@ -1419,16 +1476,6 @@ nav a:hover::before {
     
     .edu-content {
         margin-left: 2rem;
-    }
-    
-    /* Reduce 3D effects on mobile */
-    .project-card:hover, .skill-card:hover, .contact-item:hover,
-    .tech-category:hover, .testimonial-card:hover {
-        transform: translateY(-5px);
-    }
-    
-    .profile-img:hover {
-        transform: scale(1.05);
     }
 }
 
