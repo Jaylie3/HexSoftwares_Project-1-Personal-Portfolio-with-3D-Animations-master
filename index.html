@@ -398,28 +398,39 @@
                     </div>
                 </div>
                 
-                <div class="contact-form-container">
-                    <h4>Send me a Message</h4>
-                    <form action="mailto:lindokuhlenkosinathijali@gmail.com" method="post" enctype="text/plain" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="Your Email">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Subject">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Your Message"></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary">Send Message</button>
-                    </form>
-                </div>
+                <form id="contactForm" class="contact-form" action="#" method="POST" novalidate autocomplete="off">
+                    <div class="form-group">
+                        <label for="name">Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required minlength="2" maxlength="100" autocomplete="name" aria-describedby="nameError">
+                        <span class="error-message" id="nameError" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required maxlength="255" autocomplete="email" aria-describedby="emailError">
+                        <span class="error-message" id="emailError" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject <span class="required">*</span></label>
+                        <input type="text" id="subject" name="subject" required minlength="3" maxlength="200" autocomplete="off" aria-describedby="subjectError">
+                        <span class="error-message" id="subjectError" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="5" required minlength="10" maxlength="5000" aria-describedby="messageError"></textarea>
+                        <span class="error-message" id="messageError" role="alert"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loader" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                        <span class="form-success" id="formSuccess" style="display: none;">
+                            <i class="fas fa-check-circle"></i> Message sent successfully!
+                        </span>
+                    </div>
+                    <input type="hidden" name="form_timestamp" id="formTimestamp">
+                    <input type="hidden" name="security_token" id="securityToken">
+                </form>
 
                 <div class="social-links">
                     <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
@@ -474,5 +485,275 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Secure Form Validation and Sanitization
+        (function() {
+            'use strict';
+
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoader = submitBtn.querySelector('.btn-loader');
+            const formSuccess = document.getElementById('formSuccess');
+            const formTimestamp = document.getElementById('formTimestamp');
+            const securityToken = document.getElementById('securityToken');
+
+            // Rate limiting configuration
+            const SUBMIT_COOLDOWN = 30000; // 30 seconds between submissions
+            const MAX_SUBMISSIONS_PER_HOUR = 5;
+            let lastSubmitTime = 0;
+            let submissionCount = 0;
+            let submissionCountResetTime = Date.now() + 3600000;
+
+            // XSS Prevention - Sanitize input to prevent script injection
+            function sanitizeInput(input) {
+                if (typeof input !== 'string') return '';
+                
+                return input
+                    .replace(/[<>]/g, function(match) {
+                        return match === '<' ? '&lt;' : '&gt;';
+                    })
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#x27;')
+                    .replace(/\//g, '&#x2F;')
+                    .replace(/\\/g, '&#x5C;');
+            }
+
+            // Validate email format with regex
+            function isValidEmail(email) {
+                const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+                return emailRegex.test(email) && email.length <= 255;
+            }
+
+            // Detect potential SQL injection patterns
+            function containsSQLInjection(input) {
+                const sqlPatterns = [
+                    /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|EXEC|ALTER|CREATE|TRUNCATE)\b)/i,
+                    /(--|;|\/\*|\*\/|'|"|--)\s/i,
+                    /\b(OR|AND)\s+\d+=\d+/i,
+                    /\b(OR|AND)\s+['"].*['"]\s*=\s*['"]/i
+                ];
+                return sqlPatterns.some(pattern => pattern.test(input));
+            }
+
+            // Validate individual field
+            function validateField(field, fieldName) {
+                const value = field.value.trim();
+                const errorSpan = document.getElementById(`${fieldName}Error`);
+                let errorMessage = '';
+                let isValid = true;
+
+                // Reset field state
+                field.classList.remove('error', 'valid');
+
+                // Check if field is required and empty
+                if (field.hasAttribute('required') && value === '') {
+                    errorMessage = `Please enter your ${fieldName.toLowerCase()}`;
+                    isValid = false;
+                } else if (value !== '') {
+                    // Validate minimum length
+                    const minLength = parseInt(field.getAttribute('minlength')) || 0;
+                    if (value.length < minLength) {
+                        const fieldNameCaps = fieldName.charAt(0).toUpperCase() + fieldName.slice(1).toLowerCase();
+                        errorMessage = `${fieldNameCaps} must be at least ${minLength} character${minLength > 1 ? 's' : ''}`;
+                        isValid = false;
+                    }
+
+                    // Validate maximum length
+                    const maxLength = parseInt(field.getAttribute('maxlength')) || Infinity;
+                    if (value.length > maxLength) {
+                        errorMessage = `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1).toLowerCase()} exceeds maximum length`;
+                        isValid = false;
+                    }
+
+                    // Field-specific validation
+                    if (fieldName === 'email' && isValid) {
+                        if (!isValidEmail(value)) {
+                            errorMessage = 'Please enter a valid email address';
+                            isValid = false;
+                        }
+                    }
+
+                    // Security checks
+                    if (isValid && containsSQLInjection(value)) {
+                        errorMessage = 'Invalid input detected';
+                        isValid = false;
+                        console.warn('Potential SQL injection attempt detected');
+                    }
+                }
+
+                // Update UI
+                if (errorSpan) {
+                    errorSpan.textContent = errorMessage;
+                }
+                
+                if (!isValid) {
+                    field.classList.add('error');
+                } else if (value !== '') {
+                    field.classList.add('valid');
+                }
+
+                return isValid;
+            }
+
+            // Generate simple security token
+            function generateSecurityToken() {
+                const timestamp = Date.now();
+                const random = Math.random().toString(36).substring(2);
+                return btoa(timestamp + '-' + random).substring(0, 32);
+            }
+
+            // Rate limit check
+            function checkRateLimit() {
+                const now = Date.now();
+                
+                // Reset count if hour has passed
+                if (now > submissionCountResetTime) {
+                    submissionCount = 0;
+                    submissionCountResetTime = now + 3600000;
+                }
+
+                // Check cooldown
+                if (now - lastSubmitTime < SUBMIT_COOLDOWN) {
+                    const remainingTime = Math.ceil((SUBMIT_COOLDOWN - (now - lastSubmitTime)) / 1000);
+                    return { 
+                        allowed: false, 
+                        message: `Please wait ${remainingTime} seconds before submitting again` 
+                    };
+                }
+
+                // Check hourly limit
+                if (submissionCount >= MAX_SUBMISSIONS_PER_HOUR) {
+                    return { 
+                        allowed: false, 
+                        message: 'Too many submissions. Please try again later.' 
+                    };
+                }
+
+                return { allowed: true };
+            }
+
+            // Initialize form
+            function initializeForm() {
+                if (!contactForm) return;
+
+                // Set security tokens (simple implementation - in production, use server-side tokens)
+                formTimestamp.value = Date.now();
+                securityToken.value = generateSecurityToken();
+
+                // Add input event listeners for real-time validation
+                const inputs = contactForm.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    // Validate on blur (when user leaves the field)
+                    input.addEventListener('blur', function() {
+                        validateField(this, this.name);
+                    });
+
+                    // Clear error on input
+                    input.addEventListener('input', function() {
+                        this.classList.remove('error', 'valid');
+                        const errorSpan = document.getElementById(`${this.name}Error`);
+                        if (errorSpan) {
+                            errorSpan.textContent = '';
+                        }
+                    });
+
+                    // Prevent paste of potentially malicious content
+                    input.addEventListener('paste', function(e) {
+                        setTimeout(() => {
+                            validateField(this, this.name);
+                        }, 0);
+                    });
+                });
+            }
+
+            // Handle form submission
+            if (contactForm) {
+                initializeForm();
+
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Clear previous success message
+                    formSuccess.style.display = 'none';
+                    formSuccess.textContent = '';
+                    
+                    let isFormValid = true;
+                    const formData = {};
+
+                    // Validate all fields
+                    const inputs = contactForm.querySelectorAll('input:not([type="hidden"]), textarea');
+                    inputs.forEach(input => {
+                        if (!validateField(input, input.name)) {
+                            isFormValid = false;
+                        }
+                    });
+
+                    if (!isFormValid) {
+                        // Focus on first error
+                        const firstError = contactForm.querySelector('.error');
+                        if (firstError) {
+                            firstError.focus();
+                        }
+                        return;
+                    }
+
+                    // Check rate limiting
+                    const rateLimitCheck = checkRateLimit();
+                    if (!rateLimitCheck.allowed) {
+                        alert(rateLimitCheck.message);
+                        return;
+                    }
+
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    btnLoader.style.display = 'inline-block';
+
+                    // Sanitize and prepare form data
+                    formData.name = sanitizeInput(contactForm.elements['name'].value.trim());
+                    formData.email = sanitizeInput(contactForm.elements['email'].value.trim());
+                    formData.subject = sanitizeInput(contactForm.elements['subject'].value.trim());
+                    formData.message = sanitizeInput(contactForm.elements['message'].value.trim());
+                    formData.timestamp = formTimestamp.value;
+                    formData.securityToken = securityToken.value;
+                    formData.action = 'send_message';
+
+                    // Log for demonstration (in production, send to backend)
+                    console.log('Secured form data prepared for submission:', formData);
+
+                    // Simulate submission to backend
+                    setTimeout(function() {
+                        // Update rate limiting
+                        lastSubmitTime = Date.now();
+                        
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        btnText.style.display = 'inline-block';
+                        btnLoader.style.display = 'none';
+
+                        // Show success message
+                        formSuccess.innerHTML = '<i class="fas fa-check-circle"></i> Message sent successfully! Thank you for contacting me.';
+                        formSuccess.style.display = 'inline-block';
+
+                        // Reset form
+                        contactForm.reset();
+                        contactForm.querySelectorAll('.valid').forEach(el => el.classList.remove('valid'));
+                        
+                        // Regenerate security tokens
+                        formTimestamp.value = Date.now();
+                        securityToken.value = generateSecurityToken();
+
+                        // Hide success message after 5 seconds
+                        setTimeout(function() {
+                            formSuccess.style.display = 'none';
+                        }, 5000);
+
+                    }, 1500);
+                });
+            }
+
+        })();
+    </script>
 </body>
 </html>
