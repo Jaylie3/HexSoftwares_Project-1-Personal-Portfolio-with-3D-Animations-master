@@ -121,16 +121,17 @@
         <section id="projects" class="section">
             <div class="container">
                 <h3>Projects</h3>
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="web">Web Apps</button>
+                    <button class="filter-btn" data-filter="games">Games</button>
+                    <button class="filter-btn" data-filter="tools">Tools</button>
+                    <button class="filter-btn" data-filter="algorithms">Algorithms</button>
+                </div>
                 <div class="projects-grid">
-                    <div class="project-card" data-project-id="1">
+                    <div class="project-card" data-category="web">
                         <div class="project-image-container">
                             <img src="images/break-a-sweat-preview.png" alt="Break-a-Sweat Preview" class="project-image">
-                            <div class="project-overlay">
-                                <button class="preview-btn" data-project="1">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Quick Preview</span>
-                                </button>
-                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Break-a-Sweat Fitness App</h4>
@@ -145,15 +146,9 @@
                         </div>
                     </div>
             
-                    <div class="project-card" data-project-id="2">
+                    <div class="project-card" data-category="games">
                         <div class="project-image-container">
                             <img src="images/Battleship.png" alt="Battleship Game Preview" class="project-image">
-                            <div class="project-overlay">
-                                <button class="preview-btn" data-project="2">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Quick Preview</span>
-                                </button>
-                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Battleship Game</h4>
@@ -168,15 +163,9 @@
                         </div>
                     </div>
             
-                    <div class="project-card" data-project-id="3">
+                    <div class="project-card" data-category="tools">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Temperature Converter Preview" class="project-image">
-                            <div class="project-overlay">
-                                <button class="preview-btn" data-project="3">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Quick Preview</span>
-                                </button>
-                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Temperature Converter</h4>
@@ -191,15 +180,9 @@
                         </div>
                     </div>
 
-                    <div class="project-card" data-project-id="4">
+                    <div class="project-card" data-category="algorithms">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Binary Search Trees Preview" class="project-image">
-                            <div class="project-overlay">
-                                <button class="preview-btn" data-project="4">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Quick Preview</span>
-                                </button>
-                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Binary Search Trees</h4>
@@ -214,15 +197,9 @@
                         </div>
                     </div>
 
-                    <div class="project-card" data-project-id="5">
+                    <div class="project-card" data-category="algorithms">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="HashMap Preview" class="project-image">
-                            <div class="project-overlay">
-                                <button class="preview-btn" data-project="5">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Quick Preview</span>
-                                </button>
-                            </div>
                         </div>
                         <div class="project-content">
                             <h4>HashMap Implementation</h4>
@@ -237,15 +214,9 @@
                         </div>
                     </div>
 
-                    <div class="project-card" data-project-id="6">
+                    <div class="project-card" data-category="algorithms">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Knights Travails Preview" class="project-image">
-                            <div class="project-overlay">
-                                <button class="preview-btn" data-project="6">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Quick Preview</span>
-                                </button>
-                            </div>
                         </div>
                         <div class="project-content">
                             <h4>Knights Travails</h4>
@@ -262,37 +233,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Project Preview Modal -->
-        <div class="project-modal" id="projectModal">
-            <div class="modal-content">
-                <button class="modal-close" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="modal-header">
-                    <img src="" alt="" class="modal-image" id="modalImage">
-                    <div class="modal-title-section">
-                        <h3 id="modalTitle">Project Title</h3>
-                        <div class="modal-tech" id="modalTech"></div>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <p id="modalDescription">Project description goes here.</p>
-                    <div class="modal-features" id="modalFeatures">
-                        <h4>Key Features:</h4>
-                        <ul></ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" target="_blank" class="btn-primary" id="modalLiveDemo">
-                        <i class="fas fa-external-link-alt"></i> Live Demo
-                    </a>
-                    <a href="#" target="_blank" class="btn-secondary" id="modalGithub">
-                        <i class="fab fa-github"></i> View Code
-                    </a>
-                </div>
-            </div>
-        </div>
 
         <section id="experience" class="section">
             <div class="container">
@@ -446,29 +386,60 @@
 
         <section id="contact" class="section">
             <div class="container">
-                <h3>Contact Information</h3>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <h4>Email</h4>
-                        <p>lindokuhlenkosinathijali@gmail.com</p>
+                <h3>Get In Touch</h3>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h4>Contact Information</h4>
+                        <div class="contact-grid">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <h4>Email</h4>
+                                <p>lindokuhlenkosinathijali@gmail.com</p>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <h4>Phone</h4>
+                                <p>+27837752498</p>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <h4>Location</h4>
+                                <p>Bergville, KwaZulu-Natal, South Africa</p>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+                        </div>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <h4>Phone</h4>
-                        <p>+27837752498</p>
+                    <div class="contact-form-container">
+                        <h4>Send Me a Message</h4>
+                        <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" required placeholder="john@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">
+                                <span class="btn-text">Send Message</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <div id="formMessage" class="form-message"></div>
+                        </form>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h4>Location</h4>
-                        <p>Bergville, KwaZulu-Natal, South Africa</p>
-                    </div>
-                </div>
-                <div class="social-links">
-                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
                 </div>
             </div>
         </section>

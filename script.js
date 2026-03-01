@@ -90,116 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Interactive Project Preview with Hover Animations
-document.addEventListener('DOMContentLoaded', function() {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        const previewContainer = card.querySelector('.project-preview') || createPreviewContainer(card);
-        const projectImage = card.querySelector('.project-image');
-        const projectDetails = card.querySelector('.project-details');
-        
-        // Mouse enter - show preview
-        card.addEventListener('mouseenter', function() {
-            card.classList.add('hovered');
-            
-            // Add scale and shadow animation
-            card.style.transform = 'translateY(-10px) scale(1.02)';
-            card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.2)';
-            
-            // Reveal preview content
-            if (previewContainer) {
-                previewContainer.style.opacity = '1';
-                previewContainer.style.transform = 'translateY(0)';
-            }
-            
-            // Animate details slide up
-            if (projectDetails) {
-                projectDetails.style.transform = 'translateY(0)';
-                projectDetails.style.opacity = '1';
-            }
-        });
-        
-        // Mouse leave - hide preview
-        card.addEventListener('mouseleave', function() {
-            card.classList.remove('hovered');
-            
-            // Reset scale and shadow
-            card.style.transform = 'translateY(0) scale(1)';
-            card.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-            
-            // Hide preview content
-            if (previewContainer) {
-                previewContainer.style.opacity = '0';
-                previewContainer.style.transform = 'translateY(10px)';
-            }
-            
-            // Hide details
-            if (projectDetails) {
-                projectDetails.style.transform = 'translateY(20px)';
-                projectDetails.style.opacity = '0.7';
-            }
-        });
-        
-        // Click for expanded preview (optional)
-        card.addEventListener('click', function() {
-            card.classList.toggle('expanded');
-            const expandedContent = card.querySelector('.expanded-preview');
-            
-            if (expandedContent) {
-                if (card.classList.contains('expanded')) {
-                    expandedContent.style.maxHeight = expandedContent.scrollHeight + 'px';
-                    expandedContent.style.opacity = '1';
-                    expandedContent.style.padding = '20px';
-                } else {
-                    expandedContent.style.maxHeight = '0';
-                    expandedContent.style.opacity = '0';
-                    expandedContent.style.padding = '0 20px';
-                }
-            }
-        });
-    });
-    
-    function createPreviewContainer(card) {
-        const container = document.createElement('div');
-        container.className = 'project-preview';
-        container.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-            z-index: 10;
-            padding: 20px;
-            color: white;
-        `;
-        
-        card.appendChild(container);
-        return container;
-    }
-    
-    // Add floating animation to project cards
-    projectCards.forEach((card, index) => {
-        card.style.transition = 'transform 0.4s ease, box-shadow 0.4s ease';
-        
-        // Subtle floating animation
-        setInterval(() => {
-            if (!card.matches(':hover')) {
-                const offset = Math.sin(Date.now() / 1000 + index) * 3;
-                card.style.transform = `translateY(${offset}px)`;
-            }
-        }, 50);
-    });
-});
-
 // Three.js Background
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
@@ -253,6 +143,176 @@ function initThreeJS() {
     
     animate();
 }
+
+// Project Filter
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    // Get all unique categories from project cards
+    const categories = new Set();
+    projectCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (category) {
+            categories.add(category);
+        }
+    });
+    
+    // Filter functionality
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter projects with animation
+            projectCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                
+                if (filterValue === 'all' || cardCategory === filterValue) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+    
+    // Add animation styles for filter transitions
+    projectCards.forEach(card => {
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    });
+});
+
+// Contact Form with Email Notifications
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formStatus = document.getElementById('formStatus');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Validation
+            if (!name || !email || !subject || !message) {
+                showFormStatus('Please fill in all fields.', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showFormStatus('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // Prepare form data
+            const formData = {
+                name: name,
+                email: email,
+                subject: subject,
+                message: message,
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                // Simulate email sending (replace with actual API call)
+                await sendEmailNotification(formData);
+                
+                // Show success message
+                showFormStatus('Message sent successfully! I\'ll get back to you soon.', 'success');
+                
+                // Reset form
+                contactForm.reset();
+                
+            } catch (error) {
+                showFormStatus('Failed to send message. Please try again.', 'error');
+                console.error('Email sending error:', error);
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+        
+        // Real-time validation feedback
+        const inputs = contactForm.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim()) {
+                    if (this.type === 'email' && !isValidEmail(this.value)) {
+                        this.classList.add('invalid');
+                    } else {
+                        this.classList.remove('invalid');
+                    }
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                this.classList.remove('invalid');
+            });
+        });
+    }
+    
+    // Email validation helper
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    // Show form status message
+    function showFormStatus(message, type) {
+        if (!formStatus) return;
+        
+        formStatus.textContent = message;
+        formStatus.className = 'form-status ' + type;
+        formStatus.style.display = 'block';
+        
+        // Auto-hide success messages
+        if (type === 'success') {
+            setTimeout(() => {
+                formStatus.style.display = 'none';
+            }, 5000);
+        }
+    }
+    
+    // Send email notification (function to be integrated with EmailJS or similar service)
+    async function sendEmailNotification(formData) {
+        // Simulate API delay
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Here you would integrate with EmailJS, Formspree, or your backend
+                // Example EmailJS integration:
+                // emailjs.send('service_id', 'template_id', formData)
+                //     .then(response => resolve(response))
+                //     .catch(error => reject(error));
+                
+                // For demo purposes, simulate success
+                console.log('Email notification data:', formData);
+                resolve({ success: true });
+            }, 1500);
+        });
+    }
+});
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
