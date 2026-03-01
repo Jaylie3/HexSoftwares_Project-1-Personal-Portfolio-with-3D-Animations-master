@@ -4,785 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lindokuhle Jali - Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            --text-primary: #ffffff;
-            --text-secondary: #e8e8e8;
-            --accent-color: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.4);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            letter-spacing: 0.5px;
-        }
-
-        p {
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
-        }
-
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-        }
-
-        .glass-hover {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-hover:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 40px var(--accent-glow);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 60px 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .profile-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 40px var(--accent-glow), 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 60px var(--accent-glow), 0 12px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .profile-info h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .profile-info h2 {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-
-        .professional-summary {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 24px;
-            font-weight: 400;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary, .btn-secondary {
-            padding: 14px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: white;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-3px);
-        }
-
-        .main-nav ul {
-            display: flex;
-            list-style: none;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .main-nav a {
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .main-nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .section {
-            padding: 100px 20px;
-            min-height: 100vh;
-        }
-
-        .section h3 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 50px;
-            background: linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.15rem;
-            line-height: 1.9;
-            color: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-        }
-
-        .about-image img {
-            width: 100%;
-            max-width: 500px;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 28px;
-        }
-
-        .skill-card {
-            padding: 40px 32px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .skill-card i {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .skill-card h4 {
-            font-size: 1.35rem;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        .skill-card p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 0.95rem;
-        }
-
-        .tech-categories {
-            display: grid;
-            gap: 32px;
-        }
-
-        .tech-category {
-            padding: 40px;
-        }
-
-        .tech-category h4 {
-            font-size: 1.5rem;
-            margin-bottom: 24px;
-            color: #a5b4fc;
-        }
-
-        .tech-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .tech-item {
-            padding: 12px 24px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .tech-item:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(139, 92, 246, 0.4));
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .tech-item i {
-            margin-right: 8px;
-            color: #a5b4fc;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 36px;
-        }
-
-        .project-card {
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .project-image-container {
-            overflow: hidden;
-            height: 220px;
-        }
-
-        .project-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .project-card:hover .project-image {
-            transform: scale(1.1);
-        }
-
-        .project-content {
-            padding: 32px;
-        }
-
-        .project-content h4 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        .project-content p {
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-
-        .project-tech {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .project-tech span {
-            padding: 6px 14px;
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #c7d2fe;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 16px;
-        }
-
-        .project-link {
-            padding: 10px 24px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .project-link {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-        }
-
-        .github-link {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
-        .project-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .github-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .experience-timeline, .education-timeline {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline-item, .edu-item {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 32px;
-            padding: 32px;
-            margin-bottom: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-date, .edu-date {
-            font-weight: 600;
-            color: #a5b4fc;
-            font-size: 0.95rem;
-            padding-top: 4px;
-        }
-
-        .timeline-content h4, .edu-content h4 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            color: white;
-        }
-
-        .timeline-content p, .edu-content .edu-institution {
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 16px;
-        }
-
-        .timeline-content ul, .edu-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .timeline-content li, .edu-content li {
-            color: rgba(255, 255, 255, 0.85);
-            padding: 8px 0;
-            padding-left: 24px;
-            position: relative;
-        }
-
-        .timeline-content li::before, .edu-content li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: #6366f1;
-            font-size: 1.2rem;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-        }
-
-        .testimonial-card {
-            padding: 40px;
-            transition: all 0.4s ease;
-        }
-
-        .testimonial-content p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-            font-style: italic;
-            margin-bottom: 24px;
-        }
-
-        .testimonial-author .author-info h5 {
-            font-size: 1.1rem;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .testimonial-author .author-info span {
-            color: #a5b4fc;
-            font-size: 0.9rem;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
-            margin-bottom: 50px;
-        }
-
-        .contact-item {
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item i {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .contact-item h4 {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        .contact-item p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .social-link {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            transform: translateY(-5px) scale(1.1);
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .footer {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px 20px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-left h4 {
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .footer-left p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-
-        .footer-center p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 16px;
-        }
-
-        .footer-social a {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background: rgba(99, 102, 241, 0.5);
-            transform: translateY(-3px);
-        }
-
-        .fixed-nav {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 60px;
-            padding: 12px 24px;
-            z-index: 1000;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-item {
-            padding: 10px 18px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: white;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item:hover {
-            background: rgba(99, 102, 241, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .nav-item i {
-            font-size: 0.9rem;
-        }
-
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0f0f23, #1a1a3e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .loader {
-            text-align: center;
-        }
-
-        .loader-text {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .loader-bar {
-            width: 300px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .loader-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
-            border-radius: 2px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .webgl {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        @media (max-width: 768px) {
-            .profile-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .profile-info h1 {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .about-text {
-                text-align: center;
-            }
-
-            .timeline-item, .edu-item {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .fixed-nav {
-                bottom: 15px;
-                padding: 10px 16px;
-            }
-
-            .nav-item span {
-                display: none;
-            }
-
-            .nav-item {
-                padding: 10px 14px;
-            }
-        }
-    </style>
 </head>
 <body>
     <canvas class="webgl"></canvas>
     
+    <div class="particles-container" id="particles"></div>
+    
     <header>
+        <div class="hero-gradient"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
         <div class="container">
             <div class="profile-section">
-                <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
+                <div class="profile-wrapper">
+                    <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
+                    <div class="profile-ring"></div>
+                    <div class="status-indicator"></div>
+                </div>
                 <div class="profile-info">
-                    <h1>Lindokuhle Nkosinathi Jali</h1>
-                    <h2>Front-end Developer & IT Support Intern</h2>
-                    <p class="professional-summary">Passionate developer creating modern web solutions with 2+ years experience</p>
+                    <div class="greeting">Hello, I'm</div>
+                    <h1 class="gradient-text">Lindokuhle Nkosinathi Jali</h1>
+                    <div class="typing-container">
+                        <h2 class="typing-text"><span class="typed-text"></span><span class="cursor">|</span></h2>
+                    </div>
+                    <p class="professional-subtitle">Crafting Digital Experiences with Passion & Precision</p>
                     <div class="cta-buttons">
-                        <a href="#contact" class="btn-primary">Hire Me</a>
-                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary">Download CV</a>
+                        <a href="#contact" class="btn-primary btn-glow"><i class="fas fa-paper-plane"></i> Hire Me</a>
+                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary btn-hover"><i class="fas fa-download"></i> Download CV</a>
+                    </div>
+                    <div class="social-preview">
+                        <a href="https://github.com/Jaylie3" target="_blank" class="social-icon-small"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-icon-small"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://x.com/LindoJaylie" target="_blank" class="social-icon-small"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
             </div>
-            <nav class="main-nav">
+            <nav class="main-nav glass-nav">
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#technologies">Tech Stack</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#testimonials">Reviews</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#about" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+                    <li><a href="#skills" class="nav-link"><i class="fas fa-star"></i> Skills</a></li>
+                    <li><a href="#technologies" class="nav-link"><i class="fas fa-layer-group"></i> Tech Stack</a></li>
+                    <li><a href="#projects" class="nav-link"><i class="fas fa-rocket"></i> Projects</a></li>
+                    <li><a href="#experience" class="nav-link"><i class="fas fa-briefcase"></i> Experience</a></li>
+                    <li><a href="#certifications" class="nav-link"><i class="fas fa-award"></i> Certifications</a></li>
+                    <li><a href="#testimonials" class="nav-link"><i class="fas fa-comments"></i> Reviews</a></li>
+                    <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span class="scroll-text">Scroll Down</span>
         </div>
     </header>
 
     <main>
-        <section id="about" class="section">
+        <section id="about" class="section section-gradient">
+            <div class="section-decoration">
+                <div class="deco-circle deco-1"></div>
+                <div class="deco-circle deco-2"></div>
+            </div>
             <div class="container">
-                <h3>Bio</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-user-circle"></i> Bio</h3>
+                    <p class="section-subtitle">Get to know me better</p>
+                </div>
                 <div class="about-content">
-                    <div class="about-text glass">
-                        <p>Front-end developer and IT Support Intern at Okhahlamba District Teacher Development Centre (DTDC). Passionate about creating engaging web experiences and supporting educational technology initiatives. I specialize in modern web technologies and have a strong foundation in both development and technical support.</p>
+                    <div class="about-text fade-up">
+                        <div class="text-card glass-card">
+                            <p>Front-end developer and IT Support Intern at Okhahlamba District Teacher Development Centre (DTDC). Passionate about creating engaging web experiences and supporting educational technology initiatives. I specialize in modern web technologies and have a strong foundation in both development and technical support.</p>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-number" data-count="2">0</div>
+                                    <div class="stat-label">Years Experience</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" data-count="15">0</div>
+                                    <div class="stat-label">Projects Completed</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" data-count="10">0</div>
+                                    <div class="stat-label">Technologies</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="about-image">
-                        <img src="images/undraw_programming_65t2.svg" alt="Developer illustration" class="floating">
+                    <div class="about-image fade-up">
+                        <div class="image-wrapper">
+                            <img src="images/undraw_programming_65t2.svg" alt="Developer illustration" class="floating">
+                            <div class="image-glow"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -790,62 +108,98 @@
 
         <section id="skills" class="section">
             <div class="container">
-                <h3>Core Skills</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-bolt"></i> Core Skills</h3>
+                    <p class="section-subtitle">What I bring to the table</p>
+                </div>
                 <div class="skills-grid">
-                    <div class="skill-card glass glass-hover">
-                        <i class="fas fa-code"></i>
+                    <div class="skill-card glass-card fade-up">
+                        <div class="skill-icon-wrapper">
+                            <i class="fas fa-code"></i>
+                            <div class="icon-glow"></div>
+                        </div>
                         <h4>Frontend Development</h4>
                         <p>Building responsive, interactive user interfaces</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 90%"></div>
+                        </div>
                     </div>
-                    <div class="skill-card glass glass-hover">
-                        <i class="fas fa-mobile-alt"></i>
+                    <div class="skill-card glass-card fade-up">
+                        <div class="skill-icon-wrapper">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div class="icon-glow"></div>
+                        </div>
                         <h4>Responsive Design</h4>
                         <p>Mobile-first approach and cross-browser compatibility</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
                     </div>
-                    <div class="skill-card glass glass-hover">
-                        <i class="fas fa-tools"></i>
+                    <div class="skill-card glass-card fade-up">
+                        <div class="skill-icon-wrapper">
+                            <i class="fas fa-tools"></i>
+                            <div class="icon-glow"></div>
+                        </div>
                         <h4>IT Support</h4>
                         <p>Technical troubleshooting and system maintenance</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 80%"></div>
+                        </div>
                     </div>
-                    <div class="skill-card glass glass-hover">
-                        <i class="fas fa-users"></i>
+                    <div class="skill-card glass-card fade-up">
+                        <div class="skill-icon-wrapper">
+                            <i class="fas fa-users"></i>
+                            <div class="icon-glow"></div>
+                        </div>
                         <h4>Team Collaboration</h4>
                         <p>Working effectively in development teams</p>
+                        <div class="skill-progress">
+                            <div class="progress-bar" style="width: 88%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="technologies" class="section">
+        <section id="technologies" class="section section-dark">
             <div class="container">
-                <h3>Technologies & Tools</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-microchip"></i> Technologies & Tools</h3>
+                    <p class="section-subtitle">My tech arsenal</p>
+                </div>
                 <div class="tech-categories">
-                    <div class="tech-category glass glass-hover">
-                        <h4>Frontend</h4>
+                    <div class="tech-category glass-card fade-up">
+                        <div class="category-header">
+                            <h4><i class="fas fa-desktop"></i> Frontend</h4>
+                        </div>
                         <div class="tech-items">
-                            <span class="tech-item"><i class="fab fa-html5"></i> HTML5</span>
-                            <span class="tech-item"><i class="fab fa-css3-alt"></i> CSS3</span>
-                            <span class="tech-item"><i class="fab fa-js-square"></i> JavaScript</span>
-                            <span class="tech-item"><i class="fab fa-react"></i> React</span>
-                            <span class="tech-item"><i class="fab fa-node-js"></i> Node.js</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-html5"></i></div> HTML5</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-css3-alt"></i></div> CSS3</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-js-square"></i></div> JavaScript</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-react"></i></div> React</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-node-js"></i></div> Node.js</span>
                         </div>
                     </div>
-                    <div class="tech-category glass glass-hover">
-                        <h4>Tools & Platforms</h4>
+                    <div class="tech-category glass-card fade-up">
+                        <div class="category-header">
+                            <h4><i class="fas fa-wrench"></i> Tools & Platforms</h4>
+                        </div>
                         <div class="tech-items">
-                            <span class="tech-item"><i class="fab fa-git-alt"></i> Git</span>
-                            <span class="tech-item"><i class="fab fa-github"></i> GitHub</span>
-                            <span class="tech-item"><i class="fab fa-docker"></i> Docker</span>
-                            <span class="tech-item"><i class="fas fa-robot"></i> GitHub Actions</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-git-alt"></i></div> Git</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-github"></i></div> GitHub</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-docker"></i></div> Docker</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fas fa-robot"></i></div> GitHub Actions</span>
                         </div>
                     </div>
-                    <div class="tech-category glass glass-hover">
-                        <h4>Languages & More</h4>
+                    <div class="tech-category glass-card fade-up">
+                        <div class="category-header">
+                            <h4><i class="fas fa-book"></i> Languages & More</h4>
+                        </div>
                         <div class="tech-items">
-                            <span class="tech-item"><i class="fab fa-python"></i> Python</span>
-                            <span class="tech-item"><i class="fas fa-code"></i> Algorithms</span>
-                            <span class="tech-item"><i class="fas fa-project-diagram"></i> Data Structures</span>
-                            <span class="tech-item"><i class="fas fa-vial"></i> Jest Testing</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fab fa-python"></i></div> Python</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fas fa-code"></i></div> Algorithms</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fas fa-project-diagram"></i></div> Data Structures</span>
+                            <span class="tech-item"><div class="tech-icon-box"><i class="fas fa-vial"></i></div> Jest Testing</span>
                         </div>
                     </div>
                 </div>
@@ -854,106 +208,128 @@
 
         <section id="projects" class="section">
             <div class="container">
-                <h3>Projects</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-rocket"></i> Projects</h3>
+                    <p class="section-subtitle">Featured work and creations</p>
+                </div>
                 <div class="projects-grid">
-                    <div class="project-card glass glass-hover">
+                    <div class="project-card glass-card fade-up">
+                        <div class="project-badge">Featured</div>
                         <div class="project-image-container">
                             <img src="images/break-a-sweat-preview.png" alt="Break-a-Sweat Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="project-hover-icon"><i class="fas fa-external-link-alt"></i></div>
+                            </div>
                         </div>
                         <div class="project-content">
-                            <h4>Break-a-Sweat Fitness App</h4>
+                            <h4><i class="fas fa-dumbbell"></i> Break-a-Sweat Fitness App</h4>
                             <p>Track workouts, crush goals, and monitor your fitness progress with this interactive web app.</p>
                             <div class="project-tech">
-                                <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                                <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span>
                             </div>
                             <div class="project-links">
-                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Break-a-Sweat-v2" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="https://break-a-sweat.netlify.app/" target="_blank" class="project-link btn-glow"><i class="fas fa-play"></i> Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Break-a-Sweat-v2" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
             
-                    <div class="project-card glass glass-hover">
+                    <div class="project-card glass-card fade-up">
                         <div class="project-image-container">
                             <img src="images/Battleship.png" alt="Battleship Game Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="project-hover-icon"><i class="fas fa-external-link-alt"></i></div>
+                            </div>
                         </div>
                         <div class="project-content">
-                            <h4>Battleship Game</h4>
+                            <h4><i class="fas fa-ship"></i> Battleship Game</h4>
                             <p>Play the classic game against a smart AI in your browser with modern UI.</p>
                             <div class="project-tech">
-                                <span>JavaScript</span><span>HTML</span><span>CSS</span>
+                                <span class="tech-tag">JavaScript</span><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Battleship" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link btn-glow"><i class="fas fa-play"></i> Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Battleship" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
             
-                    <div class="project-card glass glass-hover">
+                    <div class="project-card glass-card fade-up">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Temperature Converter Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="project-hover-icon"><i class="fas fa-external-link-alt"></i></div>
+                            </div>
                         </div>
                         <div class="project-content">
-                            <h4>Temperature Converter</h4>
+                            <h4><i class="fas fa-thermometer-half"></i> Temperature Converter</h4>
                             <p>Quickly switch between Celsius and Fahrenheit with this clean converter tool.</p>
                             <div class="project-tech">
-                                <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                                <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/OIBSIP" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link btn-glow"><i class="fas fa-play"></i> Live Demo</a>
+                                <a href="https://github.com/Jaylie3/OIBSIP" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card glass glass-hover">
+                    <div class="project-card glass-card fade-up">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Binary Search Trees Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="project-hover-icon"><i class="fas fa-external-link-alt"></i></div>
+                            </div>
                         </div>
                         <div class="project-content">
-                            <h4>Binary Search Trees</h4>
+                            <h4><i class="fas fa-sitemap"></i> Binary Search Trees</h4>
                             <p>Learn data structures with interactive demos and visual representations.</p>
                             <div class="project-tech">
-                                <span>JavaScript</span><span>Algorithms</span><span>Data Structures</span>
+                                <span class="tech-tag">JavaScript</span><span class="tech-tag">Algorithms</span><span class="tech-tag">Data Structures</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Binary-Search-Trees" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link btn-glow"><i class="fas fa-play"></i> Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Binary-Search-Trees" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card glass glass-hover">
+                    <div class="project-card glass-card fade-up">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="HashMap Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="project-hover-icon"><i class="fas fa-external-link-alt"></i></div>
+                            </div>
                         </div>
                         <div class="project-content">
-                            <h4>HashMap Implementation</h4>
+                            <h4><i class="fas fa-database"></i> HashMap Implementation</h4>
                             <p>Custom JavaScript HashMap & HashSet implementations with comprehensive methods.</p>
                             <div class="project-tech">
-                                <span>JavaScript</span><span>Data Structures</span><span>Algorithms</span>
+                                <span class="tech-tag">JavaScript</span><span class="tech-tag">Data Structures</span><span class="tech-tag">Algorithms</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-HashMap" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link btn-glow"><i class="fas fa-play"></i> Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-HashMap" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card glass glass-hover">
+                    <div class="project-card glass-card fade-up">
                         <div class="project-image-container">
                             <img src="images/undraw_programming_65t2.svg" alt="Knights Travails Preview" class="project-image">
+                            <div class="project-overlay">
+                                <div class="project-hover-icon"><i class="fas fa-external-link-alt"></i></div>
+                            </div>
                         </div>
                         <div class="project-content">
-                            <h4>Knights Travails</h4>
+                            <h4><i class="fas fa-chess-knight"></i> Knights Travails</h4>
                             <p>Discover shortest chess knight paths using advanced algorithms and pathfinding.</p>
                             <div class="project-tech">
-                                <span>JavaScript</span><span>Algorithms</span><span>Graph Theory</span>
+                                <span class="tech-tag">JavaScript</span><span class="tech-tag">Algorithms</span><span class="tech-tag">Graph Theory</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" target="_blank" class="project-link">Live Demo</a>
-                                <a href="https://github.com/Jaylie3/Project-Knights-Travails" target="_blank" class="project-link github-link">GitHub</a>
+                                <a href="#" target="_blank" class="project-link btn-glow"><i class="fas fa-play"></i> Live Demo</a>
+                                <a href="https://github.com/Jaylie3/Project-Knights-Travails" target="_blank" class="project-link github-link"><i class="fab fa-github"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
@@ -961,32 +337,46 @@
             </div>
         </section>
 
-        <section id="experience" class="section">
+        <section id="experience" class="section section-gradient">
             <div class="container">
-                <h3>Experience</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-briefcase"></i> Experience</h3>
+                    <p class="section-subtitle">My professional journey</p>
+                </div>
                 <div class="experience-timeline">
-                    <div class="timeline-item glass glass-hover">
-                        <div class="timeline-date">2024 - Present</div>
-                        <div class="timeline-content">
-                            <h4>IT Support Intern</h4>
-                            <p>Okhahlamba District Teacher Development Centre (DTDC)</p>
-                            <ul>
-                                <li>Providing technical support for educational technology</li>
-                                <li>Maintaining computer systems and networks</li>
-                                <li>Training staff on digital tools and platforms</li>
-                            </ul>
+                    <div class="timeline-wrapper">
+                        <div class="timeline-line"></div>
+                        <div class="timeline-item glass-card fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-date">
+                                <span class="date-badge">2024 - Present</span>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="company-icon"><i class="fas fa-building"></i></div>
+                                <h4><i class="fas fa-headset"></i> IT Support Intern</h4>
+                                <p class="company-name">Okhahlamba District Teacher Development Centre (DTDC)</p>
+                                <ul class="timeline-list">
+                                    <li><i class="fas fa-check-circle"></i> Providing technical support for educational technology</li>
+                                    <li><i class="fas fa-check-circle"></i> Maintaining computer systems and networks</li>
+                                    <li><i class="fas fa-check-circle"></i> Training staff on digital tools and platforms</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="timeline-item glass glass-hover">
-                        <div class="timeline-date">2023 - 2024</div>
-                        <div class="timeline-content">
-                            <h4>Front-end Developer</h4>
-                            <p>Freelance Projects</p>
-                            <ul>
-                                <li>Developed responsive web applications</li>
-                                <li>Created interactive user interfaces</li>
-                                <li>Implemented modern web technologies</li>
-                            </ul>
+                        <div class="timeline-item glass-card fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-date">
+                                <span class="date-badge">2023 - 2024</span>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="company-icon"><i class="fas fa-laptop-code"></i></div>
+                                <h4><i class="fas fa-code"></i> Front-end Developer</h4>
+                                <p class="company-name">Freelance Projects</p>
+                                <ul class="timeline-list">
+                                    <li><i class="fas fa-check-circle"></i> Developed responsive web applications</li>
+                                    <li><i class="fas fa-check-circle"></i> Created interactive user interfaces</li>
+                                    <li><i class="fas fa-check-circle"></i> Implemented modern web technologies</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -995,38 +385,62 @@
 
         <section id="testimonials" class="section">
             <div class="container">
-                <h3>What People Say</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-comments"></i> What People Say</h3>
+                    <p class="section-subtitle">Testimonials from colleagues</p>
+                </div>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card glass glass-hover">
+                    <div class="testimonial-card glass-card fade-up">
+                        <div class="testimonial-quote"><i class="fas fa-quote-left"></i></div>
+                        <div class="testimonial-avatar">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='35' r='20' fill='%236366f1'/%3E%3Cellipse cx='50' cy='85' rx='30' ry='20' fill='%236366f1'/%3E%3C/svg%3E" alt="Sarah">
+                        </div>
                         <div class="testimonial-content">
                             <p>"Lindokuhle delivered exceptional work on our web project. His attention to detail and technical skills are impressive."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-info">
                                 <h5>Sarah Johnson</h5>
-                                <span>Project Manager</span>
+                                <span><i class="fas fa-briefcase"></i> Project Manager</span>
+                            </div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card glass glass-hover">
+                    <div class="testimonial-card glass-card fade-up">
+                        <div class="testimonial-quote"><i class="fas fa-quote-left"></i></div>
+                        <div class="testimonial-avatar">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='35' r='20' fill='%238b5cf6'/%3E%3Cellipse cx='50' cy='85' rx='30' ry='20' fill='%238b5cf6'/%3E%3C/svg%3E" alt="Mike">
+                        </div>
                         <div class="testimonial-content">
                             <p>"Great problem-solving skills and always delivers on time. A reliable developer who communicates well."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-info">
                                 <h5>Mike Chen</h5>
-                                <span>Team Lead</span>
+                                <span><i class="fas fa-users-cog"></i> Team Lead</span>
+                            </div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card glass glass-hover">
+                    <div class="testimonial-card glass-card fade-up">
+                        <div class="testimonial-quote"><i class="fas fa-quote-left"></i></div>
+                        <div class="testimonial-avatar">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='35' r='20' fill='%23ec4899'/%3E%3Cellipse cx='50' cy='85' rx='30' ry='20' fill='%23ec4899'/%3E%3C/svg%3E" alt="Sfiso">
+                        </div>
                         <div class="testimonial-content">
                             <p>"Professional approach to IT support and development. Helped streamline our technical processes effectively."</p>
                         </div>
                         <div class="testimonial-author">
                             <div class="author-info">
                                 <h5>Mr Sfiso Xulu</h5>
-                                <span>DTDC Supervisor</span>
+                                <span><i class="fas fa-building"></i> DTDC Supervisor</span>
+                            </div>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                             </div>
                         </div>
                     </div>
@@ -1034,151 +448,195 @@
             </div>
         </section>
 
-        <section id="certifications" class="section">
+        <section id="certifications" class="section section-dark">
             <div class="container">
-                <h3>Education & Certifications</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-graduation-cap"></i> Education & Certifications</h3>
+                    <p class="section-subtitle">My learning journey</p>
+                </div>
                 <div class="education-timeline">
-                    <div class="edu-item glass glass-hover">
-                        <div class="edu-date">Apr 2025 - Present</div>
+                    <div class="edu-item glass-card fade-up">
+                        <div class="edu-icon"><i class="fas fa-code"></i></div>
+                        <div class="edu-date"><span class="date-badge badge-glow">Apr 2025 - Present</span></div>
                         <div class="edu-content">
-                            <h4>The Fullstack Developer Path</h4>
-                            <p class="edu-institution">Scrimba, Online</p>
-                            <ul>
-                                <li>Learning the entire stack from backend to frontend with hireable JavaScript skills</li>
-                                <li>Gaining proficiency in React, Node, Express, Next.js, and AI engineering</li>
+                            <h4><i class="fas fa-laptop-code"></i> The Fullstack Developer Path</h4>
+                            <p class="edu-institution"><i class="fas fa-university"></i> Scrimba, Online</p>
+                            <ul class="edu-list">
+                                <li><i class="fas fa-check"></i> Learning the entire stack from backend to frontend with hireable JavaScript skills</li>
+                                <li><i class="fas fa-check"></i> Gaining proficiency in React, Node, Express, Next.js, and AI engineering</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="edu-item glass glass-hover">
-                        <div class="edu-date">Mar 2025</div>
+                    <div class="edu-item glass-card fade-up">
+                        <div class="edu-icon"><i class="fab fa-google"></i></div>
+                        <div class="edu-date"><span class="date-badge badge-glow">Mar 2025</span></div>
                         <div class="edu-content">
-                            <h4>Google IT Support Professional Certificate</h4>
-                            <p class="edu-institution">Coursera, Online</p>
-                            <ul>
-                                <li>Day-to-day IT support: computer assembly, networking, program installation</li>
-                                <li>Systems: Linux, DNS, Command-Line Interface, Binary Code</li>
-                                <li>End-to-end customer support and troubleshooting</li>
+                            <h4><i class="fas fa-server"></i> Google IT Support Professional Certificate</h4>
+                            <p class="edu-institution"><i class="fas fa-university"></i> Coursera, Online</p>
+                            <ul class="edu-list">
+                                <li><i class="fas fa-check"></i> Day-to-day IT support: computer assembly, networking, program installation</li>
+                                <li><i class="fas fa-check"></i> Systems: Linux, DNS, Command-Line Interface, Binary Code</li>
+                                <li><i class="fas fa-check"></i> End-to-end customer support and troubleshooting</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass glass-hover">
-                        <div class="edu-date">Jan 2024 - Feb 2025</div>
+                    <div class="edu-item glass-card fade-up">
+                        <div class="edu-icon"><i class="fas fa-fire"></i></div>
+                        <div class="edu-date"><span class="date-badge badge-glow">Jan 2024 - Feb 2025</span></div>
                         <div class="edu-content">
-                            <h4>Responsive Web Design Certification</h4>
-                            <p class="edu-institution">FreeCodeCamp, Online</p>
-                            <ul>
-                                <li>Mastered HTML and CSS for content and design</li>
-                                <li>Modern techniques: CSS variables, Flexbox, CSS Grid</li>
-                                <li>Responsive design and accessibility best practices</li>
+                            <h4><i class="fas fa-palette"></i> Responsive Web Design Certification</h4>
+                            <p class="edu-institution"><i class="fas fa-university"></i> FreeCodeCamp, Online</p>
+                            <ul class="edu-list">
+                                <li><i class="fas fa-check"></i> Mastered HTML and CSS for content and design</li>
+                                <li><i class="fas fa-check"></i> Modern techniques: CSS variables, Flexbox, CSS Grid</li>
+                                <li><i class="fas fa-check"></i> Responsive design and accessibility best practices</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass glass-hover">
-                        <div class="edu-date">Aug 2024 - Dec 2024</div>
+                    <div class="edu-item glass-card fade-up">
+                        <div class="edu-icon"><i class="fas fa-project-diagram"></i></div>
+                        <div class="edu-date"><span class="date-badge badge-glow">Aug 2024 - Dec 2024</span></div>
                         <div class="edu-content">
-                            <h4>Software Development Program</h4>
-                            <p class="edu-institution">Power Learn Project, Online</p>
-                            <ul>
-                                <li>16-week program: Python, Web Technologies, Database Management</li>
-                                <li>Dart with Flutter and Soft Skills development</li>
+                            <h4><i class="fas fa-terminal"></i> Software Development Program</h4>
+                            <p class="edu-institution"><i class="fas fa-university"></i> Power Learn Project, Online</p>
+                            <ul class="edu-list">
+                                <li><i class="fas fa-check"></i> 16-week program: Python, Web Technologies, Database Management</li>
+                                <li><i class="fas fa-check"></i> Dart with Flutter and Soft Skills development</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass glass-hover">
-                        <div class="edu-date">Feb 2021 - Dec 2023</div>
+                    <div class="edu-item glass-card fade-up">
+                        <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="edu-date"><span class="date-badge badge-glow">Feb 2021 - Dec 2023</span></div>
                         <div class="edu-content">
-                            <h4>Diploma in Information Technology Management</h4>
-                            <p class="edu-institution">IIE Rosebank College, Pietermaritzburg</p>
-                            <ul>
-                                <li>Comprehensive IT management and technical skills</li>
-                                <li>Foundation in business technology solutions</li>
+                            <h4><i class="fas fa-id-card"></i> Diploma in Information Technology Management</h4>
+                            <p class="edu-institution"><i class="fas fa-university"></i> IIE Rosebank College, Pietermaritzburg</p>
+                            <ul class="edu-list">
+                                <li><i class="fas fa-check"></i> Comprehensive IT management and technical skills</li>
+                                <li><i class="fas fa-check"></i> Foundation in business technology solutions</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="edu-item glass glass-hover">
-                        <div class="edu-date">2020</div>
+                    <div class="edu-item glass-card fade-up">
+                        <div class="edu-icon"><i class="fas fa-school"></i></div>
+                        <div class="edu-date"><span class="date-badge badge-glow">2020</span></div>
                         <div class="edu-content">
-                            <h4>Grade 12 Certificate</h4>
-                            <p class="edu-institution">Amangwane High School, Bergville</p>
+                            <h4><i class="fas fa-certificate"></i> Grade 12 Certificate</h4>
+                            <p class="edu-institution"><i class="fas fa-university"></i> Amangwane High School, Bergville</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="section">
+        <section id="contact" class="section section-gradient">
+            <div class="section-decoration">
+                <div class="deco-circle deco-3"></div>
+                <div class="deco-circle deco-4"></div>
+            </div>
             <div class="container">
-                <h3>Contact Information</h3>
+                <div class="section-header fade-in">
+                    <h3 class="gradient-text"><i class="fas fa-envelope-open-text"></i> Contact Information</h3>
+                    <p class="section-subtitle">Let's connect and build something amazing</p>
+                </div>
                 <div class="contact-grid">
-                    <div class="contact-item glass glass-hover">
-                        <i class="fas fa-envelope"></i>
+                    <div class="contact-item glass-card fade-up">
+                        <div class="contact-icon-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <div class="icon-pulse"></div>
+                        </div>
                         <h4>Email</h4>
-                        <p>lindokuhlenkosinathijali@gmail.com</p>
+                        <p><a href="mailto:lindokuhlenkosinathijali@gmail.com">lindokuhlenkosinathijali@gmail.com</a></p>
                     </div>
-                    <div class="contact-item glass glass-hover">
-                        <i class="fas fa-phone"></i>
+                    <div class="contact-item glass-card fade-up">
+                        <div class="contact-icon-wrapper">
+                            <i class="fas fa-phone"></i>
+                            <div class="icon-pulse"></div>
+                        </div>
                         <h4>Phone</h4>
-                        <p>+27837752498</p>
+                        <p><a href="tel:+27837752498">+27 83 775 2498</a></p>
                     </div>
-                    <div class="contact-item glass glass-hover">
-                        <i class="fas fa-map-marker-alt"></i>
+                    <div class="contact-item glass-card fade-up">
+                        <div class="contact-icon-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="icon-pulse"></div>
+                        </div>
                         <h4>Location</h4>
                         <p>Bergville, KwaZulu-Natal, South Africa</p>
                     </div>
                 </div>
-                <div class="social-links">
-                    <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
-                    <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+                <div class="social-links fade-up">
+                    <h4>Connect with me</h4>
+                    <div class="social-icons-wrapper">
+                        <a href="https://github.com/Jaylie3" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://web.facebook.com/lindokuhle.jali.39/" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/LindoJaylie" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="footer">
+        <div class="footer-waves">
+            <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
-                    <h4>Lindokuhle Jali</h4>
+                    <h4 class="gradient-text">Lindokuhle Jali</h4>
                     <p>Frontend Developer & IT Support</p>
+                    <div class="footer-tagline">Building the future, one line of code at a time</div>
                 </div>
                 <div class="footer-center">
                     <p>&copy; 2025 Lindokuhle Jali. All rights reserved.</p>
+                    <p class="footer-heart">Made with <i class="fas fa-heart"></i> and <i class="fas fa-coffee"></i></p>
                 </div>
                 <div class="footer-right">
                     <div class="footer-social">
-                        <a href="https://github.com/Jaylie3" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/Jaylie3" target="_blank" class="footer-social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" class="footer-social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://x.com/LindoJaylie" target="_blank" class="footer-social-link"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Fixed Navigation -->
-    <nav class="fixed-nav" id="fixedNav">
+    <nav class="fixed-nav glass-nav" id="fixedNav">
         <div class="nav-container">
-            <a href="#about" class="nav-item"><i class="fas fa-user"></i><span>About</span></a>
-            <a href="#skills" class="nav-item"><i class="fas fa-cogs"></i><span>Skills</span></a>
-            <a href="#projects" class="nav-item"><i class="fas fa-folder"></i><span>Projects</span></a>
-            <a href="#certifications" class="nav-item"><i class="fas fa-certificate"></i><span>Certs</span></a>
-            <a href="#contact" class="nav-item"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            <a href="#about" class="nav-item" title="About"><i class="fas fa-user"></i><span class="nav-tooltip">About</span></a>
+            <a href="#skills" class="nav-item" title="Skills"><i class="fas fa-cogs"></i><span class="nav-tooltip">Skills</span></a>
+            <a href="#projects" class="nav-item" title="Projects"><i class="fas fa-folder"></i><span class="nav-tooltip">Projects</span></a>
+            <a href="#certifications" class="nav-item" title="Certifications"><i class="fas fa-certificate"></i><span class="nav-tooltip">Certs</span></a>
+            <a href="#contact" class="nav-item" title="Contact"><i class="fas fa-envelope"></i><span class="nav-tooltip">Contact</span></a>
         </div>
     </nav>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader">
+            <div class="loader-spinner"></div>
             <div class="loader-text">Loading Portfolio...</div>
             <div class="loader-bar">
                 <div class="loader-progress"></div>
             </div>
+            <div class="loader-percentage">0%</div>
         </div>
     </div>
 
