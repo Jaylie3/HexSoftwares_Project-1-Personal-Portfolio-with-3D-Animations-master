@@ -2,6 +2,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loadingScreen');
     
+    // Add pulsing animation to loading screen
+    loadingScreen.innerHTML = `
+        <div class="loading-content">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loading-text">Loading Experience...</div>
+        </div>
+    `;
+    
     setTimeout(() => {
         loadingScreen.classList.add('hidden');
         setTimeout(() => {
@@ -10,10 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
 });
 
-// Fixed Navigation
+// Fixed Navigation with Gradient Effect
 document.addEventListener('DOMContentLoaded', function() {
     const fixedNav = document.getElementById('fixedNav');
     const navItems = document.querySelectorAll('.nav-item');
+    const navIndicator = document.createElement('div');
+    navIndicator.className = 'nav-indicator';
+    fixedNav.appendChild(navIndicator);
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
@@ -38,112 +51,163 @@ document.addEventListener('DOMContentLoaded', function() {
                 const activeItem = document.querySelector(`[href="#${sectionId}"]`);
                 if (activeItem) {
                     activeItem.classList.add('active');
+                    // Move indicator to active item
+                    const itemRect = activeItem.getBoundingClientRect();
+                    const navRect = fixedNav.getBoundingClientRect();
+                    navIndicator.style.width = `${itemRect.width}px`;
+                    navIndicator.style.left = `${activeItem.offsetLeft}px`;
                 }
             }
         });
     }
+    
+    // Initial position
+    const firstActive = document.querySelector('.nav-item');
+    if (firstActive) {
+        navIndicator.style.width = `${firstActive.offsetWidth}px`;
+        navIndicator.style.left = `${firstActive.offsetLeft}px`;
+    }
 });
 
-// Smooth Scrolling
+// Smooth Scrolling with Parallax Effect
 document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('a[href^="#"]');
+    let isScrolling = false;
     
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            if (isScrolling) return;
+            isScrolling = true;
+            
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
+                // Add ripple effect indicator
+                const ripple = document.createElement('div');
+                ripple.className = 'scroll-indicator-hint';
+                document.body.appendChild(ripple);
+                
                 targetSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
+                
+                setTimeout(() => {
+                    ripple.remove();
+                    isScrolling = false;
+                }, 1000);
             }
         });
     });
 });
 
-// Enhanced Animations
+// Enhanced Animations with Multiple Effects
 document.addEventListener('DOMContentLoaded', function() {
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -100px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0) scale(1)';
-                entry.target.classList.add('animate-in');
+                entry.target.style.transform = entry.target.dataset.transform || 'translateY(0) scale(1)';
+                entry.target.classList.add('animated');
             }
         });
     }, observerOptions);
     
-    // Animate cards with enhanced effects
-    const cards = document.querySelectorAll('.skill-card, .project-card, .testimonial-card, .edu-content');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px) scale(0.95)';
-        card.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
-        observer.observe(card);
-    });
-
-    // Parallax effect on scroll
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const parallaxElements = document.querySelectorAll('.parallax');
-        parallaxElements.forEach(el => {
-            const speed = el.dataset.speed || 0.5;
-            el.style.transform = `translateY(${scrolled * speed}px)`;
-        });
-    });
-
-    // Magnetic effect for buttons
-    const magneticButtons = document.querySelectorAll('.btn, .nav-link');
-    magneticButtons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-        });
+    // Animate various elements with staggered delays
+    const animatedElements = document.querySelectorAll('.skill-card, .project-card, .testimonial-card, .edu-content, .about-text, .contact-item');
+    animatedElements.forEach((el, index) => {
+        const delay = (index % 5) * 0.1;
+        const effects = [
+            'translateY(30px)',
+            'translateY(30px) scale(0.9)',
+            'translateX(-30px)',
+            'translateX(30px)',
+            'rotateY(15deg)'
+        ];
         
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0)';
-        });
+        el.style.opacity = '0';
+        el.dataset.transform = effects[index % effects.length];
+        el.style.transition = `all 0.7s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`;
+        observer.observe(el);
     });
-
-    // Tilt effect for cards
-    const tiltCards = document.querySelectorAll('.skill-card, .project-card');
-    tiltCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    
+    // Add floating animation to cards periodically
+    setInterval(() => {
+        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
+            if (Math.random() > 0.7) {
+                card.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 5}px)`;
+            }
         });
+    }, 50);
+});
+
+// Custom Cursor Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const cursor = document.createElement('div');
+    const cursorFollower = document.createElement('div');
+    
+    cursor.className = 'custom-cursor';
+    cursorFollower.className = 'custom-cursor-follower';
+    
+    document.body.appendChild(cursor);
+    document.body.appendChild(cursorFollower);
+    
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let followerX = 0, followerY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
         
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        cursorFollower.style.left = followerX + 'px';
+        cursorFollower.style.top = followerY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    }
+    
+    animateCursor();
+    
+    // Hover effects on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .skill-card, .project-card');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('active');
+            cursorFollower.classList.add('active');
+            el.style.transition = 'all 0.3s ease';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('active');
+            cursorFollower.classList.remove('active');
         });
     });
 });
 
-// Enhanced Three.js Background
+// Enhanced Three.js Background with Mouse Interaction
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
     
+    const canvas = document.querySelector('canvas.webgl');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('canvas.webgl'),
+        canvas: canvas,
         alpha: true,
         antialias: true
     });
@@ -152,9 +216,22 @@ function initThreeJS() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
     
-    // Enhanced Particles System
+    // Mouse position for interaction
+    const mouse = new THREE.Vector2();
+    const targetRotation = new THREE.Vector2();
+    
+    document.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        targetRotation.x = mouse.x * 0.5;
+        targetRotation.y = mouse.y * 0.5;
+    });
+    
+    // Create multiple particle systems
+    const particlesGroup = new THREE.Group();
+    
+    // Main particles with gradient colors
     const particlesCount = 1500;
-    const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
     const sizes = new Float32Array(particlesCount);
@@ -162,302 +239,248 @@ function initThreeJS() {
     const colorPalette = [
         new THREE.Color(0x6366f1),
         new THREE.Color(0x8b5cf6),
+        new THREE.Color(0xec4899),
         new THREE.Color(0x06b6d4),
-        new THREE.Color(0xf472b6)
+        new THREE.Color(0x10b981)
     ];
     
     for (let i = 0; i < particlesCount; i++) {
-        const i3 = i * 3;
-        positions[i3] = (Math.random() - 0.5) * 25;
-        positions[i3 + 1] = (Math.random() - 0.5) * 25;
-        positions[i3 + 2] = (Math.random() - 0.5) * 25;
+        positions[i * 3] = (Math.random() - 0.5) * 15;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
         
         const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-        colors[i3] = color.r;
-        colors[i3 + 1] = color.g;
-        colors[i3 + 2] = color.b;
+        colors[i * 3] = color.r;
+        colors[i * 3 + 1] = color.g;
+        colors[i * 3 + 2] = color.b;
         
         sizes[i] = Math.random() * 3 + 1;
     }
     
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    const particlesGeometry = new THREE.BufferGeometry();
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     
-    const material = new THREE.PointsMaterial({
-        size: 0.05,
-        vertexColors: true,
+    // Custom shader material for glowing particles
+    const particlesMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            time: { value: 0 },
+            mousePos: { value: new THREE.Vector2(0, 0) }
+        },
+        vertexShader: `
+            attribute float size;
+            varying vec3 vColor;
+            uniform float time;
+            uniform vec2 mousePos;
+            
+            void main() {
+                vColor = color;
+                vec3 pos = position;
+                
+                // Wave animation
+                pos.x += sin(time * 0.5 + position.y * 0.5) * 0.2;
+                pos.y += cos(time * 0.3 + position.x * 0.5) * 0.2;
+                
+                // Mouse influence
+                float dist = distance(position.xy, mousePos * 5.0);
+                pos.z += sin(dist * 2.0 - time * 2.0) * 0.3;
+                
+                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                gl_PointSize = size * (300.0 / -mvPosition.z);
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `,
+        fragmentShader: `
+            varying vec3 vColor;
+            
+            void main() {
+                float dist = length(gl_PointCoord - vec2(0.5));
+                if (dist > 0.5) discard;
+                
+                float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
+                vec3 glow = vColor * (1.0 + 0.5 * (1.0 - dist * 2.0));
+                gl_FragColor = vec4(glow, alpha * 0.8);
+            }
+        `,
         transparent: true,
-        opacity: 0.9,
-        blending: THREE.AdditiveBlending,
-        sizeAttenuation: true
+        vertexColors: true,
+        blending: THREE.AdditiveBlending
     });
     
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    particlesGroup.add(particles);
     
-    // Add floating geometric shapes
-    const shapes = [];
-    const shapeGeometry = new THREE.IcosahedronGeometry(0.3, 0);
-    const shapeMaterial = new THREE.MeshBasicMaterial({
+    // Secondary particles - smaller, faster
+    const secondaryParticlesCount = 800;
+    const secondaryPositions = new Float32Array(secondaryParticlesCount * 3);
+    const secondaryColors = new Float32Array(secondaryParticlesCount * 3);
+    
+    for (let i = 0; i < secondaryParticlesCount; i++) {
+        secondaryPositions[i * 3] = (Math.random() - 0.5) * 20;
+        secondaryPositions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+        secondaryPositions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+        
+        const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+        secondaryColors[i * 3] = color.r;
+        secondaryColors[i * 3 + 1] = color.g;
+        secondaryColors[i * 3 + 2] = color.b;
+    }
+    
+    const secondaryGeometry = new THREE.BufferGeometry();
+    secondaryGeometry.setAttribute('position', new THREE.BufferAttribute(secondaryPositions, 3));
+    secondaryGeometry.setAttribute('color', new THREE.BufferAttribute(secondaryColors, 3));
+    
+    const secondaryMaterial = new THREE.PointsMaterial({
+        size: 0.03,
+        transparent: true,
+        opacity: 0.4,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending
+    });
+    
+    const secondaryParticles = new THREE.Points(secondaryGeometry, secondaryMaterial);
+    particlesGroup.add(secondaryParticles);
+    
+    // Floating geometric shapes
+    const shapesGroup = new THREE.Group();
+    
+    // Icosahedron
+    const icosahedronGeometry = new THREE.IcosahedronGeometry(0.5, 0);
+    const icosahedronMaterial = new THREE.MeshBasicMaterial({
         color: 0x6366f1,
         wireframe: true,
         transparent: true,
-        opacity: 0.5
+        opacity: 0.3
     });
+    const icosahedron = new THREE.Mesh(icosahedronGeometry, icosahedronMaterial);
+    icosahedron.position.set(-3, 2, -2);
+    shapesGroup.add(icosahedron);
     
-    for (let i = 0; i < 5; i++) {
-        const shape = new THREE.Mesh(shapeGeometry, shapeMaterial.clone());
-        shape.position.set(
-            (Math.random() - 0.5) * 15,
-            (Math.random() - 0.5) * 15,
-            (Math.random() - 0.5) * 15
-        );
-        shape.userData = {
-            rotationSpeed: {
-                x: (Math.random() - 0.5) * 0.02,
-                y: (Math.random() - 0.5) * 0.02
-            },
-            floatSpeed: Math.random() * 0.5 + 0.5,
-            floatOffset: Math.random() * Math.PI * 2
-        };
-        shapes.push(shape);
-        scene.add(shape);
-    }
-    
-    // Mouse tracking for interactive effects
-    const mouse = {
-        x: 0,
-        y: 0,
-        targetX: 0,
-        targetY: 0
-    };
-    
-    document.addEventListener('mousemove', (e) => {
-        mouse.targetX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouse.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    // Torus
+    const torusGeometry = new THREE.TorusGeometry(0.5, 0.2, 8, 20);
+    const torusMaterial = new THREE.MeshBasicMaterial({
+        color: 0xec4899,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
     });
+    const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+    torus.position.set(3, -1, -3);
+    shapesGroup.add(torus);
     
-    // Raycaster for particle interaction
-    const raycaster = new THREE.Raycaster();
-    const mouseVector = new THREE.Vector2();
-    
-    document.addEventListener('click', (e) => {
-        mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        
-        raycaster.setFromCamera(mouseVector, camera);
-        
-        // Create burst effect on click
-        const burstGeometry = new THREE.BufferGeometry();
-        const burstCount = 30;
-        const burstPositions = new Float32Array(burstCount * 3);
-        const burstColors = new Float32Array(burstCount * 3);
-        
-        for (let i = 0; i < burstCount; i++) {
-            const i3 = i * 3;
-            burstPositions[i3] = (Math.random() - 0.5) * 2;
-            burstPositions[i3 + 1] = (Math.random() - 0.5) * 2;
-            burstPositions[i3 + 2] = (Math.random() - 0.5) * 2;
-            
-            const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-            burstColors[i3] = color.r;
-            burstColors[i3 + 1] = color.g;
-            burstColors[i3 + 2] = color.b;
-        }
-        
-        burstGeometry.setAttribute('position', new THREE.BufferAttribute(burstPositions, 3));
-        burstGeometry.setAttribute('color', new THREE.BufferAttribute(burstColors, 3));
-        
-        const burstMaterial = new THREE.PointsMaterial({
-            size: 0.1,
-            vertexColors: true,
-            transparent: true,
-            opacity: 1,
-            blending: THREE.AdditiveBlending
-        });
-        
-        const burst = new THREE.Points(burstGeometry, burstMaterial);
-        burst.position.copy(camera.position);
-        burst.position.z -= 3;
-        scene.add(burst);
-        
-        // Animate burst
-        let burstOpacity = 1;
-        function animateBurst() {
-            burstOpacity -= 0.02;
-            burst.material.opacity = burstOpacity;
-            burst.position.add(burst.position.clone().normalize().multiplyScalar(0.05));
-            
-            if (burstOpacity > 0) {
-                requestAnimationFrame(animateBurst);
-            } else {
-                scene.remove(burst);
-                burstGeometry.dispose();
-                burstMaterial.dispose();
-            }
-        }
-        animateBurst();
+    // Octahedron
+    const octahedronGeometry = new THREE.OctahedronGeometry(0.4, 0);
+    const octahedronMaterial = new THREE.MeshBasicMaterial({
+        color: 0x06b6d4,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
     });
+    const octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
+    octahedron.position.set(2, 2, -2);
+    shapesGroup.add(octahedron);
     
-    // Animation variables
-    let time = 0;
+    scene.add(particlesGroup);
+    scene.add(shapesGroup);
     
-    // Enhanced Animation
+    // Animation
+    const clock = new THREE.Clock();
+    
     function animate() {
         requestAnimationFrame(animate);
-        time += 0.01;
         
-        // Smooth mouse following
-        mouse.x += (mouse.targetX - mouse.x) * 0.05;
-        mouse.y += (mouse.targetY - mouse.y) * 0.05;
+        const elapsedTime = clock.getElapsedTime();
+        particlesMaterial.uniforms.time.value = elapsedTime;
+        particlesMaterial.uniforms.mousePos.value.lerp(mouse, 0.05);
         
-        // Particle rotation with mouse interaction
-        particles.rotation.x += 0.0005 + mouse.y * 0.001;
-        particles.rotation.y += 0.001 + mouse.x * 0.001;
+        // Rotate particles group with smooth easing
+        particlesGroup.rotation.x += 0.0003 + (targetRotation.y - particlesGroup.rotation.x) * 0.02;
+        particlesGroup.rotation.y += 0.0005 + (targetRotation.x - particlesGroup.rotation.y) * 0.02;
         
-        // Animate individual particles for wave effect
-        const positions = particles.geometry.attributes.position.array;
-        for (let i = 0; i < particlesCount; i++) {
-            const i3 = i * 3;
-            const x = positions[i3];
-            const y = positions[i3 + 1];
-            
-            // Add wave motion
-            positions[i3 + 1] = y + Math.sin(time + x * 0.5) * 0.002;
-        }
-        particles.geometry.attributes.position.needsUpdate = true;
+        // Rotate secondary particles in opposite direction
+        secondaryParticles.rotation.x -= 0.0005;
+        secondaryParticles.rotation.y -= 0.0003;
         
-        // Animate floating shapes
-        shapes.forEach((shape, i) => {
-            shape.rotation.x += shape.userData.rotationSpeed.x;
-            shape.rotation.y += shape.userData.rotationSpeed.y;
-            shape.position.y += Math.sin(time * shape.userData.floatSpeed + shape.userData.floatOffset) * 0.003;
-            shape.material.opacity = 0.3 + Math.sin(time + i) * 0.2;
-        });
+        // Animate shapes
+        icosahedron.rotation.x += 0.005;
+        icosahedron.rotation.y += 0.005;
+        icosahedron.position.y += Math.sin(elapsedTime * 0.5) * 0.003;
         
-        // Camera subtle movement
-        camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.02;
-        camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.02;
-        camera.lookAt(scene.position);
+        torus.rotation.x += 0.003;
+        torus.rotation.y += 0.007;
+        torus.position.y += Math.cos(elapsedTime * 0.7) * 0.003;
+        
+        octahedron.rotation.x += 0.004;
+        octahedron.rotation.z += 0.004;
+        octahedron.position.y += Math.sin(elapsedTime * 0.6) * 0.003;
         
         renderer.render(scene, camera);
     }
     
-    // Resize handler with smooth transition
-    let resizeTimeout;
+    // Resize
     window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }, 100);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
     animate();
 }
 
-// Theme Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        body.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
-    }
-    
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
-            
-            // Add transition effect
-            body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
-            setTimeout(() => {
-                body.style.transition = '';
-            }, 300);
-        });
-    }
-    
-    function updateThemeIcon(theme) {
-        const icon = themeToggle?.querySelector('i') || themeToggle?.querySelector('.theme-icon');
-        if (icon) {
-            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-    }
-
-    // Cursor glow effect
-    const cursorGlow = document.createElement('div');
-    cursorGlow.className = 'cursor-glow';
-    document.body.appendChild(cursorGlow);
-    
-    document.addEventListener('mousemove', (e) => {
-        cursorGlow.style.left = e.clientX - 20 + 'px';
-        cursorGlow.style.top = e.clientY - 20 + 'px';
-    });
-});
-
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced typing effect
+    // Enhanced typing effect with cursor blink
     const mainHeading = document.querySelector('.profile-info h1');
     if (mainHeading) {
         const text = mainHeading.textContent;
         mainHeading.textContent = '';
+        mainHeading.innerHTML = '<span class="typed-text"></span><span class="typing-cursor">|</span>';
+        
+        const typedSpan = mainHeading.querySelector('.typed-text');
+        const cursorSpan = mainHeading.querySelector('.typing-cursor');
         
         let i = 0;
         const typeWriter = () => {
             if (i < text.length) {
-                mainHeading.textContent += text.charAt(i);
+                typedSpan.textContent += text.charAt(i);
                 i++;
-                
-                // Add cursor blink effect
-                mainHeading.classList.add('typing');
                 setTimeout(typeWriter, 80 + Math.random() * 50);
             } else {
-                mainHeading.classList.remove('typing');
+                // Typing complete
+                cursorSpan.classList.add('blink');
             }
         };
         
-        setTimeout(typeWriter, 2500);
-    }
-
-    // Subtitle typing effect
-    const subtitle = document.querySelector('.profile-info p.subtitle');
-    if (subtitle) {
-        const subtitleText = subtitle.textContent;
-        subtitle.textContent = '';
-        
-        let j = 0;
-        const typeSubtitle = () => {
-            if (j < subtitleText.length) {
-                subtitle.textContent += subtitleText.charAt(j);
-                j++;
-                setTimeout(typeSubtitle, 30);
-            }
-        };
-        
-        setTimeout(typeSubtitle, 4000);
+        setTimeout(typeWriter, 2200);
     }
     
-    // Initialize Three.js after a delay
+    // Initialize Three.js
     setTimeout(initThreeJS, 100);
-
-    // Scroll progress indicator
-    const progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress';
-    document.body.appendChild(progressBar);
     
+    // Add magnetic effect to buttons
+    const magneticButtons = document.querySelectorAll('button, .nav-item');
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+    
+    // Add parallax effect to sections
     window.addEventListener('scroll', () => {
-        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = scrollPercent + '%';
+        const scrollY = window.scrollY;
+        document.querySelectorAll('.section').forEach(section => {
+            const speed = section.dataset.speed || 0.5;
+            const yPos = -(scrollY * speed);
+            section.style.transform = `translateY(${yPos * 0.1}px)`;
+        });
     });
 });
