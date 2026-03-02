@@ -146,6 +146,14 @@ function initThreeJS() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+    
     // Typing effect
     const mainHeading = document.querySelector('.profile-info h1');
     if (mainHeading) {
@@ -167,98 +175,57 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
     
-    // Initialize stats counter
-    initStatsCounter();
-    
-    // Initialize back to top button
-    initBackToTop();
-    
-    // Initialize theme toggle
-    initThemeToggle();
-});
-
-// Stats Counter Animation
-function initStatsCounter() {
-    const statNumbers = document.querySelectorAll('.stat-number');
-    
-    const observerOptions = {
-        threshold: 0.5
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.getAttribute('data-target'));
-                animateCounter(entry.target, target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    statNumbers.forEach(stat => observer.observe(stat));
-}
-
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 50;
-    const duration = 2000;
-    const stepTime = duration / 50;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target + (target === 100 ? '%' : '+');
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
-        }
-    }, stepTime);
-}
-
-// Back to Top Button
-function initBackToTop() {
-    const backToTopBtn = document.getElementById('backToTop');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
-    });
-    
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// Theme Toggle
-function initThemeToggle() {
+    // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
-    const icon = themeToggle.querySelector('i');
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    }
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
     
     themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        
-        if (document.body.classList.contains('light-mode')) {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+    
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
             icon.classList.remove('fa-moon');
             icon.classList.add('fa-sun');
-            localStorage.setItem('theme', 'light');
         } else {
             icon.classList.remove('fa-sun');
             icon.classList.add('fa-moon');
-            localStorage.setItem('theme', 'dark');
         }
+    }
+    
+    // Scroll Progress Bar
+    const scrollProgress = document.createElement('div');
+    scrollProgress.className = 'scroll-progress';
+    document.body.appendChild(scrollProgress);
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        scrollProgress.style.width = scrollPercent + '%';
     });
-}
+    
+    // Animate Skill Bars on Scroll
+    const skillBars = document.querySelectorAll('.progress-bar');
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const width = entry.target.style.width;
+                entry.target.style.width = '0';
+                setTimeout(() => {
+                    entry.target.style.width = width;
+                }, 100);
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    skillBars.forEach(bar => skillObserver.observe(bar));
+});

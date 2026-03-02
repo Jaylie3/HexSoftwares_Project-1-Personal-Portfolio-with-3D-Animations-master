@@ -13,6 +13,27 @@
     --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
 }
 
+[data-theme="light"] {
+    --dark: #f8fafc;
+    --dark-secondary: #e2e8f0;
+    --light: #0f172a;
+    --text-secondary: #475569;
+    --glass-bg: rgba(15, 23, 42, 0.05);
+    --glass-border: rgba(15, 23, 42, 0.1);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    z-index: 9999;
+    transition: width 0.1s ease;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -141,6 +162,27 @@ nav ul {
     list-style: none;
     gap: 2rem;
     justify-content: center;
+    align-items: center;
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--light);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.theme-toggle:hover {
+    background: var(--primary);
+    transform: rotate(15deg);
 }
 
 nav a {
@@ -253,6 +295,47 @@ nav a:hover {
 .skill-card p {
     color: var(--text-secondary);
     font-size: 0.9rem;
+}
+
+/* Skills Bars */
+.skills-bars {
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+}
+
+.skill-bar {
+    margin-bottom: 1.5rem;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.skill-info span:first-child {
+    font-weight: 600;
+    color: var(--light);
+}
+
+.skill-info span:last-child {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.skill-progress {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 5px;
+    width: 0;
+    transition: width 1.5s ease;
 }
 
 /* Projects Section - Fixed */
@@ -491,25 +574,14 @@ nav a:hover {
     margin-bottom: 1rem;
 }
 
-.contact-item h4 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--light);
-}
-
-.contact-item p {
-    color: var(--text-secondary);
-}
-
-/* Stats Section */
-.stats-grid {
+/* Services Section */
+.services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
 }
 
-.stat-card {
+.service-card {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -519,150 +591,154 @@ nav a:hover {
     padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.stat-card:hover {
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+.service-card:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.35);
     box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
 }
 
-.stat-number {
-    font-size: 3rem;
-    font-weight: 700;
+.service-icon {
+    width: 70px;
+    height: 70px;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
 }
 
-.stat-label {
-    font-size: 1rem;
+.service-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.service-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--light);
+}
+
+.service-card p {
     color: var(--text-secondary);
-    font-weight: 500;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
 
-/* Theme Toggle */
-.theme-toggle {
+.service-features {
+    list-style: none;
+    text-align: left;
+}
+
+.service-features li {
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.service-features li::before {
+    content: '✓';
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* Achievements Section */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.achievement-card {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    padding: 2rem;
+    text-align: center;
     transition: all 0.3s ease;
-    z-index: 100;
+    position: relative;
 }
 
-.theme-toggle:hover {
+.achievement-card:hover {
+    transform: translateY(-5px) scale(1.02);
     background: rgba(255, 255, 255, 0.35);
-    transform: rotate(180deg);
+    box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
 }
 
-.theme-toggle i {
-    font-size: 1.2rem;
-    color: var(--primary);
-}
-
-/* Back to Top Button */
-.back-to-top {
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    border: none;
+.achievement-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    margin: 0 auto 1.5rem auto;
 }
 
-.back-to-top.visible {
-    opacity: 1;
-    visibility: visible;
+.achievement-icon i {
+    font-size: 1.5rem;
+    color: white;
 }
 
-.back-to-top:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
-}
-
-.back-to-top i {
+.achievement-card h4 {
     font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    color: var(--light);
 }
 
-/* Light Mode */
-body.light-mode {
-    --dark: #f8fafc;
-    --dark-secondary: #e2e8f0;
-    --light: #0f172a;
-    --text-secondary: #475569;
-    --glass-bg: rgba(15, 23, 42, 0.1);
-    --glass-border: rgba(15, 23, 42, 0.2);
+.achievement-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
 }
 
-body.light-mode .profile-info h1 {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.achievement-year {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
 }
 
-body.light-mode .skill-card,
-body.light-mode .project-card,
-body.light-mode .contact-item,
-body.light-mode .stat-card,
-body.light-mode .timeline-content {
-    background: rgba(15, 23, 42, 0.05);
-    border: 1px solid rgba(15, 23, 42, 0.1);
+.contact-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--light);
 }
 
-body.light-mode header {
-    background: rgba(15, 23, 42, 0.05);
-    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-body.light-mode .theme-toggle {
-    background: rgba(15, 23, 42, 0.05);
-    border: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-body.light-mode .theme-toggle i {
-    color: #4f46e5;
-}
-
-body.light-mode .fixed-nav {
-    background: rgba(15, 23, 42, 0.95);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-body.light-mode .fixed-nav .nav-item {
-    color: #f8fafc;
-}
-
-body.light-mode .fixed-nav .nav-item:hover,
-body.light-mode .fixed-nav .nav-item.active {
-    color: #818cf8;
-}
-
-body.light-mode .fixed-nav .nav-item.active {
-    background: rgba(255, 255, 255, 0.1);
+.contact-item p {
+    color: var(--text-secondary);
 }
 
 .social-links {
