@@ -1,67 +1,25 @@
-// Mobile Menu Toggle
+// Theme Toggle with localStorage persistence
 document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
     
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
+    // Check for saved theme preference or default to dark mode
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        body.classList.add('light-mode');
     }
-});
-
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
     
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', function() {
+        body.classList.toggle('light-mode');
         
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
+        // Save theme preference to localStorage
+        if (body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light');
+        } else {
+            localStorage.setItem('theme', 'dark');
+        }
+    });
 });
 
 // Loading Screen
