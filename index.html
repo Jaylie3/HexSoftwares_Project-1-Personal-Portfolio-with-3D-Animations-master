@@ -11,6 +11,10 @@
     <canvas class="webgl"></canvas>
     
     <header>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+            <i class="fas fa-moon moon-icon"></i>
+            <i class="fas fa-sun sun-icon"></i>
+        </button>
         <div class="container">
             <div class="profile-section">
                 <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
@@ -24,12 +28,7 @@
                     </div>
                 </div>
             </div>
-            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <nav class="main-nav" id="mainNav">
+            <nav class="main-nav">
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
