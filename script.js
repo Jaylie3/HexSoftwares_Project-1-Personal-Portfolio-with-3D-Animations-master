@@ -1,3 +1,33 @@
+// Theme Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Check for saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update Three.js particle color based on theme
+        updateParticlesColor(newTheme);
+    });
+});
+
+// Update Three.js particles color based on theme
+function updateParticlesColor(theme) {
+    const particles = window.particlesMesh;
+    if (particles) {
+        const color = theme === 'dark' ? 0x6366f1 : 0x6366f1;
+        particles.material.color.setHex(color);
+    }
+}
+
 // Loading Screen
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loadingScreen');
@@ -126,6 +156,9 @@ function initThreeJS() {
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
     
+    // Store particles globally for theme updates
+    window.particlesMesh = particles;
+    
     // Animation
     function animate() {
         requestAnimationFrame(animate);
@@ -143,39 +176,6 @@ function initThreeJS() {
     
     animate();
 }
-
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.getElementById('hamburger');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-    
-    if (hamburger && mainNav) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !hamburger.contains(e.target)) {
-                hamburger.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
