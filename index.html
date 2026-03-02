@@ -6,12 +6,23 @@
     <title>Lindokuhle Jali - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <canvas class="webgl"></canvas>
     
     <header>
         <div class="container">
+            <div class="header-top">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
             <div class="profile-section">
                 <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
                 <div class="profile-info">
@@ -24,12 +35,7 @@
                     </div>
                 </div>
             </div>
-            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <nav class="main-nav" id="mainNav">
+            <nav class="main-nav">
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
@@ -43,6 +49,25 @@
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close mobile menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <nav class="mobile-nav-menu">
+            <ul>
+                <li><a href="#about" class="mobile-nav-link"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#skills" class="mobile-nav-link"><i class="fas fa-cogs"></i> Skills</a></li>
+                <li><a href="#technologies" class="mobile-nav-link"><i class="fas fa-code"></i> Tech Stack</a></li>
+                <li><a href="#projects" class="mobile-nav-link"><i class="fas fa-folder"></i> Projects</a></li>
+                <li><a href="#experience" class="mobile-nav-link"><i class="fas fa-briefcase"></i> Experience</a></li>
+                <li><a href="#certifications" class="mobile-nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+                <li><a href="#testimonials" class="mobile-nav-link"><i class="fas fa-star"></i> Reviews</a></li>
+                <li><a href="#contact" class="mobile-nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 
     <main>
         <section id="about" class="section">
@@ -454,6 +479,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
