@@ -13,16 +13,6 @@
     --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
 }
 
-[data-theme="light"] {
-    --dark: #f8fafc;
-    --dark-secondary: #e2e8f0;
-    --light: #0f172a;
-    --text-secondary: #475569;
-    --glass-bg: rgba(15, 23, 42, 0.05);
-    --glass-border: rgba(15, 23, 42, 0.1);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -61,128 +51,6 @@ header {
     -webkit-backdrop-filter: blur(4px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.theme-toggle {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: var(--light);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.theme-toggle:hover {
-    background: var(--primary);
-    transform: rotate(15deg);
-}
-
-.mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 35px;
-    height: 30px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
-}
-
-.mobile-menu-toggle span {
-    width: 100%;
-    height: 3px;
-    background: var(--light);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
-}
-
-.mobile-menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
-}
-
-.mobile-nav {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 280px;
-    height: 100vh;
-    background: var(--dark-secondary);
-    z-index: 1000;
-    transition: right 0.3s ease;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
-    overflow-y: auto;
-}
-
-.mobile-nav.active {
-    right: 0;
-}
-
-.mobile-nav-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    color: var(--light);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 10px;
-    transition: transform 0.3s ease;
-}
-
-.mobile-nav-close:hover {
-    transform: rotate(90deg);
-}
-
-.mobile-nav-menu ul {
-    list-style: none;
-    padding: 80px 20px 20px;
-}
-
-.mobile-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px 20px;
-    color: var(--light);
-    text-decoration: none;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-}
-
-.mobile-nav-link:hover {
-    background: var(--primary);
-    transform: translateX(5px);
-}
-
-.mobile-nav-link i {
-    width: 25px;
-    text-align: center;
 }
 
 .profile-section {
@@ -625,20 +493,137 @@ nav a:hover {
 
 .contact-item h4 {
     font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--light);
 }
 
-/* Mobile Responsive */
+.contact-item p {
+    color: var(--text-secondary);
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background: var(--light);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile Navigation Panel */
+.mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--dark-secondary);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+}
+
+.mobile-nav-panel.active {
+    right: 0;
+}
+
+.mobile-nav-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--light);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.mobile-nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+}
+
+.mobile-nav li {
+    margin-bottom: 1rem;
+}
+
+.mobile-nav-link {
+    display: block;
+    color: var(--light);
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+    background: var(--primary);
+    padding-left: 1.5rem;
+}
+
+/* Mobile Overlay */
+.mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 0 1rem;
     }
     
     .header-top {
-        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
     }
     
     .mobile-menu-toggle {
         display: flex;
+        margin-top: 1rem;
     }
     
     .profile-section {
@@ -667,11 +652,13 @@ nav a:hover {
     .cta-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 0.75rem;
     }
     
     .btn-primary, .btn-secondary {
         width: 100%;
         justify-content: center;
+        padding: 0.75rem 1.5rem;
     }
     
     .main-nav {
@@ -706,8 +693,8 @@ nav a:hover {
         gap: 2rem;
     }
     
-    .project-card {
-        margin: 0;
+    .project-image-container {
+        height: 180px;
     }
     
     .experience-timeline::before {
@@ -716,7 +703,7 @@ nav a:hover {
     
     .timeline-item {
         flex-direction: column !important;
-        margin-left: 50px;
+        margin-left: 40px;
     }
     
     .timeline-date {
@@ -727,6 +714,7 @@ nav a:hover {
     
     .timeline-content {
         margin: 0;
+        padding: 1.5rem;
     }
     
     .contact-grid {
@@ -735,19 +723,24 @@ nav a:hover {
     }
     
     .tech-categories {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .tech-items {
+        flex-wrap: wrap;
     }
     
     .fixed-nav .nav-item span {
         display: none;
     }
     
-    .fixed-nav .nav-item {
+    .fixed-nav .nav-container {
         padding: 0.5rem;
     }
     
-    .fixed-nav .nav-item i {
-        font-size: 1.2rem;
+    .fixed-nav .nav-item {
+        padding: 0.5rem;
     }
 }
 
@@ -760,6 +753,10 @@ nav a:hover {
         font-size: 1rem;
     }
     
+    .professional-summary {
+        font-size: 0.9rem;
+    }
+    
     .section h3 {
         font-size: 1.5rem;
     }
@@ -768,32 +765,32 @@ nav a:hover {
         padding: 1.5rem;
     }
     
+    .project-content h4 {
+        font-size: 1.2rem;
+    }
+    
+    .timeline-content h4 {
+        font-size: 1.1rem;
+    }
+    
     .btn-primary, .btn-secondary {
-        padding: 0.6rem 1.5rem;
         font-size: 0.9rem;
+        padding: 0.65rem 1.25rem;
     }
     
-    .timeline-content {
-        padding: 1.5rem;
-    }
-    
-    .mobile-nav {
+    .mobile-nav-panel {
         width: 100%;
+        right: -100%;
     }
     
-    .fixed-nav {
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-    }
-    
-    .nav-container {
-        justify-content: space-around;
+    .mobile-nav-link {
+        font-size: 1.1rem;
     }
 }
 
-body.menu-open {
-    overflow: hidden;
+.contact-item h4 {
+    margin-bottom: 0.5rem;
+    color: var(--light);
 }
 
 .contact-item p {

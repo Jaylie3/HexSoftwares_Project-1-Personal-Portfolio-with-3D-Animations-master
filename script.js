@@ -1,85 +1,3 @@
-// Dark/Light Mode Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('themeToggle');
-    const icon = themeToggle.querySelector('i');
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
-    }
-    
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateIcon(newTheme);
-    });
-    
-    function updateIcon(theme) {
-        if (theme === 'light') {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    }
-});
-
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    const mobileNavClose = document.getElementById('mobileNavClose');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-    const body = document.body;
-    
-    function openMenu() {
-        mobileNav.classList.add('active');
-        mobileMenuToggle.classList.add('active');
-        body.classList.add('menu-open');
-    }
-    
-    function closeMenu() {
-        mobileNav.classList.remove('active');
-        mobileMenuToggle.classList.remove('active');
-        body.classList.remove('menu-open');
-    }
-    
-    mobileMenuToggle.addEventListener('click', function() {
-        if (mobileNav.classList.contains('active')) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    });
-    
-    mobileNavClose.addEventListener('click', closeMenu);
-    
-    // Close menu when clicking on a link
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!mobileNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-            closeMenu();
-        }
-    });
-    
-    // Close menu on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-            closeMenu();
-        }
-    });
-});
-
 // Loading Screen
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loadingScreen');
@@ -226,13 +144,56 @@ function initThreeJS() {
     animate();
 }
 
-// Initialize AOS
+// Mobile Navigation
 document.addEventListener('DOMContentLoaded', function() {
-    AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true,
-        offset: 100
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNavPanel = document.getElementById('mobileNavPanel');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const body = document.body;
+    
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'mobile-nav-overlay';
+    overlay.id = 'mobileNavOverlay';
+    body.appendChild(overlay);
+    
+    function openMobileMenu() {
+        mobileNavPanel.classList.add('active');
+        mobileMenuToggle.classList.add('active');
+        overlay.classList.add('active');
+        body.style.overflow = 'hidden';
+    }
+    
+    function closeMobileMenu() {
+        mobileNavPanel.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        overlay.classList.remove('active');
+        body.style.overflow = '';
+    }
+    
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', openMobileMenu);
+    }
+    
+    if (mobileNavClose) {
+        mobileNavClose.addEventListener('click', closeMobileMenu);
+    }
+    
+    if (overlay) {
+        overlay.addEventListener('click', closeMobileMenu);
+    }
+    
+    // Close menu when clicking nav links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
     });
 });
 
