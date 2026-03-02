@@ -1,69 +1,3 @@
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-    
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
-
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-    
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
-
 // Loading Screen
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loadingScreen');
@@ -212,6 +146,14 @@ function initThreeJS() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+
     // Typing effect
     const mainHeading = document.querySelector('.profile-info h1');
     if (mainHeading) {
@@ -232,4 +174,102 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
+
+    // Initialize Stats Counter
+    initStatsCounter();
+
+    // Initialize Back to Top
+    initBackToTop();
+
+    // Initialize Dark/Light Mode
+    initThemeToggle();
 });
+
+// Stats Counter Animation
+function initStatsCounter() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                animateNumber(entry.target, target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    statNumbers.forEach(number => observer.observe(number));
+}
+
+function animateNumber(element, target) {
+    let current = 0;
+    const increment = target / 50;
+    const duration = 2000;
+    const stepTime = duration / 50;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target + (target === 100 ? '%' : '+');
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current);
+        }
+    }, stepTime);
+}
+
+// Back to Top Button
+function initBackToTop() {
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+    
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Dark/Light Mode Toggle
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    
+    // Check for saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateIcon(savedTheme);
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon(newTheme);
+    });
+    
+    function updateIcon(theme) {
+        if (theme === 'dark') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+}
