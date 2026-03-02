@@ -1,69 +1,3 @@
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-    
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
-
-// Mobile Menu Toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-    
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mainNav.classList.toggle('active');
-            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking a link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
-
 // Loading Screen
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loadingScreen');
@@ -209,6 +143,39 @@ function initThreeJS() {
     
     animate();
 }
+
+// Mobile Menu Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    const navLinks = document.querySelectorAll('.main-nav a');
+    
+    if (hamburger && mainNav) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            mainNav.classList.toggle('active');
+            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mainNav.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mainNav.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+});
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
