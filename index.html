@@ -10,28 +10,29 @@
 <body>
     <canvas class="webgl"></canvas>
     
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <header>
         <div class="container">
-            <div class="header-top">
-                <div class="profile-section">
-                    <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
-                    <div class="profile-info">
-                        <h1>Lindokuhle Nkosinathi Jali</h1>
-                        <h2>Front-end Developer & IT Support Intern</h2>
-                        <p class="professional-summary">Passionate developer creating modern web solutions with 2+ years experience</p>
-                        <div class="cta-buttons">
-                            <a href="#contact" class="btn-primary">Hire Me</a>
-                            <a href="assets/Web Development Resume.pdf" download class="btn-secondary">Download CV</a>
-                        </div>
+            <div class="profile-section">
+                <img src="images/profile.jpg" alt="Lindokuhle Jali" class="profile-img">
+                <div class="profile-info">
+                    <h1>Lindokuhle Nkosinathi Jali</h1>
+                    <h2>Front-end Developer & IT Support Intern</h2>
+                    <p class="professional-summary">Passionate developer creating modern web solutions with 2+ years experience</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="btn-primary">Hire Me</a>
+                        <a href="assets/Web Development Resume.pdf" download class="btn-secondary">Download CV</a>
                     </div>
                 </div>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
-            <nav class="main-nav" id="mainNav">
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </div>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
@@ -46,26 +47,31 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation Panel -->
-    <div class="mobile-nav-panel" id="mobileNavPanel">
-        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
-            <i class="fas fa-times"></i>
-        </button>
-        <nav class="mobile-nav">
-            <ul>
-                <li><a href="#about" class="mobile-nav-link">About</a></li>
-                <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
-                <li><a href="#technologies" class="mobile-nav-link">Tech Stack</a></li>
-                <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
-                <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
-                <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
-                <li><a href="#testimonials" class="mobile-nav-link">Reviews</a></li>
-                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-
     <main>
+        <!-- Stats Counter Section -->
+        <section id="stats" class="section stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="2">0</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-label">Technologies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="stat-label">Commitment %</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="about" class="section">
             <div class="container">
                 <h3>Bio</h3>
@@ -437,7 +443,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
-                    <h4>Lindokuhle Jali</h4>
+                    <p class="footer-name"><strong>Lindokuhle Jali</strong></p>
                     <p>Frontend Developer & IT Support</p>
                 </div>
                 <div class="footer-center">
@@ -445,8 +451,8 @@
                 </div>
                 <div class="footer-right">
                     <div class="footer-social">
-                        <a href="https://github.com/Jaylie3" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/Jaylie3" target="_blank" aria-label="Visit GitHub Profile"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/lindokuhle-jali" target="_blank" aria-label="Visit LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -456,13 +462,18 @@
     <!-- Fixed Navigation -->
     <nav class="fixed-nav" id="fixedNav">
         <div class="nav-container">
-            <a href="#about" class="nav-item"><i class="fas fa-user"></i><span>About</span></a>
-            <a href="#skills" class="nav-item"><i class="fas fa-cogs"></i><span>Skills</span></a>
-            <a href="#projects" class="nav-item"><i class="fas fa-folder"></i><span>Projects</span></a>
-            <a href="#certifications" class="nav-item"><i class="fas fa-certificate"></i><span>Certs</span></a>
-            <a href="#contact" class="nav-item"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            <a href="#about" class="nav-item" aria-label="About Section"><i class="fas fa-user"></i><span>About</span></a>
+            <a href="#skills" class="nav-item" aria-label="Skills Section"><i class="fas fa-cogs"></i><span>Skills</span></a>
+            <a href="#projects" class="nav-item" aria-label="Projects Section"><i class="fas fa-folder"></i><span>Projects</span></a>
+            <a href="#certifications" class="nav-item" aria-label="Certifications Section"><i class="fas fa-certificate"></i><span>Certs</span></a>
+            <a href="#contact" class="nav-item" aria-label="Contact Section"><i class="fas fa-envelope"></i><span>Contact</span></a>
         </div>
     </nav>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">

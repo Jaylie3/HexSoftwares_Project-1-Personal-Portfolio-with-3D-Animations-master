@@ -144,59 +144,6 @@ function initThreeJS() {
     animate();
 }
 
-// Mobile Navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const mobileNavPanel = document.getElementById('mobileNavPanel');
-    const mobileNavClose = document.getElementById('mobileNavClose');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-    const body = document.body;
-    
-    // Create overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'mobile-nav-overlay';
-    overlay.id = 'mobileNavOverlay';
-    body.appendChild(overlay);
-    
-    function openMobileMenu() {
-        mobileNavPanel.classList.add('active');
-        mobileMenuToggle.classList.add('active');
-        overlay.classList.add('active');
-        body.style.overflow = 'hidden';
-    }
-    
-    function closeMobileMenu() {
-        mobileNavPanel.classList.remove('active');
-        mobileMenuToggle.classList.remove('active');
-        overlay.classList.remove('active');
-        body.style.overflow = '';
-    }
-    
-    if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', openMobileMenu);
-    }
-    
-    if (mobileNavClose) {
-        mobileNavClose.addEventListener('click', closeMobileMenu);
-    }
-    
-    if (overlay) {
-        overlay.addEventListener('click', closeMobileMenu);
-    }
-    
-    // Close menu when clicking nav links
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
-    });
-    
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeMobileMenu();
-        }
-    });
-});
-
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     // Typing effect
@@ -219,4 +166,102 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
+    
+    // Initialize Dark/Light Mode
+    initThemeToggle();
+    
+    // Initialize Back to Top
+    initBackToTop();
+    
+    // Initialize Stats Counter
+    initStatsCounter();
 });
+
+// Dark/Light Mode Toggle
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        
+        if (document.body.classList.contains('light-mode')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'light');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+}
+
+// Back to Top Button
+function initBackToTop() {
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+    
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Stats Counter Animation
+function initStatsCounter() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    let animated = false;
+    
+    const animateStats = () => {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const updateCounter = () => {
+                current += step;
+                if (current < target) {
+                    stat.textContent = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    stat.textContent = target + (target === 100 ? '%' : '+');
+                }
+            };
+            
+            updateCounter();
+        });
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animated) {
+                animated = true;
+                animateStats();
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    const statsSection = document.getElementById('stats');
+    if (statsSection) {
+        observer.observe(statsSection);
+    }
+}
