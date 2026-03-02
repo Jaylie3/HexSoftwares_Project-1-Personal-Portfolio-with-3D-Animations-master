@@ -2,16 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loadingScreen = document.getElementById('loadingScreen');
     
-    // Add pulsing animation to loading screen
-    loadingScreen.innerHTML = `
-        <div class="loading-content">
-            <div class="loader-ring"></div>
-            <div class="loader-ring"></div>
-            <div class="loader-ring"></div>
-            <div class="loading-text">Loading Experience...</div>
-        </div>
-    `;
-    
     setTimeout(() => {
         loadingScreen.classList.add('hidden');
         setTimeout(() => {
@@ -20,13 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
 });
 
-// Fixed Navigation with Gradient Effect
+// Fixed Navigation
 document.addEventListener('DOMContentLoaded', function() {
     const fixedNav = document.getElementById('fixedNav');
     const navItems = document.querySelectorAll('.nav-item');
-    const navIndicator = document.createElement('div');
-    navIndicator.className = 'nav-indicator';
-    fixedNav.appendChild(navIndicator);
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
@@ -51,62 +38,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 const activeItem = document.querySelector(`[href="#${sectionId}"]`);
                 if (activeItem) {
                     activeItem.classList.add('active');
-                    // Move indicator to active item
-                    const itemRect = activeItem.getBoundingClientRect();
-                    const navRect = fixedNav.getBoundingClientRect();
-                    navIndicator.style.width = `${itemRect.width}px`;
-                    navIndicator.style.left = `${activeItem.offsetLeft}px`;
                 }
             }
         });
     }
-    
-    // Initial position
-    const firstActive = document.querySelector('.nav-item');
-    if (firstActive) {
-        navIndicator.style.width = `${firstActive.offsetWidth}px`;
-        navIndicator.style.left = `${firstActive.offsetLeft}px`;
-    }
 });
 
-// Smooth Scrolling with Parallax Effect
+// Smooth Scrolling
 document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('a[href^="#"]');
-    let isScrolling = false;
     
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            if (isScrolling) return;
-            isScrolling = true;
-            
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                // Add ripple effect indicator
-                const ripple = document.createElement('div');
-                ripple.className = 'scroll-indicator-hint';
-                document.body.appendChild(ripple);
-                
                 targetSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-                
-                setTimeout(() => {
-                    ripple.remove();
-                    isScrolling = false;
-                }, 1000);
             }
         });
     });
 });
 
-// Enhanced Animations with Multiple Effects
+// Enhanced Animations
 document.addEventListener('DOMContentLoaded', function() {
     const observerOptions = {
-        threshold: 0.15,
+        threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
     };
     
@@ -114,100 +75,203 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                entry.target.style.transform = entry.target.dataset.transform || 'translateY(0) scale(1)';
-                entry.target.classList.add('animated');
+                entry.target.style.transform = 'translateY(0) scale(1)';
+                entry.target.classList.add('animate-in');
             }
         });
     }, observerOptions);
     
-    // Animate various elements with staggered delays
-    const animatedElements = document.querySelectorAll('.skill-card, .project-card, .testimonial-card, .edu-content, .about-text, .contact-item');
-    animatedElements.forEach((el, index) => {
-        const delay = (index % 5) * 0.1;
-        const effects = [
-            'translateY(30px)',
-            'translateY(30px) scale(0.9)',
-            'translateX(-30px)',
-            'translateX(30px)',
-            'rotateY(15deg)'
-        ];
-        
-        el.style.opacity = '0';
-        el.dataset.transform = effects[index % effects.length];
-        el.style.transition = `all 0.7s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`;
-        observer.observe(el);
+    // Animate cards with staggered delay
+    const cards = document.querySelectorAll('.skill-card, .project-card, .testimonial-card, .edu-content, .timeline-item');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(50px) scale(0.95)';
+        card.style.transition = `all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${index * 0.1}s`;
+        observer.observe(card);
     });
     
-    // Add floating animation to cards periodically
-    setInterval(() => {
-        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
-            if (Math.random() > 0.7) {
-                card.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 5}px)`;
-            }
-        });
-    }, 50);
+    // Animate sections
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.6s ease';
+        observer.observe(section);
+    });
+    
+    // Animate tech items
+    const techItems = document.querySelectorAll('.tech-item');
+    techItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px) scale(0.9)';
+        item.style.transition = `all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${index * 0.05}s`;
+        observer.observe(item);
+    });
 });
 
-// Custom Cursor Effect
+// Parallax Effect on Mouse Move
 document.addEventListener('DOMContentLoaded', function() {
-    const cursor = document.createElement('div');
-    const cursorFollower = document.createElement('div');
+    const profileSection = document.querySelector('.profile-section');
+    const floatingImage = document.querySelector('.floating');
     
-    cursor.className = 'custom-cursor';
-    cursorFollower.className = 'custom-cursor-follower';
-    
-    document.body.appendChild(cursor);
-    document.body.appendChild(cursorFollower);
-    
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    let followerX = 0, followerY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-    
-    function animateCursor() {
-        cursorX += (mouseX - cursorX) * 0.2;
-        cursorY += (mouseY - cursorY) * 0.2;
-        followerX += (mouseX - followerX) * 0.1;
-        followerY += (mouseY - followerY) * 0.1;
+    if (profileSection) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            
+            profileSection.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
+        });
         
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        cursorFollower.style.left = followerX + 'px';
-        cursorFollower.style.top = followerY + 'px';
-        
-        requestAnimationFrame(animateCursor);
+        document.addEventListener('mouseleave', () => {
+            profileSection.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+        });
     }
     
-    animateCursor();
-    
-    // Hover effects on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .skill-card, .project-card');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.classList.add('active');
-            cursorFollower.classList.add('active');
-            el.style.transition = 'all 0.3s ease';
+    if (floatingImage) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 30;
+            const y = (window.innerHeight / 2 - e.pageY) / 30;
+            floatingImage.style.transform = `translate(${x}px, ${y}px)`;
         });
-        el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('active');
-            cursorFollower.classList.remove('active');
+    }
+});
+
+// Magnetic Button Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+    
+    buttons.forEach(button => {
+        button.addEventListener('mousemove', (e) => {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.05)`;
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = 'translate(0, 0) scale(1)';
         });
     });
 });
 
-// Enhanced Three.js Background with Mouse Interaction
+// Tilt Effect on Cards
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.skill-card, .project-card, .testimonial-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+    });
+});
+
+// Glow Follow Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const glow = document.createElement('div');
+    glow.style.cssText = `
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.3s ease;
+    `;
+    document.body.appendChild(glow);
+    
+    document.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+});
+
+// Text Reveal Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const headings = document.querySelectorAll('h3, h4');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const text = entry.target.textContent;
+                entry.target.innerHTML = '';
+                
+                text.split('').forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    span.style.opacity = '0';
+                    span.style.transform = 'translateY(20px)';
+                    span.style.transition = `all 0.3s ease ${index * 0.03}s`;
+                    span.style.display = 'inline-block';
+                    entry.target.appendChild(span);
+                    
+                    setTimeout(() => {
+                        span.style.opacity = '1';
+                        span.style.transform = 'translateY(0)';
+                    }, 50);
+                });
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    headings.forEach(heading => observer.observe(heading));
+});
+
+// Counter Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.counter');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        entry.target.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        entry.target.textContent = target;
+                    }
+                };
+                
+                updateCounter();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    counters.forEach(counter => observer.observe(counter));
+});
+
+// Enhanced Three.js Background
 function initThreeJS() {
     if (typeof THREE === 'undefined') return;
     
-    const canvas = document.querySelector('canvas.webgl');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
+        canvas: document.querySelector('canvas.webgl'),
         alpha: true,
         antialias: true
     });
@@ -216,137 +280,54 @@ function initThreeJS() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     camera.position.z = 5;
     
-    // Mouse position for interaction
-    const mouse = new THREE.Vector2();
-    const targetRotation = new THREE.Vector2();
-    
-    document.addEventListener('mousemove', (event) => {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        targetRotation.x = mouse.x * 0.5;
-        targetRotation.y = mouse.y * 0.5;
-    });
-    
-    // Create multiple particle systems
-    const particlesGroup = new THREE.Group();
-    
-    // Main particles with gradient colors
+    // Enhanced Particles with multiple colors
+    const geometry = new THREE.BufferGeometry();
     const particlesCount = 1500;
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
     const sizes = new Float32Array(particlesCount);
     
     const colorPalette = [
-        new THREE.Color(0x6366f1),
-        new THREE.Color(0x8b5cf6),
-        new THREE.Color(0xec4899),
-        new THREE.Color(0x06b6d4),
-        new THREE.Color(0x10b981)
+        new THREE.Color(0x6366f1), // Indigo
+        new THREE.Color(0xa855f7), // Purple
+        new THREE.Color(0xec4899), // Pink
+        new THREE.Color(0x3b82f6)  // Blue
     ];
     
     for (let i = 0; i < particlesCount; i++) {
-        positions[i * 3] = (Math.random() - 0.5) * 15;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
+        positions[i * 3] = (Math.random() - 0.5) * 25;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 25;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 25;
         
         const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
         colors[i * 3] = color.r;
         colors[i * 3 + 1] = color.g;
         colors[i * 3 + 2] = color.b;
         
-        sizes[i] = Math.random() * 3 + 1;
+        sizes[i] = Math.random() * 0.03 + 0.01;
     }
     
-    const particlesGeometry = new THREE.BufferGeometry();
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     
-    // Custom shader material for glowing particles
-    const particlesMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-            time: { value: 0 },
-            mousePos: { value: new THREE.Vector2(0, 0) }
-        },
-        vertexShader: `
-            attribute float size;
-            varying vec3 vColor;
-            uniform float time;
-            uniform vec2 mousePos;
-            
-            void main() {
-                vColor = color;
-                vec3 pos = position;
-                
-                // Wave animation
-                pos.x += sin(time * 0.5 + position.y * 0.5) * 0.2;
-                pos.y += cos(time * 0.3 + position.x * 0.5) * 0.2;
-                
-                // Mouse influence
-                float dist = distance(position.xy, mousePos * 5.0);
-                pos.z += sin(dist * 2.0 - time * 2.0) * 0.3;
-                
-                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-                gl_PointSize = size * (300.0 / -mvPosition.z);
-                gl_Position = projectionMatrix * mvPosition;
-            }
-        `,
-        fragmentShader: `
-            varying vec3 vColor;
-            
-            void main() {
-                float dist = length(gl_PointCoord - vec2(0.5));
-                if (dist > 0.5) discard;
-                
-                float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
-                vec3 glow = vColor * (1.0 + 0.5 * (1.0 - dist * 2.0));
-                gl_FragColor = vec4(glow, alpha * 0.8);
-            }
-        `,
-        transparent: true,
-        vertexColors: true,
-        blending: THREE.AdditiveBlending
-    });
-    
-    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-    particlesGroup.add(particles);
-    
-    // Secondary particles - smaller, faster
-    const secondaryParticlesCount = 800;
-    const secondaryPositions = new Float32Array(secondaryParticlesCount * 3);
-    const secondaryColors = new Float32Array(secondaryParticlesCount * 3);
-    
-    for (let i = 0; i < secondaryParticlesCount; i++) {
-        secondaryPositions[i * 3] = (Math.random() - 0.5) * 20;
-        secondaryPositions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-        secondaryPositions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-        
-        const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-        secondaryColors[i * 3] = color.r;
-        secondaryColors[i * 3 + 1] = color.g;
-        secondaryColors[i * 3 + 2] = color.b;
-    }
-    
-    const secondaryGeometry = new THREE.BufferGeometry();
-    secondaryGeometry.setAttribute('position', new THREE.BufferAttribute(secondaryPositions, 3));
-    secondaryGeometry.setAttribute('color', new THREE.BufferAttribute(secondaryColors, 3));
-    
-    const secondaryMaterial = new THREE.PointsMaterial({
+    const material = new THREE.PointsMaterial({
         size: 0.03,
-        transparent: true,
-        opacity: 0.4,
         vertexColors: true,
-        blending: THREE.AdditiveBlending
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
     });
     
-    const secondaryParticles = new THREE.Points(secondaryGeometry, secondaryMaterial);
-    particlesGroup.add(secondaryParticles);
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
     
-    // Floating geometric shapes
+    // Add floating geometric shapes
     const shapesGroup = new THREE.Group();
     
     // Icosahedron
-    const icosahedronGeometry = new THREE.IcosahedronGeometry(0.5, 0);
+    const icosahedronGeometry = new THREE.IcosahedronGeometry(1, 0);
     const icosahedronMaterial = new THREE.MeshBasicMaterial({
         color: 0x6366f1,
         wireframe: true,
@@ -354,35 +335,45 @@ function initThreeJS() {
         opacity: 0.3
     });
     const icosahedron = new THREE.Mesh(icosahedronGeometry, icosahedronMaterial);
-    icosahedron.position.set(-3, 2, -2);
+    icosahedron.position.set(-5, 2, -5);
     shapesGroup.add(icosahedron);
     
     // Torus
-    const torusGeometry = new THREE.TorusGeometry(0.5, 0.2, 8, 20);
+    const torusGeometry = new THREE.TorusGeometry(0.8, 0.3, 16, 100);
     const torusMaterial = new THREE.MeshBasicMaterial({
-        color: 0xec4899,
+        color: 0xa855f7,
         wireframe: true,
         transparent: true,
         opacity: 0.3
     });
     const torus = new THREE.Mesh(torusGeometry, torusMaterial);
-    torus.position.set(3, -1, -3);
+    torus.position.set(5, -2, -5);
     shapesGroup.add(torus);
     
     // Octahedron
-    const octahedronGeometry = new THREE.OctahedronGeometry(0.4, 0);
+    const octahedronGeometry = new THREE.OctahedronGeometry(0.6, 0);
     const octahedronMaterial = new THREE.MeshBasicMaterial({
-        color: 0x06b6d4,
+        color: 0xec4899,
         wireframe: true,
         transparent: true,
         opacity: 0.3
     });
     const octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
-    octahedron.position.set(2, 2, -2);
+    octahedron.position.set(0, 3, -8);
     shapesGroup.add(octahedron);
     
-    scene.add(particlesGroup);
     scene.add(shapesGroup);
+    
+    // Mouse interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
     
     // Animation
     const clock = new THREE.Clock();
@@ -391,29 +382,40 @@ function initThreeJS() {
         requestAnimationFrame(animate);
         
         const elapsedTime = clock.getElapsedTime();
-        particlesMaterial.uniforms.time.value = elapsedTime;
-        particlesMaterial.uniforms.mousePos.value.lerp(mouse, 0.05);
         
-        // Rotate particles group with smooth easing
-        particlesGroup.rotation.x += 0.0003 + (targetRotation.y - particlesGroup.rotation.x) * 0.02;
-        particlesGroup.rotation.y += 0.0005 + (targetRotation.x - particlesGroup.rotation.y) * 0.02;
+        // Smooth mouse follow
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
         
-        // Rotate secondary particles in opposite direction
-        secondaryParticles.rotation.x -= 0.0005;
-        secondaryParticles.rotation.y -= 0.0003;
+        // Particle animation
+        particles.rotation.x += 0.0003 + targetY * 0.001;
+        particles.rotation.y += 0.0005 + targetX * 0.001;
         
-        // Animate shapes
+        // Wave effect on particles
+        const positions = particles.geometry.attributes.position.array;
+        for (let i = 0; i < particlesCount; i++) {
+            const i3 = i * 3;
+            positions[i3 + 1] += Math.sin(elapsedTime + positions[i3]) * 0.002;
+        }
+        particles.geometry.attributes.position.needsUpdate = true;
+        
+        // Shape animations
         icosahedron.rotation.x += 0.005;
         icosahedron.rotation.y += 0.005;
-        icosahedron.position.y += Math.sin(elapsedTime * 0.5) * 0.003;
+        icosahedron.position.y = 2 + Math.sin(elapsedTime * 0.5) * 0.5;
         
         torus.rotation.x += 0.003;
         torus.rotation.y += 0.007;
-        torus.position.y += Math.cos(elapsedTime * 0.7) * 0.003;
+        torus.position.y = -2 + Math.cos(elapsedTime * 0.5) * 0.5;
         
         octahedron.rotation.x += 0.004;
-        octahedron.rotation.z += 0.004;
-        octahedron.position.y += Math.sin(elapsedTime * 0.6) * 0.003;
+        octahedron.rotation.y += 0.006;
+        octahedron.position.y = 3 + Math.sin(elapsedTime * 0.3) * 0.3;
+        
+        // Camera subtle movement
+        camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
+        camera.position.y += (mouseY * 0.5 - camera.position.y) * 0.02;
+        camera.lookAt(scene.position);
         
         renderer.render(scene, camera);
     }
@@ -430,57 +432,24 @@ function initThreeJS() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced typing effect with cursor blink
+    // Typing effect
     const mainHeading = document.querySelector('.profile-info h1');
     if (mainHeading) {
         const text = mainHeading.textContent;
         mainHeading.textContent = '';
-        mainHeading.innerHTML = '<span class="typed-text"></span><span class="typing-cursor">|</span>';
-        
-        const typedSpan = mainHeading.querySelector('.typed-text');
-        const cursorSpan = mainHeading.querySelector('.typing-cursor');
         
         let i = 0;
         const typeWriter = () => {
             if (i < text.length) {
-                typedSpan.textContent += text.charAt(i);
+                mainHeading.textContent += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, 80 + Math.random() * 50);
-            } else {
-                // Typing complete
-                cursorSpan.classList.add('blink');
+                setTimeout(typeWriter, 100);
             }
         };
         
-        setTimeout(typeWriter, 2200);
+        setTimeout(typeWriter, 2500);
     }
     
-    // Initialize Three.js
+    // Initialize Three.js after a delay
     setTimeout(initThreeJS, 100);
-    
-    // Add magnetic effect to buttons
-    const magneticButtons = document.querySelectorAll('button, .nav-item');
-    magneticButtons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            
-            btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-        });
-        
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0)';
-        });
-    });
-    
-    // Add parallax effect to sections
-    window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        document.querySelectorAll('.section').forEach(section => {
-            const speed = section.dataset.speed || 0.5;
-            const yPos = -(scrollY * speed);
-            section.style.transform = `translateY(${yPos * 0.1}px)`;
-        });
-    });
 });
