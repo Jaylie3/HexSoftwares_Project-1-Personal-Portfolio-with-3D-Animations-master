@@ -287,7 +287,7 @@ nav a:hover {
     transform: scale(1.1);
 }
 
-.skill-card h4 {
+.skill-card h3 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: var(--light);
@@ -369,7 +369,7 @@ nav a:hover {
     z-index: 2;
 }
 
-.project-content h4 {
+.project-content h3 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -474,7 +474,7 @@ nav a:hover {
     position: relative;
 }
 
-.timeline-content h4 {
+.timeline-content h3 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: var(--light);
@@ -613,7 +613,7 @@ nav a:hover {
     transform: translateY(-2px);
 }
 
-.contact-item h4 {
+.contact-item h3 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: var(--light);
@@ -676,7 +676,7 @@ nav a:hover {
     box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
 }
 
-.tech-category h4 {
+.tech-category h3 {
     font-size: 1.3rem;
     margin-bottom: 1.5rem;
     color: var(--light);
@@ -977,7 +977,7 @@ nav a:hover {
     box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.4);
 }
 
-.edu-content h4 {
+.edu-content h3 {
     color: var(--light);
     margin-bottom: 0.5rem;
     font-size: 1.3rem;
