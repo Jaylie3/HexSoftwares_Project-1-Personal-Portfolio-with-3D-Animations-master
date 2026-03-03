@@ -7,7 +7,7 @@
     --dark: #0f172a;
     --dark-secondary: #1e293b;
     --light: #f8fafc;
-    --text-secondary: #94a3b8;
+    --text-secondary: #cbd5e1;
     --glass-bg: rgba(255, 255, 255, 0.1);
     --glass-border: rgba(255, 255, 255, 0.2);
     --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
@@ -17,7 +17,7 @@ body.light-mode {
     --dark: #f8fafc;
     --dark-secondary: #e2e8f0;
     --light: #0f172a;
-    --text-secondary: #475569;
+    --text-secondary: #334155;
     --glass-bg: rgba(15, 23, 42, 0.05);
     --glass-border: rgba(15, 23, 42, 0.1);
 }
@@ -204,7 +204,7 @@ nav a:hover {
     position: relative;
 }
 
-.section h3 {
+.section h2 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 3rem;
@@ -212,7 +212,7 @@ nav a:hover {
     position: relative;
 }
 
-.section h3::after {
+.section h2::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -456,7 +456,7 @@ nav a:hover {
     flex: 0 0 150px;
     text-align: center;
     font-weight: 600;
-    color: var(--primary);
+    color: #818cf8;
     padding: 1rem;
 }
 
@@ -480,7 +480,7 @@ nav a:hover {
 }
 
 .timeline-content p {
-    color: var(--primary);
+    color: #818cf8;
     font-weight: 500;
     margin-bottom: 1rem;
 }
@@ -794,14 +794,14 @@ nav a:hover {
     gap: 1rem;
 }
 
-.author-info h5 {
+.author-info h3 {
     color: var(--light);
     margin-bottom: 0.25rem;
     font-size: 1rem;
 }
 
 .author-info span {
-    color: var(--primary);
+    color: #818cf8;
     font-size: 0.9rem;
 }
 
@@ -839,7 +839,7 @@ nav a:hover {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    color: var(--text-secondary);
+    color: #cbd5e1;
     text-decoration: none;
     border-radius: 25px;
     transition: all 0.3s ease;
@@ -950,7 +950,7 @@ nav a:hover {
 .edu-date {
     flex: 0 0 200px;
     font-weight: 600;
-    color: var(--primary);
+    color: #818cf8;
     padding: 1rem 2rem 1rem 0;
     text-align: right;
 }
@@ -981,7 +981,7 @@ nav a:hover {
 }
 
 .edu-institution {
-    color: var(--primary);
+    color: #818cf8;
     font-weight: 500;
     margin-bottom: 1rem;
     font-size: 1rem;
@@ -1026,7 +1026,7 @@ nav a:hover {
     gap: 2rem;
 }
 
-.footer-left h4 {
+.footer-name {
     color: var(--light);
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
@@ -1065,7 +1065,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: #cbd5e1;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -1180,7 +1180,7 @@ nav a:hover {
         font-size: 1.8rem;
     }
     
-    .section h3 {
+    .section h2 {
         font-size: 2rem;
     }
     
