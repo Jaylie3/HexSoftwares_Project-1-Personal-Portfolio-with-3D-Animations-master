@@ -168,12 +168,12 @@ header {
 
 .btn-secondary {
     background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--primary);
+    color: #818cf8;
+    border: 2px solid #818cf8;
 }
 
 .btn-secondary:hover {
-    background: var(--primary);
+    background: #818cf8;
     color: white;
     transform: translateY(-2px);
 }
@@ -481,7 +481,7 @@ nav a:hover {
 }
 
 .timeline-content p {
-    color: #818cf8;
+    color: #a5b4fc;
     font-weight: 500;
     margin-bottom: 1rem;
 }
