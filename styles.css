@@ -746,6 +746,69 @@ nav a:hover {
     color: var(--primary) !important;
 }
 
+/* Contact Form */
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto 2rem auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 2.5rem 2rem 2rem 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--light);
+    font-weight: 500;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--primary);
+    background: rgba(255,255,255,0.08);
+    color: var(--light);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    transition: border 0.2s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--secondary);
+}
+.contact-form button[type="submit"] {
+    margin-top: 0.5rem;
+    width: 100%;
+    font-size: 1.1rem;
+}
+.contact-status {
+    margin-top: 1rem;
+    min-height: 1.5em;
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+    text-align: center;
+}
+.contact-status.error {
+    color: #ef4444;
+}
+.contact-status.success {
+    color: #22c55e;
+}
+.contact-note {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+}
+
 /* Testimonials */
 .testimonials-grid {
     display: grid;
