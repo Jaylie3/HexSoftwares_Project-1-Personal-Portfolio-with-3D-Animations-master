@@ -146,6 +146,22 @@ HexSoftwares_Project-1-Personal-Portfolio/
 - Upload all files to your web hosting provider
 - Ensure `index.html` is in the root directory
 
+## 📬 Contact Form Backend
+
+To enable the real-time contact form, you need to run a backend server locally:
+
+1. Make sure you have Node.js installed.
+2. Install dependencies:
+   ```bash
+   npm install express cors nodemailer
+   ```
+3. Edit `contact_backend.js` and set your Gmail app password in the `auth` section.
+4. Start the backend server:
+   ```bash
+   node contact_backend.js
+   ```
+5. The frontend will POST to `http://localhost:3001/api/contact`.
+
 ## 📈 Performance Tips
 
 - **Images:** Optimize all images (use WebP format when possible)

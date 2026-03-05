@@ -537,6 +537,51 @@ nav a:hover {
     margin-bottom: 1rem;
 }
 
+/* Contact Form */
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto 3rem auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.contact-form label {
+    color: var(--light);
+    font-weight: 500;
+}
+.contact-form input, .contact-form textarea {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.2);
+    color: var(--dark);
+    outline: none;
+    transition: border 0.2s;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+    border: 1.5px solid var(--primary);
+}
+.contact-form button[type="submit"] {
+    margin-top: 1rem;
+    align-self: flex-end;
+}
+#formStatus {
+    min-height: 1.5em;
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+
 /* Stats Section */
 .stats-section {
     background: rgba(255, 255, 255, 0.1);
