@@ -225,6 +225,45 @@ function initBackToTop() {
     });
 }
 
+// Contact Form Submission
+function initContactForm() {
+    const form = document.getElementById('contactForm');
+    const statusDiv = document.getElementById('formStatus');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        statusDiv.textContent = 'Sending...';
+        const formData = {
+            name: form.name.value,
+            email: form.email.value,
+            message: form.message.value
+        };
+        try {
+            const res = await fetch('http://localhost:3001/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                statusDiv.style.color = 'green';
+                statusDiv.textContent = 'Message sent successfully!';
+                form.reset();
+            } else {
+                statusDiv.style.color = 'red';
+                statusDiv.textContent = data.error || 'Failed to send message.';
+            }
+        } catch (err) {
+            statusDiv.style.color = 'red';
+            statusDiv.textContent = 'Network error. Please try again later.';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initContactForm();
+});
+
 // Stats Counter Animation
 function initStatsCounter() {
     const statNumbers = document.querySelectorAll('.stat-number');
