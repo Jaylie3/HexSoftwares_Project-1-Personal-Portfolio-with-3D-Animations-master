@@ -255,7 +255,7 @@ function initContactForm() {
             }
         } catch (err) {
             statusDiv.style.color = 'red';
-            statusDiv.textContent = 'Network error. Please try again later.';
+            statusDiv.textContent = 'Unable to connect to the server. Please check your internet connection or try again in a few minutes.';
         }
     });
 }
