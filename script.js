@@ -225,6 +225,40 @@ function initBackToTop() {
     });
 }
 
+// Real-time Contact Form Integration
+function initContactFormRealtime() {
+    // Only run if socket.io is loaded
+    if (typeof io === 'undefined') return;
+    const socket = io('https://your-realtime-backend-url.com'); // <-- Replace with your backend URL
+    const form = document.getElementById('contactForm');
+    const statusDiv = document.getElementById('contactStatus');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        statusDiv.textContent = 'Sending...';
+        statusDiv.className = 'contact-status';
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const message = form.message.value.trim();
+        socket.emit('contact_message', { name, email, message });
+    });
+
+    socket.on('contact_success', function() {
+        statusDiv.textContent = 'Message sent!';
+        statusDiv.className = 'contact-status success';
+        form.reset();
+    });
+    socket.on('contact_error', function(msg) {
+        statusDiv.textContent = msg || 'Failed to send. Try again.';
+        statusDiv.className = 'contact-status error';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initContactFormRealtime();
+});
+
 // Stats Counter Animation
 function initStatsCounter() {
     const statNumbers = document.querySelectorAll('.stat-number');
